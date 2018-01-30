@@ -2,20 +2,65 @@
 <head>
 	<title>Learning D3</title>
 	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<style type="text/css">
+		.pumpkin {
+			fill: yellow;
+			stroke: orange;
+			stroke-width: 5;
+		}
+		.boundary {
+			stroke:gray;
+			stroke-width: 2;
+		}
+	</style>
 </head>
 <body>
 	<ul class="items">
 		<li> This is an item </li>
 		<li> This is an item </li>
+		<li> This is an item </li>
 		<p> A Paragraph </p>
-		<p>Brilliant paragraph</p>
-		<p>Insightful paragraph</p>
-		<p class="awesome">Awe-inspiring paragraph</p>
+		<p class="awesome">Look at this beautiful round shape</p>
+		
 		<!-- this is a comment -->
+	
+		<svg width="200" height="150">
+			<circle cx="120" cy="60" r="52" fill="blue" stroke="black" stroke-width="2"/>
+		</svg>
+
+		<p> Thesen, this one here, is a funny circle </p>
+
+		<svg width="500" height="100">
+			<ellipse cx="120" cy="25" rx="100" ry="25"/>
+		</svg>
+
+		<p> A line ... because why not </p>
+
+		<svg width="500" height="200">
+			<line x1="0" y1="0" x2="500" y2="50" stroke="black"/>
+		</svg>
+
+		<svg width="400" height="100">
+			<text x="100" y="50" font-family="serif" font-size="25" fill="gray">Easy-peasy</text>
+		</svg>
+
+		<svg width="400" height="100">
+			<circle cx="50" cy="50" r="40" class="pumpkin"/>
+		</svg>
+
+		<svg width="400" height="100" class="boundary">
+			<rect x="0" y="0" width="80" height="80" fill="rgba(128, 0, 128, 1.0)"/> // purple
+			<rect x="20" y="5" width="80" height="80" fill="rgba(0, 0, 255, 0.75)"/> // blue
+			<rect x="40" y="10" width="80" height="80" fill="rgba(0, 255, 0, 0.5)"/> // green
+			<rect x="60" y="15" width="80" height="80" fill="rgba(255, 255, 0, 0.25)"/> // yellow
+			<rect x="80" y="20" width="80" height="80" fill="rgba(255, 0, 0, 0.1)"/> // red
+		</svg>
+
 	</ul>
 
 	<script>
 		d3.selectAll('li').style('color','green');
+		//alert("Hello, world!");
 	</script>
 </body>
 </html>
