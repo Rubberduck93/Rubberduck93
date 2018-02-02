@@ -18,7 +18,7 @@
 			};
 		}
 			
-		d3.csv("Food.csv", function(data) { console.log(data); });
+		d3.csv("Food.csv", rowConverter, function(data) { console.log(data); });
 		</script>
 	</body>
 </html>
