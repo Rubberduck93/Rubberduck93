@@ -4,18 +4,9 @@
 		<meta charset="utf-8">
 		<title>D3 Chapter 5</title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<style type="text/css">
-			div {
-				background-color: red;
-				font-size: 24px;
-				font-weight: bold;
-				color: white;
-			}
-		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
-		<div>
 		// Your beautiful D3 code will go here	
 			
 		var dataset = [ 5, 10, 15, 20, 25, 100 ];
@@ -25,6 +16,9 @@
 			.data(dataset)
 			.enter()
 			.append("p")
+			.style("font-weight","bold")
+			.style("font-size","24px")
+			.style("font-family","sans-serif")
 			// .style("color", "red")
 			.style("color", function(d) {
 				if (d > 15) { //Threshold of 15
@@ -48,8 +42,6 @@
 			
 		d3.csv("Food.csv", rowConverter, function(data) { console.log(data); });
 		//d3.json("waterfallVelocities.json", function(json) { console.log(json); });
-		
-		</div>
 		</script>
 	</body>
 </html>
