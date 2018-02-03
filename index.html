@@ -10,17 +10,14 @@
 		// Your beautiful D3 code will go here
 			
 		var dataset = [ 5, 10, 15, 20, 25, 100 ];
-			
-		someFunction() {
-			"HELLO"
-		};
+
 			
 		d3.select("body").selectAll("p")
 			.data(dataset)
 			.enter()
 			.append("p")
 			.text(function(d) { 
-				return someFunction() + d;
+				return "I can count up to " + d;
 			});
 		
 		
