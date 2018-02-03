@@ -4,6 +4,8 @@
 		<meta charset="utf-8">
 		<title>D3 Chapter 5</title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<style style="color: blue; font-size: 48px; font-style: italic;">
+		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
@@ -16,9 +18,6 @@
 			.data(dataset)
 			.enter()
 			.append("p")
-			.style("font-weight","bold")
-			.style("font-size","24px")
-			.style("font-family","sans-serif")
 			// .style("color", "red")
 			.style("color", function(d) {
 				if (d > 15) { //Threshold of 15
