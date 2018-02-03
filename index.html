@@ -7,9 +7,7 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-		// Your beautiful D3 code will go here
-		
-		font-weight: bold;	
+		// Your beautiful D3 code will go here	
 			
 		var dataset = [ 5, 10, 15, 20, 25, 100 ];
 
@@ -18,6 +16,7 @@
 			.data(dataset)
 			.enter()
 			.append("p")
+			.style("font-weight",bold)
 			// .style("color", "red")
 			.style("color", function(d) {
 				if (d > 15) { //Threshold of 15
