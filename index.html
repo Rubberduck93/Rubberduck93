@@ -16,6 +16,7 @@
 			.data(dataset)
 			.enter()
 			.append("p")
+			.style("color", "red")
 			.text(function(d) { 
 				return "I can count up to " + d;
 			});
