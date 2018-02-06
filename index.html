@@ -16,8 +16,10 @@
 		<script type="text/javascript">
 		// Your beautiful D3 code will go here	
 			
-		var dataset = [ 5, 10, 15, 20, 25, 100 ];
-
+		//var dataset = [ 5, 10, 15, 20, 25, 100 ];
+		d3.csv("Data.csv", function(data) {
+        		var dataset=data
+        	});
 			
 		d3.select("body").selectAll("p")
 			.data(dataset)
