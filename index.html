@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>Week 2</title>
-      <script type="text/javascript" src="../d3/d3.js"></script>
-      <style type="text/css">
-        div.bar {
-              display: inline-block;
-              width: 25px;
-              height: 75px; /* We'll override height later */
-              background-color: teal;
-        }
-      </style>
-  </head>
-  <body>
-      <script type="text/javascript">
-          // Your beautiful D3 code will go here
-          var dataset = [ 5, 10, 15, 20, 25 ];
-          d3.select("body").selectAll("div")
-              .data(dataset)
-              .enter()
-              .append("div")
-              .attr("class", "bar")
-              .style("height", function(d) {
-                  return d + "px";
-              });
-      </script>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Drawing divs, spaced out</title>
+		<script type="text/javascript" src="../d3.js"></script>
+		<style type="text/css">
+		
+			div.bar {
+				display: inline-block;
+				width: 20px;
+				height: 75px;	/* Gets overridden by D3-assigned height below */
+				margin-right: 2px;
+				background-color: teal;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+		
+			var dataset = [ 5, 10, 15, 20, 25 ];
+			
+			d3.select("body").selectAll("div")
+				.data(dataset)
+				.enter()
+				.append("div")
+				.attr("class", "bar")
+				.style("height", function(d) {
+					var barHeight = d * 5;
+					return barHeight + "px";
+				});
+			
+		</script>
+	</body>
 </html>
