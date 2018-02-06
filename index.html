@@ -1,62 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>D3 Chapter 5</title>
-		<script src="https://d3js.org/d3.v4.min.js"></script>
-		<style type="text/css">
-			
-			.boundary {
-				stroke:gray;
-				stroke-width: 2;
-			}
-		</style>
-	</head>
-	<body>
-		<p> Week 1 </p>
-		<script type="text/javascript">
-		// Your beautiful D3 code will go here		
-		var dataset = [ 5, 10, 15, 20, 25, 100 ];
-		
-		d3.select("body").selectAll("p")
-			.data(dataset)
-			.enter()
-			.append("p")
-			.style("font-weight","bold")
-			.style("font-size","24px")
-			.style("font-family","sans-serif")
-			// .style("color", "red")
-			.style("color", function(d) {
-				if (d > 15) { //Threshold of 15
-					return "red";
-				} else {
-					return "black";
-				}
-			})
-			.text(function(d) { 
-				return "I can count up to " + d;
-		});
-	
-		
-		
-			
-		var rowConverter = function(d) {
-			return {
-				Food: d.Food, //No conversion
-				Deliciousness: parseFloat(d.Deliciousness)
-			};
-		}
-			
-		d3.csv("Food.csv", rowConverter, function(data) { console.log(data); });
-		//d3.json("waterfallVelocities.json", function(json) { console.log(json); });
-		</script>
-		
-		<svg width="400" height="200" class="boundary">
-			<rect x="0" y="20" width="80" height="80" fill="rgba(128, 0, 128, 1.0)"/> // purple
-			<rect x="40" y="15" width="80" height="80" fill="rgba(0, 0, 255, 0.75)"/> // blue
-			<rect x="80" y="10" width="80" height="80" fill="rgba(0, 255, 0, 0.5)"/> // green
-			<rect x="120" y="5" width="80" height="80" fill="rgba(255, 255, 0, 0.25)"/> // yellow
-			<rect x="160" y="0" width="80" height="80" fill="rgba(255, 0, 0, 0.1)"/> // red
-		</svg>
-	</body>
+  <head>
+      <meta charset="utf-8">
+      <title>Week 2</title>
+      <script type="text/javascript" src="../d3/d3.js"></script>
+      <style type="text/css">
+        div.bar {
+              display: inline-block;
+              width: 20px;
+              height: 75px; /* We'll override height later */
+              background-color: teal;
+        }
+      </style>
+  </head>
+  <body>
+      <script type="text/javascript">
+          // Your beautiful D3 code will go here
+          var dataset = [ 5, 10, 15, 20, 25 ];
+          d3.select("body").selectAll("div")
+              .data(dataset)
+              .enter()
+              .append("div")
+              .attr("class", "bar");
+      </script>
+      <div class="bar"></div>
+  </body>
 </html>
