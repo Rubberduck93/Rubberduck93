@@ -36,10 +36,12 @@
       Food: d.Food, //No conversion
       Deliciousness: parseFloat(d.Deliciousness)
       };
+      dataset.push(d.Deliciousness);
       }
       d3.csv("Food.csv", rowConverter, function(data) {
-      console.log(data);
       dataset.push(data);
+      console.log(data);
+      
       });
       
       
