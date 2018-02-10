@@ -30,8 +30,16 @@
       }
       */
 
-      var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-                     11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ]
+      var dataset=[];
+
+      d3.csv("Data.csv",function(csv){
+            csv.map(function(d){
+                dataset.push(d.Data);
+            })
+            //called after the AJAX is success
+            console.log("dataset",dataset);
+            console.log("dataset",dataset[0]);
+        });
       
       d3.select("body").selectAll("div")
         .data(dataset)
