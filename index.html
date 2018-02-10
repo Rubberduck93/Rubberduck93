@@ -32,9 +32,7 @@
       d3.csv("Data.csv",function(error,data) {
         if (error) throw error;
 
-        data.forEach(function(d) {
-          d.something = +d.something;
-        });
+        
 
         d3.select("body").selectAll("div")
         .data(data)
