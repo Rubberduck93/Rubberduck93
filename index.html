@@ -29,7 +29,7 @@
         dataset.push(newNumber); //Add new number to array
       }
       */
-      d3.csv("Data.csv",function(error,data)) {
+      d3.csv("Data.csv",function(error,data) {
         if (error) throw error;
 
         data.forEach(function(d)) {
