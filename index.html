@@ -32,7 +32,10 @@
       d3.csv("Presidents.csv",function(error,data) {
         if (error) throw error;
 
-        
+        // format the data
+        data.forEach(function(d) {
+          d.Months = +d.Months;
+        });
 
         d3.select("body").selectAll("div")
         .data(data)
