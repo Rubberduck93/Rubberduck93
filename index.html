@@ -29,7 +29,8 @@
         dataset.push(newNumber); //Add new number to array
       }
       */
-
+      var dataset = [];
+      
       var rowConverter = function(d) {
       return {
       Food: d.Food, //No conversion
@@ -38,6 +39,7 @@
       }
       d3.csv("Food.csv", rowConverter, function(data) {
       console.log(data);
+      dataset.push(data);
       });
       
       /*
