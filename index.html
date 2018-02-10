@@ -5,7 +5,18 @@
     <title>Bar</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <style type="text/css">
-    
+      
+      .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+      
       div.bar {
         display: inline-block;
         width: 20px;
