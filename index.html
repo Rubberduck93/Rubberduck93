@@ -53,7 +53,7 @@
           .enter()
           .append("rect")
           .attr("fill", function(d) {
-              return "rgb(0, " + Math.round(d.Months * 10) + ", 0)";
+              return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
           })
           .attr("x", function(d, i) {
               return i * (w/data.length);
