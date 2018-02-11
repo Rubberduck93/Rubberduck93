@@ -46,43 +46,29 @@
       d3.csv("Presidents.csv",function(error,data) {
         if (error) throw error;
         
-        // Bars
-        svg.selectAll("rect")
+        // Circle
+        svg.selectAll("circle")
           .data(data)
           .enter()
-          .append("rect")
+          .append("circle")
           .attr("fill", function(d) {
               return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
           })
-          .attr("x", function(d, i) {
+          .attr("cx", function(d, i) {
               return i * (w/data.length);
           })
-          .attr("y", function(d) {
+          .attr("cy", function(d) {
               return h - d.Months * 4; //Height minus data value
           })
-          .attr("width", w / data.length - barPadding)
-          .attr("height", function(d) {
-              return d.Months * 4;
-          });
-        
-        // Text
-         svg.selectAll("text")
-          .data(data)
-          .enter()
-          .append("text")
-          .text(function(d) {
+          .attr("r", function(d) {
               return d.Months;
           })
-          .attr("x", function(d, i) {
-              return i * (w / data.length) + (w / data.length - barPadding) / 2;
-          })
-          .attr("y", function(d) {
-              return h - (d.Months * 4) + 14;
-          })
-          .attr("font-family", "sans-serif")
-          .attr("font-size", "11px")
-          .attr("text-anchor", "middle")
-          .attr("fill", "white");
+          .attr("width", w / data.length - barPadding)
+          .attr("stroke-width", function(d) {
+                return d/2;
+           });
+        
+        
       
 
       });
