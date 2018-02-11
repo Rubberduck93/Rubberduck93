@@ -61,7 +61,7 @@
           .attr("y", function(d) {
               return h - d.Months * 4; //Height minus data value
           })
-          .attr("width", w / data.length - barPadding)
+          .attr("width", w / data.length - barPadding + 20)
           .attr("height", function(d) {
               return d.Months * 4;
           });
