@@ -52,7 +52,7 @@
           .enter()
           .append("circle")
           .attr("fill", function(d) {
-              return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
+              return "rgb(0, " + Math.round(d.Months * 5) + ", 0,0.5)";
           })
           .attr("cx", function(d, i) {
               return 10 + d.Months;
