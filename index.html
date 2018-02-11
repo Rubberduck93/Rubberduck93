@@ -30,31 +30,41 @@
       }
       */
       
-      
-      
+ 
       
       d3.csv("Presidents.csv",function(error,data) {
         if (error) throw error;
-
-        // format the data
-        data.forEach(function(d) {
-          d.Months = +d.Months;
-        });
+        
+        //Width and height
+        var w = 500;
+        var h = 200;
+        var barPadding = 1;
+        
         
         //Create SVG element
         var svg = d3.select("body").append("svg")
                 .attr("width", 500)
                 .attr("height", 200);
-
-        svg.selectAll("div")
-        .data(data)
-        .enter()
-        .append("div")
-        .attr("class", "bar")
-        .style("height", function(d) {
-          var barHeight = d.Months;
-          return barHeight + "px";
-        });
+        
+        
+        // Bars
+        svg.selectAll("rect")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("fill", function(d) {
+              return "rgb(0, " + Math.round(d * 10) + ", 0)";
+          })
+          .attr("x", function(d, i) {
+              return i * (w/dataset.length);
+          })
+          .attr("y", function(d) {
+              return h - d.Months * 4; //Height minus data value
+          })
+          .attr("width", w / dataset.length - barPadding)
+          .attr("height", function(d) {
+              return d.Months * 4;
+          });
 
       });
 
