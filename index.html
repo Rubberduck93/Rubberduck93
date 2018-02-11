@@ -36,7 +36,7 @@
         if (error) throw error;
         
         //Width and height
-        var w = 500;
+        var w = 300;
         var h = 500;
         var barPadding = 1;
         
@@ -61,7 +61,7 @@
           .attr("y", function(d) {
               return h - d.Months * 4; //Height minus data value
           })
-          .attr("width", w / data.length*2 - barPadding)
+          .attr("width", w / data.length - barPadding)
           .attr("height", function(d) {
               return d.Months * 4;
           });
