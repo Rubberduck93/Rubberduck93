@@ -51,9 +51,6 @@
           .data(data)
           .enter()
           .append("circle")
-          .attr("fill", function(d) {
-              return "rgb(0, " + Math.round(d.Months * 5) + ", 0,0.5)";
-          })
           .attr("cx", function(d, i) {
               return i+5 * d.Months;
           })
@@ -65,6 +62,8 @@
               return 10;
           })
           //.attr("width", w / data.length - barPadding)
+          .attr("fill", "yellow")
+          .attr("stroke", "orange")
           .attr("stroke-width", function(d) {
                 return d/2;
            });
