@@ -30,10 +30,7 @@
       }
       */
       
-      //Create SVG element
-      var svg = d3.select("body").append("svg")
-                .attr("width", 500)
-                .attr("height", 200);
+      
       
       
       d3.csv("Presidents.csv",function(error,data) {
@@ -43,6 +40,11 @@
         data.forEach(function(d) {
           d.Months = +d.Months;
         });
+        
+        //Create SVG element
+        var svg = d3.select("body").append("svg")
+                .attr("width", 500)
+                .attr("height", 200);
 
         svg.selectAll("div")
         .data(data)
