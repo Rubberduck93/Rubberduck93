@@ -29,6 +29,13 @@
         dataset.push(newNumber); //Add new number to array
       }
       */
+      
+      //Create SVG element
+      var svg = d3.select("body").append("svg")
+                .attr("width", 500)
+                .attr("height", 200);
+      
+      
       d3.csv("Presidents.csv",function(error,data) {
         if (error) throw error;
 
@@ -37,7 +44,7 @@
           d.Months = +d.Months;
         });
 
-        d3.select("body").selectAll("div")
+        svg.selectAll("div")
         .data(data)
         .enter()
         .append("div")
