@@ -65,6 +65,26 @@
           .attr("height", function(d) {
               return d.Months * 4;
           });
+        
+        // Text
+         svg.selectAll("text")
+          .data(data)
+          .enter()
+          .append("text")
+          .text(function(d) {
+              return d.Months;
+          })
+          .attr("x", function(d, i) {
+              return i * (w / data.length) + (w / data.length - barPadding) / 2;
+          })
+          .attr("y", function(d) {
+              return h - (d.Months * 4) + 14;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "11px")
+          .attr("text-anchor", "middle")
+          .attr("fill", "white");
+      
 
       });
 
