@@ -46,8 +46,24 @@
       d3.csv("Presidents.csv",function(error,data) {
         if (error) throw error;
         
-        
-        
+        // Bars
+        svg.selectAll("rect")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("fill", function(d) {
+              return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
+          })
+          .attr("x", function(d, i) {
+              return i*4 * (w/data.length);
+          })
+          .attr("y", function(d) {
+              return h*4 - d.Months * 4; //Height minus data value
+          })
+          .attr("width", w / data.length - barPadding)
+          .attr("height", function(d) {
+              return d.Months * 4;
+          });
         
         // Bars
         svg.selectAll("rect")
