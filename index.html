@@ -55,10 +55,10 @@
               return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
           })
           .attr("cx", function(d, i) {
-              return i * (w/data.length);
+              return i;
           })
           .attr("cy", function(d) {
-              return h - d.Months * 4; //Height minus data value
+              return h; //Height minus data value
           })
           .attr("r", function(d) {
               return d.Months;
