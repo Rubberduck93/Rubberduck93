@@ -36,15 +36,15 @@
         if (error) throw error;
         
         //Width and height
-        var w = 500;
-        var h = 200;
+        var w = 1000;
+        var h = 1000;
         var barPadding = 1;
         
         
         //Create SVG element
         var svg = d3.select("body").append("svg")
-                .attr("width", 1000)
-                .attr("height", 500);
+                .attr("width", w)
+                .attr("height", h);
         
         
         // Bars
