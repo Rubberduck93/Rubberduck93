@@ -56,12 +56,12 @@
               return "rgb(0, " + Math.round(d * 10) + ", 0)";
           })
           .attr("x", function(d, i) {
-              return i * (w/dataset.length);
+              return i * (w/data.length);
           })
           .attr("y", function(d) {
               return h - d.Months * 4; //Height minus data value
           })
-          .attr("width", w / dataset.length - barPadding)
+          .attr("width", w / data.length - barPadding)
           .attr("height", function(d) {
               return d.Months * 4;
           });
