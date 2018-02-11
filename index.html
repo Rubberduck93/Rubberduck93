@@ -50,7 +50,23 @@
         svg.selectAll("circle")
           .data(data)
           .enter()
-          .append("circle");
+          .append("circle")
+          .attr("fill", function(d) {
+              return "rgb(0, " + Math.round(d.Months * 5) + ", 0)";
+          })
+          .attr("cx", function(d, i) {
+              return i * (w/data.length);
+          })
+          .attr("cy", function(d) {
+              return h; //Height minus data value
+          })
+          .attr("r", function(d) {
+              return d.Months;
+          })
+          .attr("width", w / data.length - barPadding)
+          .attr("stroke-width", function(d) {
+                return d/2;
+           });
           
         
         
