@@ -30,12 +30,7 @@
       }
       */
       
- 
-      
-      d3.csv("Presidents.csv",function(error,data) {
-        if (error) throw error;
-        
-        //Width and height
+      //Width and height
         var w = 800;
         var h = 500;
         var barPadding = 1;
@@ -45,6 +40,13 @@
         var svg = d3.select("body").append("svg")
                 .attr("width", w)
                 .attr("height", h);
+      
+ 
+      
+      d3.csv("Presidents.csv",function(error,data) {
+        if (error) throw error;
+        
+        
         
         
         // Bars
