@@ -59,23 +59,7 @@
 							.attr("width", w)
 							.attr("height", h);
 
-				//Generate date labels first, so they are in back
- 				svg.selectAll("text")
- 				   .data(dataset)
- 				   .enter()
- 				   .append("text")
- 				   .text(function(d) {
- 				   		return formatTime(d.Date);
- 				   })
- 				   .attr("x", function(d) {
- 				   		return xScale(d.Date) + 4;
- 				   })
- 				   .attr("y", function(d) {
- 				   		return yScale(d.Amount) + 4;
- 				   })
- 				   .attr("font-family", "sans-serif")
- 				   .attr("font-size", "11px")
- 				   .attr("fill", "#bbb");
+				
 
 				//Generate circles last, so they appear in front
 				svg.selectAll("circle")
