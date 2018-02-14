@@ -22,15 +22,6 @@
 			//For converting Dates to strings
 			var formatTime = d3.timeFormat("%B %e %Y %Z");
 			
-			      //Define Y axis
-			    var yAxis = d3.axisLeft()
-			    .scale(yScale)
-			    .ticks(5);
-
-			    // xAxis
-			    var xAxis = d3.axisBottom(xScale)
-					.ticks(5);
-			
 			
 			
 			//Function for converting CSV values from strings to Dates and numbers
@@ -58,6 +49,16 @@
 								])
 							   .range([h - padding, padding]);
 		
+				      //Define Y axis
+				    var yAxis = d3.axisLeft()
+				    .scale(yScale)
+				    .ticks(5);
+
+				    // xAxis
+				    var xAxis = d3.axisBottom(xScale)
+						.ticks(5);
+				
+				
 				//Create SVG element
 				var svg = d3.select("body")
 							.append("svg")
