@@ -28,24 +28,14 @@
 		      var rowConverter = function(d) {
 			return {
 			  Index: parseInt(d.Index),
-			  Category: parsetInt(d.Category),
-			  Freshness: parseInt(d.Freshness),
-			  Jan: parseInt(d.Jan),
-			  Feb: parseInt(d.Feb),
-			  Mar: parseInt(d.Mar),
-			  Apr: parseInt(d.Apr),
-			  May: parseInt(d.May),
-			  Jun: parseInt(d.Jun),
-			  Jul: parseInt(d.Jul),
-			  Aug: parseInt(d.Aug),
-			  Sep: parseInt(d.Sep),
-			  Oct: parseInt(d.Oct),
-			  Nov: parseInt(d.Nov),
-			  Dec: parseInt(d.Dec)
+			  Month: parseInt(d.Month),
+			  Count: parseInt(d.Count)
 			};
 		      }
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
+			      
+			      
 			    
 			      //Create SVG element
 				var svg = d3.select("body")
@@ -53,13 +43,18 @@
 				      .attr("width", w)
 				      .attr("height", h);
 			      
+			      // xAxis
+			    var xAxis = d3.axisBottom();
+			      
+			      svg.append("g")
+				.call(xAxis);
+			      
 			     /* 
 		           //Define Y axis
 			    var yAxis = d3.axisLeft()
 			    .ticks(5);
 				    
-			    // xAxis
-			    var xAxis = d3.axisBottom().ticks(5);
+			    
 				    
 			      
 			      
