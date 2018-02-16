@@ -46,7 +46,14 @@
 		      }
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
+			    
+			      //Create SVG element
+				var svg = d3.select("body")
+				      .append("svg")
+				      .attr("width", w)
+				      .attr("height", h);
 			      
+			     /* 
 		           //Define Y axis
 			    var yAxis = d3.axisLeft()
 			    .ticks(5);
@@ -55,11 +62,7 @@
 			    var xAxis = d3.axisBottom().ticks(5);
 				    
 			      
-			      //Create SVG element
-				var svg = d3.select("body")
-				      .append("svg")
-				      .attr("width", w)
-				      .attr("height", h);
+			      
 			     
 			      //Create Y axis
 			    svg.append("g")
@@ -72,6 +75,8 @@
 			    .attr("class", "axis") //Assign "axis" class
 			    .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
 			    .call(xAxis);
+			      
+			     */ 
 		      });
 		      
 		      
