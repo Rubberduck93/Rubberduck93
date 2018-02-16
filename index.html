@@ -10,6 +10,71 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+			
+			//Width and height
+		      var w = 500;
+		      var h = 300;
+		      var padding = 40;
+			
+			var dataset, xScale, yScale;  //Empty, for now
+		      //For converting strings to Dates
+		      var parseTime = d3.timeParse("%m/%d/%y");
+		      //For converting Dates to strings
+		      var formatTime = d3.timeFormat("%B %e %Y %Z");
+
+
+
+		      //Function for converting CSV values from strings to Dates and numbers
+		      var rowConverter = function(d) {
+			return {
+			  Index: parseInt(d.Index),
+			  Category: parsetInt(d.Category),
+			  Freshness: parseInt(d.Freshness),
+			  Jan: parseInt(d.Jan),
+			  Feb: parseInt(d.Feb),
+			  Mar: parseInt(d.Mar),
+			  Apr: parseInt(d.Apr),
+			  May: parseInt(d.May),
+			  Jun: parseInt(d.Jun),
+			  Jul: parseInt(d.Jul),
+			  Aug: parseInt(d.Aug),
+			  Sep: parseInt(d.Sep),
+			  Oct: parseInt(d.Oct),
+			  Nov: parseInt(d.Nov),
+			  Dec: parseInt(d.Dec)
+			};
+		      }
+		      
+		      d3.csv("green_markets.csv", rowConverter, function(data) {
+			      
+		           //Define Y axis
+			    var yAxis = d3.axisLeft();
+				    
+			    // xAxis
+			    var xAxis = d3.axisBottom();
+				    
+			      
+			      //Create SVG element
+				var svg = d3.select("body")
+				      .append("svg")
+				      .attr("width", w)
+				      .attr("height", h);
+			     
+			      //Create Y axis
+			    svg.append("g")
+			    .attr("class", "axis")
+			    .attr("transform", "translate(" + padding + ",0)")
+			    .call(yAxis);
+
+			    // SVG Axis
+			    svg.append("g") // Group element
+			    .attr("class", "axis") //Assign "axis" class
+			    .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
+			    .call(xAxis);
+		      });
+		      
+		      
+		      
 
 		</script>
 	</body>
