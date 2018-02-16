@@ -48,10 +48,11 @@
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
 			      
 		           //Define Y axis
-			    var yAxis = d3.axisLeft();
+			    var yAxis = d3.axisLeft()
+			    .ticks(5);
 				    
 			    // xAxis
-			    var xAxis = d3.axisBottom();
+			    var xAxis = d3.axisBottom().ticks(5);
 				    
 			      
 			      //Create SVG element
