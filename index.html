@@ -44,7 +44,7 @@
 				      .attr("height", h);
 			      
 			      // xAxis
-			    var xAxis = d3.axisBottom();
+			    var xAxis = d3.axisBottom().tickValues([0, 100, 250, 600]);
 			      
 			      svg.append("g")
 				.call(xAxis);
