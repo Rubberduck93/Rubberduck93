@@ -20,6 +20,8 @@
 		      var index1 = 0;
 		      var index2 = 0;
 		      var index3 = 0;
+			// istedet for indexs, skal vi ligge til Jan, Feb osv
+		      var Jan = 0;
 			
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
@@ -42,7 +44,7 @@
 			};
 		      }
 		      
-		      d3.csv("green_markets.csv", rowConverter, function(data) {
+		      d3.csv("green_marks.csv", rowConverter, function(data) {
 			      
 			      //alert(Count.length);
 			      //Copy data into global dataset
