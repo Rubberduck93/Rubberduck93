@@ -58,7 +58,7 @@
 				  .attr("x", function(d, i) {
 				      return i * (w/data.length);
 				  })
-				  .attr("y", function(d) {
+				  .attr(dataset, function(d) {
 					if (d.Index == 0) {
 						index0 += d.Count;
 						return h - d.Count * 4;
