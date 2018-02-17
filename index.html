@@ -42,10 +42,9 @@
 				xScale = d3.scaleTime()
 					 .domain([
 					  d3.min(dataset, function(d) { return d.Count; }),
-					  d3.max(dataset, function(d) { return alert(d.Count.length); })
-					  //d.Count.length; })
+					  d3.max(dataset, function(d) { return d.Count; })
 					])
-			    
+			       alert(dataset.length);
 			      //Create SVG element
 				var svg = d3.select("body")
 				      .append("svg")
