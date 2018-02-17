@@ -22,7 +22,7 @@
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
 
-
+		     alert("hello!");
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -34,6 +34,7 @@
 		      }
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
+			      
 			      
 			      //Copy data into global dataset
 				dataset = data;
