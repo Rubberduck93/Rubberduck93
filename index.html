@@ -75,7 +75,7 @@
 					if (d.Index == 0) {
 						//alert(index0);
 						index0 += d.Count;
-						return 200;
+						return h - d.Count * 4;
 					} 
 					if (d.Index == 1) {
 						return h - d.Count * 4;
@@ -90,7 +90,20 @@
 				  })
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
-				      return d.Index * 4;
+				      if (d.Index == 0) {
+						//alert(index0);
+						index0 += d.Count;
+						return d.Count * 4;
+					} 
+					if (d.Index == 1) {
+						return d.Count * 4;
+					}
+					if (d.Index == 2) {
+						return d.Count * 4;
+					} 
+					if (d.Index == 3) {
+						return d.Count * 4;
+					}
 				  });
 			      
 			      
