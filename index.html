@@ -16,6 +16,7 @@
 		      var h = 300;
 		      var barPadding = 1;
 		      var padding = 40;
+		      var index0 = 0;
 			
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
@@ -43,6 +44,7 @@
 			      //alert(Count.length);
 			      //Copy data into global dataset
 				dataset = data;
+			        
 			      
 			      // Bars
 				svg.selectAll("rect")
@@ -58,6 +60,7 @@
 				  })
 				  .attr("y", function(d) {
 					if (d.Index == 0) {
+						index0 += d.Count;
 						return h - d.Count * 4;
 					} 
 					if (d.Index == 1) {
@@ -76,6 +79,7 @@
 				      return d.Index * 4;
 				  });
 			      
+			      alert(index0);
 			      
 			      /*
 				//Create scale functions
