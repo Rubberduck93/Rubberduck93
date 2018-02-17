@@ -73,6 +73,7 @@
 				  })
 				  .attr("y", function(d) {
 					if (d.Index == 0) {
+						alert(index0);
 						index0 += d.Count;
 						return h - d.Count * 4;
 					} 
@@ -92,7 +93,7 @@
 				      return d.Index * 4;
 				  });
 			      
-			      alert(index0);
+			      
 			      
 			      /*
 				//Create scale functions
