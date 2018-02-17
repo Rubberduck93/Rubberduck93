@@ -81,27 +81,25 @@
 						return h - index0 * 4;
 					} 
 					if (d.Index == 1) {
-						
-						return h - index1 * 4;
 						index1 += d.Count;
+						return h - index1 * 4;
+						
 					}
 					if (d.Index == 2) {
-						
-						return h - index2 * 4;
 						index2 += d.Count;
+						return h - index2 * 4;
+						
 					} 
 					if (d.Index == 3) {
-						
-						return h - index3 * 4;
 						index3 += d.Count;
+						return h - index3 * 4;
+						
 					}
 				      //return h - d.Index * 4; //Height minus data value
 				  })
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
 				      if (d.Index == 0) {
-						//alert(index0);
-						index0 += d.Count;
 						return d.Count * 4;
 					} 
 					if (d.Index == 1) {
