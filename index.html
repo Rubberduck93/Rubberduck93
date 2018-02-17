@@ -56,9 +56,22 @@
 				  })
 			      	  
 				  .attr("x", function(d, i) {
-				      return i * (w/data.length);
+					if (d.Index == 0) {
+						return 10;
+						//return h - d.Count * 4;
+					} 
+					if (d.Index == 1) {
+						return 20;
+					}
+					if (d.Index == 2) {
+						return 30;
+					} 
+					if (d.Index == 3) {
+						return 40;
+					}
+				      //return i * (w/data.length);
 				  })
-				  .attr(dataset, function(d) {
+				  .attr("y", function(d) {
 					if (d.Index == 0) {
 						index0 += d.Count;
 						return h - d.Count * 4;
