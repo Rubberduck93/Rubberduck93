@@ -22,7 +22,11 @@
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
 
-		     
+		     //Create SVG element
+				var svg = d3.select("body")
+				      .append("svg")
+				      .attr("width", w)
+				      .attr("height", h);
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -69,11 +73,7 @@
 					])
 			       alert(dataset.length);
 			      */
-			      //Create SVG element
-				var svg = d3.select("body")
-				      .append("svg")
-				      .attr("width", w)
-				      .attr("height", h);
+			      
 			      
 			      // xAxis
 			      /*
