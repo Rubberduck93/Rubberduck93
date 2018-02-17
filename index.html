@@ -35,14 +35,15 @@
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
 			      
-			      alert(Count.length);
+			      //alert(Count.length);
 			      //Copy data into global dataset
 				dataset = data;
 				//Create scale functions
 				xScale = d3.scaleTime()
 					 .domain([
 					  d3.min(dataset, function(d) { return d.Count; }),
-					  d3.max(dataset, function(d) { return d.Count.length; })
+					  d3.max(dataset, function(d) { return alert(d.Count); })
+					  //d.Count.length; })
 					])
 			    
 			      //Create SVG element
