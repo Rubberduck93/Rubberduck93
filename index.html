@@ -42,7 +42,7 @@
 				xScale = d3.scaleTime()
 					 .domain([
 					  d3.min(dataset, function(d) { return d.Count; }),
-					  d3.max(dataset, function(d) { return alert(d.Count); })
+					  d3.max(dataset, function(d) { return alert(d.Count.length); })
 					  //d.Count.length; })
 					])
 			    
