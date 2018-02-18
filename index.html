@@ -42,7 +42,8 @@
 			
 			var xScale = 
 			    d3.scaleLinear()
-			    .range([0, w]);
+			    .domain([0, d3.max(dataset, function(d) { return d; })])
+			    .range([padding, w]);
 			
 			// xAxis
     			var xAxis = d3.axisBottom(xScale)
