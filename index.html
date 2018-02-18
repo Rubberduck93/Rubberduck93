@@ -36,7 +36,8 @@
 			
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
-		      var parseTime = d3.timeParse("%m/%d/%y");
+		      //var parseTime = d3.timeParse("%m/%d/%y");
+			var parseTime = d3.timeParse("%b");
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
 			
@@ -46,7 +47,7 @@
 		      var rowConverter = function(d) {
 			return {
 			  Index: parseInt(d.Index),
-			  Month: d.Month,
+			  Month: parseTime(d.Month),
 			  Count: parseInt(d.Count)
 			};
 		      }
