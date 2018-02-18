@@ -60,11 +60,11 @@
 			      var xScale = 
 			    d3.scaleLinear()
 			    .domain([0, d3.max(dataset, function(d) { return d; })])
-			    .range([padding, w]);
+			    .range([padding, 600+padding]);
 			
 				// xAxis
 				var xAxis = d3.axisBottom(xScale)
-				.tickValues(["Jan","Feb"]);
+				.ticks(12);
 			     //Create SVG element
 					var svg = d3.select("body")
 					      .append("svg")
