@@ -60,7 +60,7 @@
 			      
 			      var xScale = 
 			    d3.scaleTime()
-			    .domain([d3.min(dataset, function(d) { return d.Month; }), 
+			    .domain(["January", 
 				     d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
 			
