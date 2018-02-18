@@ -9,6 +9,11 @@
 		</style>
 	</head>
 	<body>
+		<p id="FF">Fresh Fruit</p>
+    		<p id="FV">Fresh Vegetable</p>
+		<p id="SF">Storage Fruit</p>
+    		<p id="SV">Storage Vegetable</p>
+		
 		<script type="text/javascript">
 			
 			//Width and height
@@ -122,20 +127,6 @@
 					if (d.Month == "Dec") {
 						return 600;
 					}
-					/*
-					if (d.Index == 0) {
-						return 50;
-						//return h - d.Count * 4;
-					} 
-					if (d.Index == 1) {
-						return 100;
-					}
-					if (d.Index == 2) {
-						return 150;
-					} 
-					if (d.Index == 3) {
-						return 200;
-					}
 					*/
 				      //return i * (w/data.length);
 				  })
@@ -188,23 +179,6 @@
 						DecMonth += d.Count;
 						return h - DecMonth * 4;
 					}
-					/*
-					if (d.Index == 1) {
-						index1 += d.Count;
-						return h - index1 * 4;
-						
-					}
-					if (d.Index == 2) {
-						index2 += d.Count;
-						return h - index2 * 4;
-						
-					} 
-					if (d.Index == 3) {
-						index3 += d.Count;
-						return h - index3 * 4;
-						
-					}
-					*/
 				      //return h - d.Index * 4; //Height minus data value
 				  })
 				  .attr("width", w / data.length - barPadding)
@@ -225,6 +199,7 @@
 					}
 					*/
 				  });
+			      
 			      /*
 			      // Text
 				 svg.selectAll("text")
