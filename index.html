@@ -80,7 +80,6 @@
 				  .enter()
 				  .append("rect")
 				  .attr("fill", function(d) {
-					alert(d.Month);
 				      	if (d.Index == 0) {
 						return "rgb(200,0, 0)";
 					} 
@@ -99,7 +98,7 @@
 			      	  
 				  .attr("x", function(d, i) {
 					//alert(data.length);
-					if (d.Month == "Jan") {
+					if (d.Month == Jan) {
 						return 50;
 					}
 					if (d.Month == "Feb") {
