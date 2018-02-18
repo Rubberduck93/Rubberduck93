@@ -58,8 +58,8 @@
 				dataset = data;
 			      
 			      var xScale = 
-			    d3.scaleLinear()
-			    .domain([0, d3.max(dataset, function(d) { return d.length; })])
+			    d3.scaleTime()
+			    .domain([0, d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
 			
 				// xAxis
