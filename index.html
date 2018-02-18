@@ -67,18 +67,22 @@
 				  .data(data)
 				  .enter()
 				  .append("rect")
-				  .attr("color", function(d) {
+				  .attr("fill", function(d) {
 				      	if (d.Index == 0) {
-						return "Red";
+						return "rgb(50,0,0)";
+						//return "Red";
 					} 
 					if (d.Index == 1) {
-						return "Pink";
+						return "rgb(10,0,0)";
+						//return "Pink";
 					}
 					if (d.Index == 2) {
-						return "Green";
+						return "rgb(0,50,0)";
+						//return "Green";
 					} 
 					if (d.Index == 3) {
-						return "Blue";
+						return "rgb(0,10,0)";
+						//return "Blue";
 					}
 					//return "rgb(0, " + Math.round(d.Count * 20) + ", 0)";
 				  })
