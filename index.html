@@ -60,7 +60,7 @@
 			      //alert(Count.length);
 			      //Copy data into global dataset
 				dataset = data;
-			        alert(d.Month.length);
+			        
 			      //
 			      // Bars
 				svg.selectAll("rect")
@@ -85,6 +85,7 @@
 				  })
 			      	  
 				  .attr("x", function(d, i) {
+					alert(d.Month.length);
 					if (d.Month == "Jan") {
 						return 50;
 					}
