@@ -135,51 +135,51 @@
 				  .attr("y", function(d) {
 					if (d.Month == "Jan") {
 						JanMonth += d.Count;
-						return h - JanMonth * 4;
+						return h - padding - JanMonth * 4;
 					}
 					if (d.Month == "Feb") {
 						FebMonth += d.Count;
-						return h - FebMonth * 4;
+						return h - padding - FebMonth * 4;
 					}
 					if (d.Month == "Mar") {
 						MarMonth += d.Count;
-						return h - MarMonth * 4;
+						return h - padding - MarMonth * 4;
 					}
 					if (d.Month == "Apr") {
 						AprMonth += d.Count;
-						return h - AprMonth * 4;
+						return h - padding - AprMonth * 4;
 					}
 					if (d.Month == "May") {
 						MayMonth += d.Count;
-						return h - MayMonth * 4;
+						return h - padding - MayMonth * 4;
 					}
 					if (d.Month == "Jun") {
 						JunMonth += d.Count;
-						return h - JunMonth * 4;
+						return h - padding - JunMonth * 4;
 					}
 					if (d.Month == "Jul") {
 						JulMonth += d.Count;
-						return h - JulMonth * 4;
+						return h - padding - JulMonth * 4;
 					}
 					if (d.Month == "Aug") {
 						AugMonth += d.Count;
-						return h - AugMonth * 4;
+						return h - padding - AugMonth * 4;
 					}
 					if (d.Month == "Sep") {
 						SepMonth += d.Count;
-						return h - SepMonth * 4;
+						return h - padding - SepMonth * 4;
 					}
 					if (d.Month == "Oct") {
 						OctMonth += d.Count;
-						return h - OctMonth * 4;
+						return h - padding - OctMonth * 4;
 					}
 					if (d.Month == "Nov") {
 						NovMonth += d.Count;
-						return h - NovMonth * 4;
+						return h - padding - NovMonth * 4;
 					}
 					if (d.Month == "Dec") {
 						DecMonth += d.Count;
-						return h - DecMonth * 4;
+						return h - padding - DecMonth * 4;
 					}
 				      //return h - d.Index * 4; //Height minus data value
 				  })
@@ -205,7 +205,7 @@
 			      //Create X axis
 			    svg.append("g") // Group element
 			    .attr("class", "x axis") //Assign "axis" class
-			    .attr("transform", "translate(0," + (h-20) + ")") // translate(x,y)
+			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 			    .call(xAxis);
 			      /*
 			      // Text
