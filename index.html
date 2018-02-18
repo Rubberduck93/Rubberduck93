@@ -54,7 +54,7 @@
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
 			      
-			      alert(Month);
+			      
 			      //Copy data into global dataset
 				dataset = data;
 			      
@@ -80,6 +80,7 @@
 				  .enter()
 				  .append("rect")
 				  .attr("fill", function(d) {
+					alert(d.Month);
 				      	if (d.Index == 0) {
 						return "rgb(200,0, 0)";
 					} 
