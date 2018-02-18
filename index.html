@@ -201,7 +201,12 @@
 					}
 					*/
 				  });
-			      
+			      	
+			      //Create X axis
+			    svg.append("g") // Group element
+			    .attr("class", "x axis") //Assign "axis" class
+			    .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
+			    .call(xAxis);
 			      /*
 			      // Text
 				 svg.selectAll("text")
