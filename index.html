@@ -40,19 +40,7 @@
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
 			
-			var xScale = 
-			    d3.scaleLinear()
-			    .domain([0, d3.max(dataset, function(d) { return d; })])
-			    .range([padding, w]);
 			
-			// xAxis
-    			var xAxis = d3.axisBottom(xScale)
-                	.tickValues(["Jan","Feb"]);
-		     //Create SVG element
-				var svg = d3.select("body")
-				      .append("svg")
-				      .attr("width", w)
-				      .attr("height", h);
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -68,6 +56,20 @@
 			      //alert(Count.length);
 			      //Copy data into global dataset
 				dataset = data;
+			      
+			      var xScale = 
+			    d3.scaleLinear()
+			    .domain([0, d3.max(dataset, function(d) { return d; })])
+			    .range([padding, w]);
+			
+				// xAxis
+				var xAxis = d3.axisBottom(xScale)
+				.tickValues(["Jan","Feb"]);
+			     //Create SVG element
+					var svg = d3.select("body")
+					      .append("svg")
+					      .attr("width", w)
+					      .attr("height", h);
 			        
 			      //
 			      // Bars
