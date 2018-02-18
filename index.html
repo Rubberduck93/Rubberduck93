@@ -60,7 +60,7 @@
 			      
 			      var xScale = 
 			    d3.scaleTime()
-			    .domain(["January", 
+			    .domain([d3.max(dataset, function(d) { return d.Month; }), 
 				     d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
 			
@@ -97,7 +97,7 @@
 				  })
 			      	  
 				  .attr("x", function(d, i) {
-					alert(d.Month);
+					//alert(d.Month);
 					if (d.Month == "Jan") {
 						return 50;
 					}
