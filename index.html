@@ -67,8 +67,9 @@
 				  .data(data)
 				  .enter()
 				  .append("rect")
-				  .style("color", function(d) {
-					
+				  .attr("fill", function(d) {
+					return "rgb(50,0, 0)";
+					/*
 				      	if (d.Index == 0) {
 						//return "rgb(50,0,0)";
 						return "Red";
@@ -85,7 +86,7 @@
 						//return "rgb(0,10,0)";
 						return "Blue";
 					}
-					
+					*/
 					//return "rgb(0, " + Math.round(d.Count * 20) + ", 0)";
 				  })
 			      	  
