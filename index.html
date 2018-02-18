@@ -21,11 +21,6 @@
 		      var h = 300;
 		      var barPadding = 1;
 		      var padding = 40;
-		      var index0 = 0;
-		      var index1 = 0;
-		      var index2 = 0;
-		      var index3 = 0;
-			// istedet for indexs, skal vi ligge til Jan, Feb osv
 		      var JanMonth = 0;
 			var FebMonth = 0;
 			var MarMonth = 0;
@@ -44,15 +39,19 @@
 		      var parseTime = d3.timeParse("%m/%d/%y");
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
-
+			
+			var xScale = 
+			    d3.scaleLinear()
+			    .range([0, w]);
+			
+			// xAxis
+    			var xAxis = d3.axisBottom(xScale)
+                	.ticks(5);
 		     //Create SVG element
 				var svg = d3.select("body")
 				      .append("svg")
 				      .attr("width", w)
-				      .attr("height", h)
-					.append("g")
-				    .attr("transform", "translate(0,30)")
-				    .call(axis);
+				      .attr("height", h);
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
