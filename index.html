@@ -60,7 +60,7 @@
 			      //alert(Count.length);
 			      //Copy data into global dataset
 				dataset = data;
-			        
+			        alert(Month.length);
 			      //
 			      // Bars
 				svg.selectAll("rect")
@@ -224,7 +224,26 @@
 					}
 					*/
 				  });
-			      
+			      /*
+			      // Text
+				 svg.selectAll("text")
+				  .data(data)
+				  .enter()
+				  .append("text")
+				  .text(function(d) {
+				      return d.Count;
+				  })
+				  .attr("x", function(d, i) {
+				      return i * (w / data.length) + (w / data.length - barPadding) / 2;
+				  })
+				  .attr("y", function(d) {
+				      return h - (d.Months * 4) + 14;
+				  })
+				  .attr("font-family", "sans-serif")
+				  .attr("font-size", "11px")
+				  .attr("text-anchor", "middle")
+				  .attr("fill", "white");
+			      */
 			      
 			      
 			      /*
