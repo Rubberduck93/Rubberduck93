@@ -44,6 +44,14 @@
 		      var parseTime = d3.timeParse("%m/%d/%y");
 		      //For converting Dates to strings
 		      var formatTime = d3.timeFormat("%B %e %Y %Z");
+			
+			//Define Y axis
+			    var yAxis = d3.axisLeft(scale)
+			    .ticks(5);
+
+			    // xAxis
+			    var xAxis = d3.axisBottom(scale)
+					.ticks(5);
 
 		     //Create SVG element
 				var svg = d3.select("body")
