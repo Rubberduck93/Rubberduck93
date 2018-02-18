@@ -54,13 +54,14 @@
 		      
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
 			      
-			      //alert(Count.length);
+			      alert(Month);
 			      //Copy data into global dataset
 				dataset = data;
 			      
 			      var xScale = 
 			    d3.scaleTime()
-			    .domain([0, d3.max(dataset, function(d) { return d.Month; })])
+			    .domain([d3.min(dataset, function(d) { return d.Month; }), 
+				     d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
 			
 				// xAxis
