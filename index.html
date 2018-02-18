@@ -195,7 +195,9 @@
 				  })
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
-				      if (d.Index == 0) {
+				        return d.Count * 4;
+					/*
+					if (d.Index == 0) {
 						return d.Count * 4;
 					} 
 					if (d.Index == 1) {
@@ -207,6 +209,7 @@
 					if (d.Index == 3) {
 						return d.Count * 4;
 					}
+					*/
 				  });
 			      
 			      
