@@ -68,7 +68,8 @@
 				  .enter()
 				  .append("rect")
 				  .attr("fill", function(d) {
-					return "rgb("50",0, 0)";
+					return "rgb("+50+",0, 0)";
+					alert(Math.round(d.Count * 20));
 					/*
 				      	if (d.Index == 0) {
 						//return "rgb(50,0,0)";
