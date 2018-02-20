@@ -120,7 +120,7 @@
 					      .attr("width", w)
 					      .attr("height", h);
 
-								/*
+
 			      // Bars
 				svg.selectAll("rect")
 				  .data(data)
@@ -198,7 +198,7 @@
 				  .attr("height", function(d) {
 				        return d.Count * 4;
 				  });
-					*/
+
 
 
 
@@ -212,14 +212,14 @@
 					d3.selectAll("p")
 					.on("click", function() {
 
-						var bars = svg.selectAll("rect").data(dataset);
+						//var bars = svg.selectAll("rect").data(dataset);
 
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									alert("Fresh Fruit");
 									// Bars
-									bars.enter()
-									.append("rect")
+									svg.selectAll("rect")
+									.data(dataset)
 									.attr("fill", function(d) {
 									if (d.Index == 0) {
 										return "rgb(200,0, 0)";
@@ -245,8 +245,6 @@
 
 									// Bar Exit
 									//bars.transition().duration(500).remove();
-
-
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
