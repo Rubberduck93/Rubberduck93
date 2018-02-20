@@ -54,13 +54,11 @@
 			<br/> You probably know that farmers markets are a staple across all five boroughs of New York City, but September happens to be a very special month. Why is that?  Well, it turns out September is the month with the most unique types of fresh produce- forty three to be exact.
 			<br/> To show the current offerings, we charted how many types of fruits and vegetables are available by month, and showed if they were fresh or from storage.
 		</p>
-
-		<p id="FF">Fresh Fruit</p>
-    <p id="FV">Fresh Vegetable</p>
-		<p id="SF">Storage Fruit</p>
-    <p id="SV">Storage Vegetable</p>
 		<p> This is a reproduction of http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the </p>
-
+		<p id="FF">Fresh Fruit</p>
+		<p id="FV">Fresh Vegetable</p>
+		<p id="SF">Storage Fruit</p>
+		<p id="SV">Storage Vegetable</p>
 		<script type="text/javascript">
 
 			//Width and height
@@ -136,7 +134,7 @@
 				  .enter()
 				  .append("rect")
 				  .attr("fill", function(d) {
-				      	if (d.Index == 0) {
+				  if (d.Index == 0) {
 						return "rgb(200,0, 0)";
 					}
 					if (d.Index == 1) {
@@ -148,15 +146,9 @@
 					if (d.Index == 3) {
 						return "rgb(0,100, 0)";
 					}
-
-					//return "rgb(0, " + Math.round(d.Count * 20) + ", 0)";
 				  })
-
-				  .attr("x", function(d, i) { //scaleband
+				  .attr("x", function(d, i) {
 						return xScale(d.Month) + 24;
-
-						//
-				      //return i * (w/data.length);
 				  })
 				  .attr("y", function(d) {
 					if (d.Month == "Jan") {
@@ -226,10 +218,29 @@
 
 							if (paragraphID == "FF") {
 								alert("SOOOO");
+								// Bars
+								svg.selectAll("rect")
+								.data(data)
+								.enter()
+								.append("rect")
+								.attr("fill", function(d) {
+								if (d.Index == 0) {
+									return "rgb(200,0, 0)";
+								}
+								})
+								.attr("x", function(d, i) {
+								return xScale(d.Month) + 24;
+								})
+								.attr("y", function(d) {
+									return h - padding;
+								})
+								.attr("width", w / data.length - barPadding)
+								.attr("height", function(d) {
+								if (d.Index == 0) {
+									return d.Count * 4;
+								});
 							}
-					});
-
-
+						});
 		      });
 
 
