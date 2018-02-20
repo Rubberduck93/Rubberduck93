@@ -220,9 +220,6 @@
 			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 			    .call(xAxis);
 
-
-		      });
-
 					d3.selectAll("p")
 	        .on("click", function() {
 	            var paragraphID = d3.select(this).attr("id");
@@ -230,7 +227,12 @@
 							if (paragraphID == "FF") {
 								alert("SOOOO");
 							}
-					}
+					});
+
+
+		      });
+
+
 
 
 
