@@ -69,17 +69,17 @@
 		      var barPadding = 1;
 		      var padding = 40;
 		      var JanMonth = 0;
-			var FebMonth = 0;
-			var MarMonth = 0;
-			var AprMonth = 0;
-			var MayMonth = 0;
-			var JunMonth = 0;
-			var JulMonth = 0;
-			var AugMonth = 0;
-			var SepMonth = 0;
-			var OctMonth = 0;
-			var NovMonth = 0;
-			var DecMonth = 0;
+					var FebMonth = 0;
+					var MarMonth = 0;
+					var AprMonth = 0;
+					var MayMonth = 0;
+					var JunMonth = 0;
+					var JulMonth = 0;
+					var AugMonth = 0;
+					var SepMonth = 0;
+					var OctMonth = 0;
+					var NovMonth = 0;
+					var DecMonth = 0;
 
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
@@ -212,20 +212,6 @@
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
 				        return d.Count * 4;
-					/*
-					if (d.Index == 0) {
-						return d.Count * 4;
-					}
-					if (d.Index == 1) {
-						return d.Count * 4;
-					}
-					if (d.Index == 2) {
-						return d.Count * 4;
-					}
-					if (d.Index == 3) {
-						return d.Count * 4;
-					}
-					*/
 				  });
 
 			      //Create X axis
@@ -233,6 +219,16 @@
 			    .attr("class", "x axis") //Assign "axis" class
 			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 			    .call(xAxis);
+
+
+				d3.selectAll("p")
+        .on("click", function() {
+            var paragraphID = d3.select(this).attr("id");
+
+						if (paragraphID == "FF") {
+							alert("SOOOO");
+						}
+				}
 			      /*
 			      // Text
 				 svg.selectAll("text")
