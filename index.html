@@ -214,13 +214,13 @@
 								dataset = data;
 								if (paragraphID == "FF") {
 									alert("Fresh Fruit");
-									alert(data.length);
 									// Bars
 									svg.selectAll("rect")
 									.data(data)
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
+										alert(d.Intex);
 									if (d.Index == 0) {
 										return "rgb(200,0, 0)";
 									}
@@ -242,13 +242,14 @@
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
 									dataset = data;
-									alert(data.length);
+
 									// Bars
 									svg.selectAll("rect")
 									.data(data)
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
+										alert(d.Intex);
 									if (d.Index == 1) {
 										return "rgb(200,0, 0)";
 									}
