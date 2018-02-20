@@ -111,13 +111,6 @@
 			      var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
 			      range([0,w]).paddingInner(0.05);
 
-			      /*
-			      var xScale =
-			    d3.scaleTime()
-			    .domain([d3.min(dataset, function(d) { return d.Month; }),
-				     d3.max(dataset, function(d) { return d.Month; })])
-			    .range([padding, 600+padding]);
-				*/
 				// xAxis
 				var xAxis = d3.axisBottom(xScale)
 				.ticks(12);
@@ -213,8 +206,12 @@
 			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 			    .call(xAxis);
 
+
+					});
+
 					d3.selectAll("p")
 	        .on("click", function() {
+							d3.csv("green_markets.csv", rowConverter, function(data) {
 	            var paragraphID = d3.select(this).attr("id");
 
 							if (paragraphID == "FF") {
@@ -241,9 +238,8 @@
 										return d.Count * 4;
 									}
 								});
-							}
+							}}
 		      	});
-					});
 
 
 
