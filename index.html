@@ -60,13 +60,19 @@
 			      
 			      //Copy data into global dataset
 				dataset = data;
+			      // xscale = d3.scaleBand
+			     
 			      
+			      var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
+			      range([0,w]).paddingInner(0.05);
+			      
+			      /*
 			      var xScale = 
 			    d3.scaleTime()
 			    .domain([d3.min(dataset, function(d) { return d.Month; }), 
 				     d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
-			
+				*/
 				// xAxis
 				var xAxis = d3.axisBottom(xScale)
 				.ticks(12);
@@ -99,7 +105,7 @@
 					//return "rgb(0, " + Math.round(d.Count * 20) + ", 0)";
 				  })
 			      	  
-				  .attr("x", function(d, i) {
+				  .attr("x", function(d, i) { //scaleband 
 					//alert(d.Month);
 					if (d.Month == "Jan") {
 						return 50;
