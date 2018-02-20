@@ -237,20 +237,19 @@
 											return d.Count * 4;
 										}
 									});
+
+									bars.exit().remove();
 								}
 
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
 
 									// Bar Exit
-									//d3.selectAll("rect").transition().duration(500).remove();
+									d3.selectAll("rect").transition().duration(500).remove();
 									// Bars
 									bars.enter()
 									.append("rect")
 									.attr("fill", function(d) {
-										if (d.Index == 0) {
-											return "rgb(0,200, 0)";
-										}
 									if (d.Index == 1) {
 										return "rgb(100,0, 0)";
 									}
