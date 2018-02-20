@@ -120,7 +120,7 @@
 					      .attr("width", w)
 					      .attr("height", h);
 
-								/*
+								
 			      // Bars
 				svg.selectAll("rect")
 				  .data(data)
@@ -198,7 +198,7 @@
 				  .attr("height", function(d) {
 				        return d.Count * 4;
 				  });
-					*/
+
 
 
 			      //Create X axis
@@ -245,9 +245,6 @@
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
-										alert("trying");
-										alert(d.Index);
-										alert(dataset.length);
 									if (d.Index == 1) {
 										return "rgb(200,0, 0)";
 									}
