@@ -228,7 +228,7 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count;
+										return h - padding - d.Count*4;
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
@@ -254,7 +254,7 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count;
+										return h - padding - d.Count*4;
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
