@@ -248,7 +248,10 @@
 									alert("Fresh Vegetable");
 
 									// Bar Exit
-									d3.selectAll("rect").remove();
+									d3.selectAll("rect").exit()
+			            .transition()
+			            .duration(500)
+			            .remove();
 									// Bars
 									bars.enter()
 									.append("rect")
