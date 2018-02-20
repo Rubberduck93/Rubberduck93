@@ -208,12 +208,10 @@
 			    .call(xAxis);
 
 
-					});
-
 					d3.selectAll("p")
-	        .on("click", function() {
-							d3.csv("green_markets.csv", rowConverter, function(data) {
-	            var paragraphID = d3.select(this).attr("id");
+					.on("click", function() {
+							//d3.csv("green_markets.csv", rowConverter, function(data) {
+							var paragraphID = d3.select(this).attr("id");
 
 								if (paragraphID == "FF") {
 									alert("SOOOO");
@@ -240,8 +238,12 @@
 										}
 									});
 								}
-							});
-		      	});
+							//});
+						});
+
+					});
+
+
 
 
 
