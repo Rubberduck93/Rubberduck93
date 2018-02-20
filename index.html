@@ -221,78 +221,16 @@
 			    .call(xAxis);
 
 
-				d3.selectAll("p")
-        .on("click", function() {
-            var paragraphID = d3.select(this).attr("id");
-
-						if (paragraphID == "FF") {
-							alert("SOOOO");
-						}
-				}
-			      /*
-			      // Text
-				 svg.selectAll("text")
-				  .data(data)
-				  .enter()
-				  .append("text")
-				  .text(function(d) {
-				      return d.Count;
-				  })
-				  .attr("x", function(d, i) {
-				      return i * (w / data.length) + (w / data.length - barPadding) / 2;
-				  })
-				  .attr("y", function(d) {
-				      return h - (d.Months * 4) + 14;
-				  })
-				  .attr("font-family", "sans-serif")
-				  .attr("font-size", "11px")
-				  .attr("text-anchor", "middle")
-				  .attr("fill", "white");
-			      */
-
-
-			      /*
-				//Create scale functions
-				xScale = d3.scaleTime()
-					 .domain([
-					  d3.min(dataset, function(d) { return d.Count; }),
-					  d3.max(dataset, function(d) { return d.Count; })
-					])
-			       alert(dataset.length);
-			      */
-
-
-			      // xAxis
-			      /*
-			    var xAxis = d3.axisBottom(xScale).ticks(5);
-
-			      svg.append("g")
-				.call(xAxis);
-			      */
-			     /*
-		           //Define Y axis
-			    var yAxis = d3.axisLeft()
-			    .ticks(5);
-
-
-
-
-
-
-			      //Create Y axis
-			    svg.append("g")
-			    .attr("class", "axis")
-			    .attr("transform", "translate(" + padding + ",0)")
-			    .call(yAxis);
-
-			    // SVG Axis
-			    svg.append("g") // Group element
-			    .attr("class", "axis") //Assign "axis" class
-			    .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
-			    .call(xAxis);
-
-			     */
 		      });
+
+					d3.selectAll("p")
+	        .on("click", function() {
+	            var paragraphID = d3.select(this).attr("id");
+
+							if (paragraphID == "FF") {
+								alert("SOOOO");
+							}
+					}
 
 
 
