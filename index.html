@@ -40,7 +40,7 @@
 			var parseTime = d3.timeParse("%b");
 		      //For converting Dates to strings
 		      //var formatTime = d3.timeFormat("%B %e %Y %Z");
-			var formatTime = d3.time.format("%b");
+			//var formatTime = d3.time.format("%b");
 			
 			
 
@@ -49,8 +49,8 @@
 			return {
 			  Index: parseInt(d.Index),
 			 //Month: parseTime(d.Month),
-			  Month: formatTime(d.Month),
-			 // Month: d.Month,
+			 // Month: formatTime(d.Month),
+			  Month: d.Month,
 			  Count: parseInt(d.Count)
 			};
 		      }
