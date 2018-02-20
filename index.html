@@ -216,11 +216,10 @@
 									alert("Fresh Fruit");
 									// Bars
 									svg.selectAll("rect")
-									.data(data)
+									.data(dataset)
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
-										alert(d.Index);
 									if (d.Index == 0) {
 										return "rgb(200,0, 0)";
 									}
@@ -245,11 +244,10 @@
 
 									// Bars
 									svg.selectAll("rect")
-									.data(data)
+									.data(dataset)
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
-										alert(d.Index);
 									if (d.Index == 1) {
 										return "rgb(200,0, 0)";
 									}
