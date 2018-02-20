@@ -211,13 +211,14 @@
 
 					d3.selectAll("p")
 					.on("click", function() {
+
+						var bars = svg.selectAll("rect").data(dataset);
+
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									alert("Fresh Fruit");
 									// Bars
-									svg.selectAll("rect")
-									.data(dataset)
-									.enter()
+									bars.enter()
 									.append("rect")
 									.attr("fill", function(d) {
 									if (d.Index == 0) {
@@ -241,9 +242,7 @@
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
 									// Bars
-									svg.selectAll("rect")
-									.data(dataset)
-									.enter()
+									bars.enter()
 									.append("rect")
 									.attr("fill", function(d) {
 									if (d.Index == 1) {
