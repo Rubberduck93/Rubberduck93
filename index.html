@@ -238,14 +238,13 @@
 										}
 									});
 
-									bars.exit().remove();
 								}
 
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
 
 									// Bar Exit
-									d3.selectAll("rect").transition().duration(500).remove();
+									bars.transition().duration(500).remove();
 									// Bars
 									bars.enter()
 									.append("rect")
