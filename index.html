@@ -245,6 +245,8 @@
 
 									// Bar Exit
 									bars.transition().duration(500).remove();
+									var bars = svg.selectAll("rect").data(dataset);
+
 									// Bars
 									bars.enter()
 									.append("rect")
