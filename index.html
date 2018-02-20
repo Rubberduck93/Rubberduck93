@@ -107,6 +107,9 @@
 			      	  
 				  .attr("x", function(d, i) { //scaleband 
 					//alert(d.Month);
+					return xScale(d.month);
+					
+					/*
 					if (d.Month == "Jan") {
 						return 50;
 					}
@@ -143,6 +146,7 @@
 					if (d.Month == "Dec") {
 						return 600;
 					}
+					*/
 					
 				      //return i * (w/data.length);
 				  })
