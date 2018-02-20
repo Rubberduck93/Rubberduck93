@@ -246,7 +246,9 @@
 									.enter()
 									.append("rect")
 									.attr("fill", function(d) {
+										alert("trying");
 										alert(d.Index);
+										alert(dataset.length);
 									if (d.Index == 1) {
 										return "rgb(200,0, 0)";
 									}
