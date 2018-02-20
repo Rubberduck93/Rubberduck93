@@ -210,6 +210,38 @@
 
 					});
 
+					d3.selectAll("p")
+	        .on("click", function() {
+							d3.csv("green_markets.csv", rowConverter, function(data) {
+	            var paragraphID = d3.select(this).attr("id");
+
+								if (paragraphID == "FF") {
+									alert("SOOOO");
+									// Bars
+									svg.selectAll("rect")
+									.data(data)
+									.enter()
+									.append("rect")
+									.attr("fill", function(d) {
+									if (d.Index == 0) {
+										return "rgb(200,0, 0)";
+									}
+									})
+									.attr("x", function(d, i) {
+									return xScale(d.Month) + 24;
+									})
+									.attr("y", function(d) {
+										return h - padding;
+									})
+									.attr("width", w / data.length - barPadding)
+									.attr("height", function(d) {
+										if (d.Index == 0) {
+											return d.Count * 4;
+										}
+									});
+								}
+							})
+		      	});
 
 
 
