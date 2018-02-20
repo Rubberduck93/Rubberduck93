@@ -120,7 +120,7 @@
 					      .attr("width", w)
 					      .attr("height", h);
 
-								
+								/*
 			      // Bars
 				svg.selectAll("rect")
 				  .data(data)
@@ -198,6 +198,7 @@
 				  .attr("height", function(d) {
 				        return d.Count * 4;
 				  });
+					*/
 
 
 
@@ -227,7 +228,7 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding;
+										return h - padding - d.Count;
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
@@ -246,14 +247,14 @@
 									.append("rect")
 									.attr("fill", function(d) {
 									if (d.Index == 1) {
-										return "rgb(200,0, 0)";
+										return "rgb(100,0, 0)";
 									}
 									})
 									.attr("x", function(d, i) {
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding;
+										return h - padding - d.Count;
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
