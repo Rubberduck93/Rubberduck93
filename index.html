@@ -244,12 +244,12 @@
 									alert("Fresh Vegetable");
 
 									// Bar Exit
-									bars.transition().duration(500).remove();
-									var bars = svg.selectAll("rect").data(dataset);
+									//bars.transition().duration(500).remove();
+
 
 									// Bars
-									bars.enter()
-									.append("rect")
+									svg.selectAll("rect")
+									.data(dataset)
 									.attr("fill", function(d) {
 									if (d.Index == 1) {
 										return "rgb(100,0, 0)";
@@ -274,7 +274,32 @@
 
 
 
+/*
+// Bar Exit
+bars.transition().duration(500).remove();
 
+
+// Bars
+bars.enter()
+.append("rect")
+.attr("fill", function(d) {
+if (d.Index == 1) {
+	return "rgb(100,0, 0)";
+}
+})
+.attr("x", function(d, i) {
+return xScale(d.Month) + 24;
+})
+.attr("y", function(d) {
+	return h - padding - d.Count*4;
+})
+.attr("width", w / data.length - barPadding)
+.attr("height", function(d) {
+	if (d.Index == 1) {
+		return d.Count * 4;
+	}
+});
+*/
 
 
 
