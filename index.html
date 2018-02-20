@@ -5,7 +5,7 @@
 		<title>This is a reproduction of http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the</title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<style type="text/css">
-			/* No style rules here yet */		
+			/* No style rules here yet */
 		</style>
 	</head>
 	<body>
@@ -13,9 +13,9 @@
     		<p id="FV">Fresh Vegetable</p>
 		<p id="SF">Storage Fruit</p>
     		<p id="SV">Storage Vegetable</p>
-		
+
 		<script type="text/javascript">
-			
+
 			//Width and height
 		      var w = 800;
 		      var h = 300;
@@ -33,7 +33,7 @@
 			var OctMonth = 0;
 			var NovMonth = 0;
 			var DecMonth = 0;
-			
+
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
 		      //var parseTime = d3.timeParse("%m/%d/%y");
@@ -41,8 +41,8 @@
 		      //For converting Dates to strings
 		      //var formatTime = d3.timeFormat("%B %e %Y %Z");
 			//var formatTime = d3.time.format("%b");
-			
-			
+
+
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -54,22 +54,22 @@
 			  Count: parseInt(d.Count)
 			};
 		      }
-		      
+
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
-			      
-			      
+
+
 			      //Copy data into global dataset
 				dataset = data;
 			      // xscale = d3.scaleBand
-			     
-			      
+
+
 			      var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
 			      range([0,w]).paddingInner(0.05);
-			      
+
 			      /*
-			      var xScale = 
+			      var xScale =
 			    d3.scaleTime()
-			    .domain([d3.min(dataset, function(d) { return d.Month; }), 
+			    .domain([d3.min(dataset, function(d) { return d.Month; }),
 				     d3.max(dataset, function(d) { return d.Month; })])
 			    .range([padding, 600+padding]);
 				*/
@@ -81,7 +81,7 @@
 					      .append("svg")
 					      .attr("width", w)
 					      .attr("height", h);
-			        
+
 			      //
 			      // Bars
 				svg.selectAll("rect")
@@ -91,24 +91,24 @@
 				  .attr("fill", function(d) {
 				      	if (d.Index == 0) {
 						return "rgb(200,0, 0)";
-					} 
+					}
 					if (d.Index == 1) {
 						return "rgb(100,0, 0)";
 					}
 					if (d.Index == 2) {
 						return "rgb(0,200, 0)";
-					} 
+					}
 					if (d.Index == 3) {
 						return "rgb(0,100, 0)";
 					}
-					
+
 					//return "rgb(0, " + Math.round(d.Count * 20) + ", 0)";
 				  })
-			      	  
-				  .attr("x", function(d, i) { //scaleband 
+
+				  .attr("x", function(d, i) { //scaleband
 					//alert(d.Month);
-					return xScale(d.Month) + 24;
-					
+					//return xScale(d.Month) + 24;
+
 					/*
 					if (d.Month == "Jan") {
 						return 50;
@@ -147,7 +147,7 @@
 						return 600;
 					}
 					*/
-					
+
 				      //return i * (w/data.length);
 				  })
 				  .attr("y", function(d) {
@@ -207,19 +207,19 @@
 					/*
 					if (d.Index == 0) {
 						return d.Count * 4;
-					} 
+					}
 					if (d.Index == 1) {
 						return d.Count * 4;
 					}
 					if (d.Index == 2) {
 						return d.Count * 4;
-					} 
+					}
 					if (d.Index == 3) {
 						return d.Count * 4;
 					}
 					*/
 				  });
-			      	
+
 			      //Create X axis
 			    svg.append("g") // Group element
 			    .attr("class", "x axis") //Assign "axis" class
@@ -245,8 +245,8 @@
 				  .attr("text-anchor", "middle")
 				  .attr("fill", "white");
 			      */
-			      
-			      
+
+
 			      /*
 				//Create scale functions
 				xScale = d3.scaleTime()
@@ -256,25 +256,25 @@
 					])
 			       alert(dataset.length);
 			      */
-			      
-			      
+
+
 			      // xAxis
 			      /*
 			    var xAxis = d3.axisBottom(xScale).ticks(5);
-			      
+
 			      svg.append("g")
 				.call(xAxis);
 			      */
-			     /* 
+			     /*
 		           //Define Y axis
 			    var yAxis = d3.axisLeft()
 			    .ticks(5);
-				    
-			    
-				    
-			      
-			      
-			     
+
+
+
+
+
+
 			      //Create Y axis
 			    svg.append("g")
 			    .attr("class", "axis")
@@ -286,12 +286,12 @@
 			    .attr("class", "axis") //Assign "axis" class
 			    .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
 			    .call(xAxis);
-			      
-			     */ 
+
+			     */
 		      });
-		      
-		      
-		      
+
+
+
 
 		</script>
 	</body>
