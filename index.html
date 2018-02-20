@@ -241,6 +241,13 @@
 
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
+
+									/ Bar Exit
+			            bars.exit()
+			            .transition()
+			            .duration(500)
+			            .attr("x", -xScale.bandwidth())
+			            .remove();
 									// Bars
 									bars.enter()
 									.append("rect")
