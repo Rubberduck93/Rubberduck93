@@ -211,7 +211,6 @@
 					d3.selectAll("p")
 					.on("click", function() {
 							var paragraphID = d3.select(this).attr("id");
-								dataset = data;
 								if (paragraphID == "FF") {
 									alert("Fresh Fruit");
 									// Bars
@@ -240,7 +239,6 @@
 
 								if (paragraphID == "FV") {
 									alert("Fresh Vegetable");
-									dataset = data;
 
 									// Bars
 									svg.selectAll("rect")
