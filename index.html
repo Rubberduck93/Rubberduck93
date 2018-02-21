@@ -278,8 +278,8 @@
 											newMaxFF += d.Count;
 											//alert("Height Value = " + (d.Count*4));
 											//alert("Height Value Normal = " + yScale(d.Count));
-											alert("Height Value minus H = " + (300 - yScale(d.Count)));
-											return h - d.Count * 4;
+											//alert("Height Value minus H = " + (300 - yScale(d.Count)));
+											return h - yScale(d.Count); // - padding?
 										}
 									});
 
