@@ -433,6 +433,10 @@
 									var NovMonth = 0;
 									var DecMonth = 0;
 
+									yScale.domain([0, d3.max(arrayOfMonths,function(a) {
+										return d3.max(a);
+									})]);
+
 									// Bars
 							svg.selectAll("rect")
 								.data(dataset)
@@ -459,57 +463,57 @@
 								if (d.Month == "Jan") {
 									//JanMonth
 									JanMonth += d.Count;
-									return h - padding - JanMonth * 4;
+									return yScale(JanMonth);
 								}
 								if (d.Month == "Feb") {
 									FebMonth += d.Count;
-									return h - padding - FebMonth * 4;
+									return yScale(FebMonth);
 								}
 								if (d.Month == "Mar") {
 									MarMonth += d.Count;
-									return h - padding - MarMonth * 4;
+									return yScale(MarMonth);
 								}
 								if (d.Month == "Apr") {
 									AprMonth += d.Count;
-									return h - padding - AprMonth * 4;
+									return yScale(AprMonth);
 								}
 								if (d.Month == "May") {
 									MayMonth += d.Count;
-									return h - padding - MayMonth * 4;
+									return yScale(MayMonth);
 								}
 								if (d.Month == "Jun") {
 									JunMonth += d.Count;
-									return h - padding - JunMonth * 4;
+									return yScale(JunMonth);
 								}
 								if (d.Month == "Jul") {
 									JulMonth += d.Count;
-									return h - padding - JulMonth * 4;
+									return yScale(JulMonth);
 								}
 								if (d.Month == "Aug") {
 									AugMonth += d.Count;
-									return h - padding - AugMonth * 4;
+									return yScale(AugMonth);
 								}
 								if (d.Month == "Sep") {
 									SepMonth += d.Count;
-									return h - padding - SepMonth * 4;
+									return yScale(SepMonth);
 								}
 								if (d.Month == "Oct") {
 									OctMonth += d.Count;
-									return h - padding - OctMonth * 4;
+									return yScale(OctMonth);
 								}
 								if (d.Month == "Nov") {
 									NovMonth += d.Count;
-									return h - padding - NovMonth * 4;
+									return yScale(NovMonth);
 								}
 								if (d.Month == "Dec") {
 									DecMonth += d.Count;
-									return h - padding - DecMonth * 4;
+									return yScale(DecMonth);
 								}
 										//return h - d.Index * 4; //Height minus data value
 								})
 								.attr("width", w / data.length - barPadding)
 								.attr("height", function(d) {
-											return d.Count * 4;
+											return h - padding - yScale(d.Count);
 								});
 								}
 
