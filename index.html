@@ -268,12 +268,13 @@
 				.call(yAxis);
 
 				// text label for the y axis
-		  svg.append("text")
-		      .attr("transform", "rotate(-90)")
-					.attr("x", w)
-    			.attr("y", h - 6)
-		      .style("text-anchor", "middle")
-		      .text("Value");
+				svg.append("text")
+	    //.attr("class", "y label")
+	    .attr("text-anchor", "end")
+	    .attr("y", 6)
+	    .attr("dy", ".75em")
+	    .attr("transform", "rotate(-90)")
+	    .text("life expectancy (years)");
 
 					d3.selectAll("p")
 					.on("click", function() {
