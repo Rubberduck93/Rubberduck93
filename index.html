@@ -178,7 +178,7 @@
 					}
 				  })
 				  .attr("x", function(d, i) {
-						return xScale(d.Month) + 24;
+						return xScale(d.Month) + 20;
 				  })
 				  .attr("y", function(d) {
 					if (d.Month == "Jan") {
@@ -287,7 +287,7 @@
 
 				// Fresh Fruit
 				svg.append("text")
-	        .attr("x", 800)
+	        .attr("x", 850)
 					.attr("id","FF")
 	        .attr("y", 120)
 	        .attr("text-anchor", "start")
@@ -297,7 +297,7 @@
 
 				// Fresh Vegetable
 				svg.append("text")
-	        .attr("x", 800)
+	        .attr("x", 850)
 					.attr("id","FV")
 	        .attr("y", 150)
 	        .attr("text-anchor", "start")
@@ -307,7 +307,7 @@
 
 				// Storage Fruit
 				svg.append("text")
-					.attr("x", 800)
+					.attr("x", 850)
 					.attr("id","SF")
 					.attr("y", 180)
 					.attr("text-anchor", "start")
@@ -317,7 +317,7 @@
 
 				// Storage Vegetable
 				svg.append("text")
-					.attr("x", 800)
+					.attr("x", 850)
 					.attr("id","SV")
 					.attr("y", 210)
 					.attr("text-anchor", "start")
@@ -327,7 +327,7 @@
 
 				// Everything
 				svg.append("text")
-					.attr("x", 800)
+					.attr("x", 850)
 					.attr("id","All")
 					.attr("y", 240)
 					.attr("text-anchor", "start")
@@ -360,7 +360,7 @@
 									}
 									})
 									.attr("x", function(d, i) {
-									return xScale(d.Month) + 24;
+									return xScale(d.Month) + 20;
 									})
 									.attr("y", function(d) {
 											return yScale(d.Count);
@@ -403,7 +403,7 @@
 									}
 									})
 									.attr("x", function(d, i) {
-									return xScale(d.Month) + 24;
+									return xScale(d.Month) + 20;
 									})
 									.attr("y", function(d) {
 										return yScale(d.Count);
