@@ -5,7 +5,6 @@
 		<title>Assignment 1</title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<style type="text/css">
-			/* No style rules here yet */
 		 .axis path,
      .axis line {
       stroke: teal;
@@ -94,40 +93,27 @@
 					var index_2_max = 0;
 					var index_3_max = 0;
 
-			var dataset, xScale, yScale;  //Empty, for now
-		      //For converting strings to Dates
-		      //var parseTime = d3.timeParse("%m/%d/%y");
-			var parseTime = d3.timeParse("%b");
-		      //For converting Dates to strings
-		      //var formatTime = d3.timeFormat("%B %e %Y %Z");
-			//var formatTime = d3.time.format("%b");
-
-
+					var dataset, xScale, yScale;
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
-			return {
-			  Index: parseInt(d.Index),
-			 //Month: parseTime(d.Month),
-			 // Month: formatTime(d.Month),
-			  Month: d.Month,
-			  Count: parseInt(d.Count)
-			};
+						return {
+						  Index: parseInt(d.Index),
+						  Month: d.Month,
+						  Count: parseInt(d.Count)
+						};
 		      }
 
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
 
 
 			      //Copy data into global dataset
-				dataset = data;
-			      // xscale = d3.scaleBand
-
+						dataset = data;
 
 						var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
 					  range([padding,w-wpadding]).paddingInner(0.05);
 
 					  var yScale = d3.scaleLinear()
-					  //.domain([0, d3.max(dataset, function(d) { return 50; })])
 					  .domain([0,50])
 					  .range([h-padding,padding]);
 
@@ -136,7 +122,6 @@
 					  .ticks(12);
 
 					  var yAxis = d3.axisLeft(yScale);
-					  //.ticks(5);
 
 			     //Create SVG element
 					var svg = d3.select("body")
