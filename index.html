@@ -218,10 +218,12 @@
 
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
-									alert("Fresh Fruit");
+									//alert("Fresh Fruit");
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
+									.transition()
+									.duration(1000)
 									.attr("fill", function(d) {
 									if (d.Index == 0) {
 										return "rgb(200,0, 0)";
