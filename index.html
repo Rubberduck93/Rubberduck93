@@ -70,10 +70,11 @@
 		<script type="text/javascript">
 
 			//Width and height
-		      var w = 800;
+		      var w = 1000;
 		      var h = 500;
 		      var barPadding = 1;
 		      var padding = 100;
+					var wpadding = 200;
 		      var JanMonth = 0;
 					var FebMonth = 0;
 					var MarMonth = 0;
@@ -123,7 +124,7 @@
 
 
 						var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
-					  range([padding,w-padding]).paddingInner(0.05);
+					  range([padding,w-wpadding]).paddingInner(0.05);
 
 					  var yScale = d3.scaleLinear()
 					  //.domain([0, d3.max(dataset, function(d) { return 50; })])
@@ -274,7 +275,7 @@
 
 			// title
 			svg.append("text")
-        .attr("x", padding+w/2)
+        .attr("x", w/2)
         .attr("y", 50)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
@@ -286,7 +287,7 @@
 
 				// Fresh Fruit
 				svg.append("text")
-	        .attr("x", 700)
+	        .attr("x", 800)
 					.attr("id","FF")
 	        .attr("y", 120)
 	        .attr("text-anchor", "start")
@@ -296,7 +297,7 @@
 
 				// Fresh Vegetable
 				svg.append("text")
-	        .attr("x", 700)
+	        .attr("x", 800)
 					.attr("id","FV")
 	        .attr("y", 150)
 	        .attr("text-anchor", "start")
@@ -306,7 +307,7 @@
 
 				// Storage Fruit
 				svg.append("text")
-					.attr("x", 700)
+					.attr("x", 800)
 					.attr("id","SF")
 					.attr("y", 180)
 					.attr("text-anchor", "start")
@@ -316,7 +317,7 @@
 
 				// Storage Vegetable
 				svg.append("text")
-					.attr("x", 700)
+					.attr("x", 800)
 					.attr("id","SV")
 					.attr("y", 210)
 					.attr("text-anchor", "start")
@@ -326,7 +327,7 @@
 
 				// Everything
 				svg.append("text")
-					.attr("x", 700)
+					.attr("x", 800)
 					.attr("id","All")
 					.attr("y", 240)
 					.attr("text-anchor", "start")
