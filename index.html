@@ -267,14 +267,14 @@
 									})
 									.attr("y", function(d) {
 
-										return 400 - padding - yScale(d.Count);
+										return h - padding - d.Count*4;
 
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
-											return h-yScale(d.Count);
+											return d.Count * 4;
 										}
 									});
 
