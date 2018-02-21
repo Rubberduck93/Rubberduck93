@@ -485,19 +485,6 @@
 
 								if (paragraphID == "All") {
 
-									var JanMonth = 0;
-									var FebMonth = 0;
-									var MarMonth = 0;
-									var AprMonth = 0;
-									var MayMonth = 0;
-									var JunMonth = 0;
-									var JulMonth = 0;
-									var AugMonth = 0;
-									var SepMonth = 0;
-									var OctMonth = 0;
-									var NovMonth = 0;
-									var DecMonth = 0;
-
 									yScale.domain([0, Math.max(...arrayOfMonths)]);
 
 									//Update y-axis
@@ -530,52 +517,39 @@
 								})
 								.attr("y", function(d) {
 								if (d.Month == "Jan") {
-									//JanMonth
-									JanMonth += d.Count;
 									return yScale(JanMonth);
 								}
 								if (d.Month == "Feb") {
-									FebMonth += d.Count;
 									return yScale(FebMonth);
 								}
 								if (d.Month == "Mar") {
-									MarMonth += d.Count;
 									return yScale(MarMonth);
 								}
 								if (d.Month == "Apr") {
-									AprMonth += d.Count;
 									return yScale(AprMonth);
 								}
 								if (d.Month == "May") {
-									MayMonth += d.Count;
 									return yScale(MayMonth);
 								}
 								if (d.Month == "Jun") {
-									JunMonth += d.Count;
 									return yScale(JunMonth);
 								}
 								if (d.Month == "Jul") {
-									JulMonth += d.Count;
 									return yScale(JulMonth);
 								}
 								if (d.Month == "Aug") {
-									AugMonth += d.Count;
 									return yScale(AugMonth);
 								}
 								if (d.Month == "Sep") {
-									SepMonth += d.Count;
 									return yScale(SepMonth);
 								}
 								if (d.Month == "Oct") {
-									OctMonth += d.Count;
 									return yScale(OctMonth);
 								}
 								if (d.Month == "Nov") {
-									NovMonth += d.Count;
 									return yScale(NovMonth);
 								}
 								if (d.Month == "Dec") {
-									DecMonth += d.Count;
 									return yScale(DecMonth);
 								}
 										//return h - d.Index * 4; //Height minus data value
