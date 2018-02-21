@@ -485,7 +485,7 @@
 
 								if (paragraphID == "All") {
 
-									var JanMonth = 0;
+
 									var FebMonth = 0;
 									var MarMonth = 0;
 									var AprMonth = 0;
@@ -530,8 +530,6 @@
 								})
 								.attr("y", function(d) {
 								if (d.Month == "Jan") {
-									//JanMonth
-									JanMonth += d.Count;
 									return yScale(JanMonth);
 								}
 								if (d.Month == "Feb") {
