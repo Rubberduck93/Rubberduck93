@@ -432,10 +432,8 @@
 									var OctMonth = 0;
 									var NovMonth = 0;
 									var DecMonth = 0;
-
-									yScale.domain([0, d3.max(arrayOfMonths,function(a) {
-										return d3.max(a);
-									})]);
+									alert(d3.max(arrayOfMonths,function(a) { return d3.max(a); }));
+					
 
 									// Bars
 							svg.selectAll("rect")
