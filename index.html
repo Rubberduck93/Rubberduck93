@@ -112,9 +112,17 @@
 			      var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
 			      range([0,w]).paddingInner(0.05);
 
-				// xAxis
-				var xAxis = d3.axisBottom(xScale)
-				.ticks(12);
+						var yScale = d3.scaleLinear()
+				    .domain([0, d3.max(dataset, function(d) { return d.Count; })])
+				    .range([h-padding, padding]);
+
+						// xAxis
+						var xAxis = d3.axisBottom(xScale)
+						.ticks(12);
+
+						var yAxis = d3.axisLeft(yScale)
+						.ticks(10);
+
 			     //Create SVG element
 					var svg = d3.select("body")
 					      .append("svg")
@@ -209,6 +217,12 @@
 			    .attr("class", "x axis") //Assign "axis" class
 			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 			    .call(xAxis);
+
+					//Create y-axis
+				svg.append("g")
+				.attr("class", "y axis") // <-- Note y added here
+				.attr("transform", "translate(" + padding + ",0)")
+				.call(yAxis);
 
 
 					d3.selectAll("p")
