@@ -133,7 +133,7 @@
 						.ticks(12);
 
 						var yAxis = d3.axisLeft(yScale)
-						.ticks(10);
+						.ticks(5);
 
 			     //Create SVG element
 					var svg = d3.select("body")
@@ -269,13 +269,15 @@
 										}
 									});
 
+									yScale.domain([0, 30]);
+									
 									//Update y-axis
 				          svg.select(".y.axis")
 				          .transition()
 				          .duration(1000)
 				          .call(yAxis);
 
-									yScale.domain([0, 30]);
+
 									//alert("masdmasmd");
 									//yScale.domain([0, newMaxFF]);
 
