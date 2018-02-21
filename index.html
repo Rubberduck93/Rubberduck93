@@ -232,7 +232,7 @@
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									//alert("Fresh Fruit");
-									yScale.domain([0, d3.max(dataset, function(d) { return d.Count; })]);
+									var newMaxFF = 0;
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
@@ -252,11 +252,14 @@
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
+											newMaxFF += d.Count;
 											return d.Count * 4;
 										}
 									});
 
 								}
+
+								yScale.domain([0, newMaxFF]);
 
 								if (paragraphID == "FV") {
 									//alert("Fresh Vegetable");
