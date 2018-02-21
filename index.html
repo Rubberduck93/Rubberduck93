@@ -274,11 +274,14 @@
 	    .text("# of Unique Kinds of Produce");
 
 			// line
-			svg.append("line")
-				.attr("x1",50)
-				.attr("x2",100)
-				.attr("y1",50)
-				.attr("y2",50);
+			var line = d3.svg.line()
+		    .x(function(d) { return xScale(d.x); })
+		    .y(function(d) { return yScale(d.y); });
+
+				svg.append("path")
+			 .data([dataset])
+			 .attr("class", "line")
+			 .attr("d", line);
 			// title
 			svg.append("text")
         .attr("x", w/2)
