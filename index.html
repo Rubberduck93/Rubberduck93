@@ -131,7 +131,7 @@
 
 					  var yScale = d3.scaleLinear()
 					  //.domain([0, d3.max(dataset, function(d) { return 50; })])
-					  .domain([0,Math.max(...arrayOfMonths)])
+					  .domain([0,50])
 					  .range([h-padding,padding]);
 
 					  // xAxis
@@ -185,71 +185,70 @@
 				  })
 				  .attr("y", function(d) {
 					if (d.Month == "Jan") {
-						//JanMonth
 						JanMonth += d.Count;
 						arrayOfMonths.push(JanMonth);
-						return h - padding - JanMonth * 4;
+						return yScale(JanMonth);
 					}
 					if (d.Month == "Feb") {
 						FebMonth += d.Count;
 						arrayOfMonths.push(FebMonth);
-						return h - padding - FebMonth * 4;
+						return yScale(FebMonth);
 					}
 					if (d.Month == "Mar") {
 						MarMonth += d.Count;
 						arrayOfMonths.push(MarMonth);
-						return h - padding - MarMonth * 4;
+						return yScale(MarMonth);
 					}
 					if (d.Month == "Apr") {
 						AprMonth += d.Count;
 						arrayOfMonths.push(AprMonth);
-						return h - padding - AprMonth * 4;
+						return yScale(AprMonth);
 					}
 					if (d.Month == "May") {
 						MayMonth += d.Count;
 						arrayOfMonths.push(MayMonth);
-						return h - padding - MayMonth * 4;
+						return yScale(MayMonth);
 					}
 					if (d.Month == "Jun") {
 						JunMonth += d.Count;
 						arrayOfMonths.push(JunMonth);
-						return h - padding - JunMonth * 4;
+						return yScale(JunMonth);
 					}
 					if (d.Month == "Jul") {
 						JulMonth += d.Count;
 						arrayOfMonths.push(JulMonth);
-						return h - padding - JulMonth * 4;
+						return yScale(JulMonth);
 					}
 					if (d.Month == "Aug") {
 						AugMonth += d.Count;
 						arrayOfMonths.push(AugMonth);
-						return h - padding - AugMonth * 4;
+						return yScale(AugMonth);
 					}
 					if (d.Month == "Sep") {
 						SepMonth += d.Count;
 						arrayOfMonths.push(SepMonth);
-						return h - padding - SepMonth * 4;
+						return yScale(SepMonth);
 					}
 					if (d.Month == "Oct") {
 						OctMonth += d.Count;
 						arrayOfMonths.push(OctMonth);
-						return h - padding - OctMonth * 4;
+						return yScale(OctMonth);
 					}
 					if (d.Month == "Nov") {
 						NovMonth += d.Count;
 						arrayOfMonths.push(NovMonth);
-						return h - padding - NovMonth * 4;
+						return yScale(NovMonth);
 					}
 					if (d.Month == "Dec") {
 						DecMonth += d.Count;
 						arrayOfMonths.push(DecMonth);
-						return h - padding - DecMonth * 4;
+						return yScale(DecMonth);
 					}
 				      //return h - d.Index * 4; //Height minus data value
 				  })
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
-				        return d.Count * 4;
+				        return h - padding - yScale(d.Count);
 				  });
 
 
