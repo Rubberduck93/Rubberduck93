@@ -259,7 +259,7 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count*4;
+										return h - padding - yScale(d.Count*4);
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
