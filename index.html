@@ -279,11 +279,12 @@
 			// title
 			svg.append("text")
         .attr("x", padding+w/2)
-        .attr("y", 100)
+				.attr("id","FF")
+        .attr("y", 50)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-				.style("text-decoration", "underline") 
-        .text("Value vs Date Graph");
+				.style("text-decoration", "underline")
+        .text("NYC Green Markets - Unique Produce Types");
 
 					d3.selectAll("p")
 					.on("click", function() {
