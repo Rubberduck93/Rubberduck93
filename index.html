@@ -267,8 +267,9 @@
 									})
 									.attr("y", function(d) {
 										if (d.Index == 0) {
-											alert("Y Value = " + (h - padding - d.Count*4));
-											return h - padding - d.Count*4;
+											//alert("Y Value = " + (h - padding - d.Count*4));
+											//return h - padding - d.Count*4;
+											return yScale(d.Count);
 										}
 									})
 									.attr("width", w / data.length - barPadding)
