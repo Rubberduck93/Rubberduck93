@@ -131,7 +131,7 @@
 
 					  var yScale = d3.scaleLinear()
 					  //.domain([0, d3.max(dataset, function(d) { return 50; })])
-					  .domain([0,50])
+					  .domain([0,Math.max(...arrayOfMonths)])
 					  .range([h-padding,padding]);
 
 					  // xAxis
@@ -418,8 +418,7 @@
 								}
 
 								if (paragraphID == "All") {
-									//alert("Everything");
-									var something = [2,3,4,5,6,1];
+
 									var JanMonth = 0;
 									var FebMonth = 0;
 									var MarMonth = 0;
@@ -432,10 +431,9 @@
 									var OctMonth = 0;
 									var NovMonth = 0;
 									var DecMonth = 0;
-									//alert(Math.max(...something));
-									//alert(d3.max(arrayOfMonths,function(a) { return d3.max(a); }));
+
 									yScale.domain([0, Math.max(...arrayOfMonths)]);
-									//alert(Math.max(...arrayOfMonths));
+
 									//Update y-axis
 				          svg.select(".y.axis")
 				          .transition()
