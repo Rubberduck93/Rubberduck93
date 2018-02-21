@@ -276,7 +276,9 @@
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
-											alert("Height Value = " + (d.Count*4));
+											//alert("Height Value = " + (d.Count*4));
+											alert("Height Value Normal = " + yScale(d.Count));
+											alert("Height Value minus H = " + h - yScale(d.Count));
 											return d.Count * 4;
 										}
 									});
