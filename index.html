@@ -245,6 +245,13 @@
 								if (paragraphID == "FF") {
 									//alert("Fresh Fruit");
 									var newMaxFF = 0;
+									yScale.domain([0, 30]);
+
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
@@ -269,13 +276,7 @@
 										}
 									});
 
-									yScale.domain([0, newMaxFF]);
 
-									//Update y-axis
-				          svg.select(".y.axis")
-				          .transition()
-				          .duration(1000)
-				          .call(yAxis);
 
 
 									//alert("masdmasmd");
