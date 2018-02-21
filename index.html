@@ -270,11 +270,11 @@
 				// text label for the y axis
 				svg.append("text")
 	    .attr("text-anchor", "end")
-			.attr("x",-h/2)
+			.attr("x",-h/2+padding)
 	    .attr("y",padding/2)
 	    .attr("dy", ".75em")
 	    .attr("transform", "rotate(-90)")
-	    .text("life expectancy (years)");
+	    .text("# of Unique Kinds of Produce");
 
 					d3.selectAll("p")
 					.on("click", function() {
