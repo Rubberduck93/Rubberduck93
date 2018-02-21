@@ -266,13 +266,13 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - yScale(d.Count*4);
+										return h - padding - yScale(d.Count);
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
-											return yScale(d.Count * 4);
+											return yScale(d.Count);
 										}
 									});
 
