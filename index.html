@@ -126,13 +126,27 @@
 			      // xscale = d3.scaleBand
 
 
+						var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
+					  range([padding,w]).paddingInner(0.05);
 
+					  var yScale = d3.scaleLinear()
+					  //.domain([0, d3.max(dataset, function(d) { return 50; })])
+					  .domain([0,d3.max(arrayOfMonths,function(a) { return d3.max(a)})])
+					  .range([h-padding,padding]);
+
+					  // xAxis
+					  var xAxis = d3.axisBottom(xScale)
+					  .ticks(12);
+
+					  var yAxis = d3.axisLeft(yScale);
+					  //.ticks(5);
 
 			     //Create SVG element
 					var svg = d3.select("body")
 					      .append("svg")
 					      .attr("width", w)
 					      .attr("height", h);
+
 
 
 			      // Bars
@@ -238,20 +252,7 @@
 				        return d.Count * 4;
 				  });
 
-					var xScale = d3.scaleBand().domain(['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']).
-				  range([padding,w]).paddingInner(0.05);
 
-				  var yScale = d3.scaleLinear()
-				  //.domain([0, d3.max(dataset, function(d) { return 50; })])
-				  .domain([0,d3.max(arrayOfMonths,function(a) { return d3.max(a)})])
-				  .range([h-padding,padding]);
-
-				  // xAxis
-				  var xAxis = d3.axisBottom(xScale)
-				  .ticks(12);
-
-				  var yAxis = d3.axisLeft(yScale);
-				  //.ticks(5);
 
 
 
