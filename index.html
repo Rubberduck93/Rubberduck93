@@ -276,6 +276,14 @@
 	    .attr("transform", "rotate(-90)")
 	    .text("# of Unique Kinds of Produce");
 
+			// title
+			svg.append("text")
+        .attr("x", (w / 2))
+        .attr("y", 0 - (h / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Value vs Date Graph");
+
 					d3.selectAll("p")
 					.on("click", function() {
 
@@ -528,58 +536,9 @@
 								});
 								}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 						});
 
 					});
-
-
-
-/*
-// Bar Exit
-bars.transition().duration(500).remove();
-
-
-// Bars
-bars.enter()
-.append("rect")
-.attr("fill", function(d) {
-if (d.Index == 1) {
-	return "rgb(100,0, 0)";
-}
-})
-.attr("x", function(d, i) {
-return xScale(d.Month) + 24;
-})
-.attr("y", function(d) {
-	return h - padding - d.Count*4;
-})
-.attr("width", w / data.length - barPadding)
-.attr("height", function(d) {
-	if (d.Index == 1) {
-		return d.Count * 4;
-	}
-});
-*/
-
-
-
-
-
 
 
 
