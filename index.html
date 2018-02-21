@@ -273,15 +273,6 @@
 	    .attr("transform", "rotate(-90)")
 	    .text("# of Unique Kinds of Produce");
 
-			// line
-			var line = d3.svg.line()
-		    .x(function(d) { return xScale(d.x); })
-		    .y(function(d) { return yScale(d.y); });
-
-				svg.append("path")
-			 .data([dataset])
-			 .attr("class", "line")
-			 .attr("d", line);
 			// title
 			svg.append("text")
         .attr("x", w/2)
