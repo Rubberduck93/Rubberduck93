@@ -90,6 +90,10 @@
 					var OctMonth = 0;
 					var NovMonth = 0;
 					var DecMonth = 0;
+					var index_0_max = 0;
+					var index_1_max = 0;
+					var index_2_max = 0;
+					var index_3_max = 0;
 
 			var dataset, xScale, yScale;  //Empty, for now
 		      //For converting strings to Dates
@@ -149,15 +153,27 @@
 				  .append("rect")
 				  .attr("fill", function(d) {
 				  if (d.Index == 0) {
+						if (d.Count>=index_0_max) {
+							index_0_max = d.Count;
+						}
 						return "rgb(200,0, 0)";
 					}
 					if (d.Index == 1) {
+						if (d.Count>=index_1_max) {
+							index_1_max = d.Count;
+						}
 						return "rgb(100,0, 0)";
 					}
 					if (d.Index == 2) {
+						if (d.Count>=index_2_max) {
+							index_2_max = d.Count;
+						}
 						return "rgb(0,200, 0)";
 					}
 					if (d.Index == 3) {
+						if (d.Count>=index_3_max) {
+							index_3_max = d.Count;
+						}
 						return "rgb(0,100, 0)";
 					}
 				  })
@@ -244,8 +260,7 @@
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									//alert("Fresh Fruit");
-									var newMaxFF = 0;
-									yScale.domain([0, 30]);
+									yScale.domain([0, index_0_max]);
 
 									//Update y-axis
 				          svg.select(".y.axis")
@@ -288,7 +303,7 @@
 
 								if (paragraphID == "FV") {
 									//alert("Fresh Vegetable");
-									yScale.domain([0, 30]);
+									yScale.domain([0, 10]);
 
 									//Update y-axis
 				          svg.select(".y.axis")
