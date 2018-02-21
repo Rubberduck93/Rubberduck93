@@ -565,6 +565,29 @@
 
 						});
 
+
+
+
+						/*					Viz 2 Boston Marathon								*/
+
+						//Function for converting CSV values from strings to Dates and numbers
+			      var mensRowConverter = function(d) {
+							return {
+								Year: parseInt(d.Year),
+								Athlete: d.Athlete,
+								Country/State: d.CountryState,
+								Time: d.Time //parsetime formattime
+								Notes: d.Notes
+							};
+			      }
+
+			      d3.csv("mens_open.csv", mensRowConverter, function(data) {
+
+							//Create SVG element
+							var marathon_svg = d3.select("#marathon")
+												 .append("svg")
+												 .attr("width", w)
+												 .attr("height", h);
 					});
 
 
