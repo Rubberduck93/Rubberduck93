@@ -126,7 +126,7 @@
 						var yScale = d3.scaleLinear()
 				    //.domain([0, d3.max(dataset, function(d) { return 50; })])
 						.domain([0,50])
-				    .range([0, h]);
+				    .range([h-padding,padding]);
 
 						// xAxis
 						var xAxis = d3.axisBottom(xScale)
@@ -266,7 +266,7 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										
+
 										return h - padding - yScale(d.Count);
 
 									})
@@ -274,7 +274,7 @@
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
-											return yScale(d.Count);
+											return h-yScale(d.Count);
 										}
 									});
 
