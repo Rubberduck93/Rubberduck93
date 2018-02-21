@@ -270,7 +270,8 @@
 				// text label for the y axis
 				svg.append("text")
 	    .attr("text-anchor", "end")
-	    .attr("y", h/2)
+			.attr("x",padding/2)
+	    .attr("y", 100)
 	    .attr("dy", ".75em")
 	    .attr("transform", "rotate(-90)")
 	    .text("life expectancy (years)");
