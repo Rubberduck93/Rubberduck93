@@ -266,20 +266,13 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										if (d.Index == 0) {
-											//alert("Y Value = " + (h - padding - d.Count*4));
-											//return h - padding - d.Count*4;
 											return yScale(d.Count);
-										}
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
-											newMaxFF += d.Count;
-											//alert("Height Value = " + (d.Count*4));
-											//alert("Height Value Normal = " + yScale(d.Count));
-											//alert("Height Value minus H = " + (300 - yScale(d.Count)));
-											return h - padding - yScale(d.Count); // - padding?
+											//newMaxFF += d.Count;
+											return h - padding - yScale(d.Count);
 										}
 									});
 
@@ -295,6 +288,13 @@
 
 								if (paragraphID == "FV") {
 									//alert("Fresh Vegetable");
+									yScale.domain([0, 100]);
+
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
@@ -309,12 +309,12 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count*4;
+										return yScale(d.Count);
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 1) {
-											return d.Count * 4;
+											return h - padding - yScale(d.Count);
 										}
 									});
 								}
