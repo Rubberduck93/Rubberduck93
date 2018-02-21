@@ -90,6 +90,8 @@
 					var OctMonth = 0;
 					var NovMonth = 0;
 					var DecMonth = 0;
+					var arrayOfMonths = [];
+
 					var index_0_max = 0;
 					var index_1_max = 0;
 					var index_2_max = 0;
@@ -129,15 +131,15 @@
 
 						var yScale = d3.scaleLinear()
 				    //.domain([0, d3.max(dataset, function(d) { return 50; })])
-						.domain([0,50])
+						.domain([0,d3.max(arrayOfMonths,function(a) { return d3.max(a)})])
 				    .range([h-padding,padding]);
 
 						// xAxis
 						var xAxis = d3.axisBottom(xScale)
 						.ticks(12);
 
-						var yAxis = d3.axisLeft(yScale)
-						.ticks(5);
+						var yAxis = d3.axisLeft(yScale);
+						//.ticks(5);
 
 			     //Create SVG element
 					var svg = d3.select("body")
@@ -184,50 +186,62 @@
 					if (d.Month == "Jan") {
 						//JanMonth
 						JanMonth += d.Count;
+						arrayOfMonths.push(JanMonth);
 						return h - padding - JanMonth * 4;
 					}
 					if (d.Month == "Feb") {
 						FebMonth += d.Count;
+						arrayOfMonths.push(FebMonth);
 						return h - padding - FebMonth * 4;
 					}
 					if (d.Month == "Mar") {
 						MarMonth += d.Count;
+						arrayOfMonths.push(MarMonth);
 						return h - padding - MarMonth * 4;
 					}
 					if (d.Month == "Apr") {
 						AprMonth += d.Count;
+						arrayOfMonths.push(AprMonth);
 						return h - padding - AprMonth * 4;
 					}
 					if (d.Month == "May") {
 						MayMonth += d.Count;
+						arrayOfMonths.push(MayMonth);
 						return h - padding - MayMonth * 4;
 					}
 					if (d.Month == "Jun") {
 						JunMonth += d.Count;
+						arrayOfMonths.push(JunMonth);
 						return h - padding - JunMonth * 4;
 					}
 					if (d.Month == "Jul") {
 						JulMonth += d.Count;
+						arrayOfMonths.push(JulMonth);
 						return h - padding - JulMonth * 4;
 					}
 					if (d.Month == "Aug") {
 						AugMonth += d.Count;
+						arrayOfMonths.push(AugMonth);
 						return h - padding - AugMonth * 4;
 					}
 					if (d.Month == "Sep") {
 						SepMonth += d.Count;
+						arrayOfMonths.push(SepMonth);
 						return h - padding - SepMonth * 4;
 					}
 					if (d.Month == "Oct") {
 						OctMonth += d.Count;
+						arrayOfMonths.push(OctMonth);
 						return h - padding - OctMonth * 4;
 					}
 					if (d.Month == "Nov") {
 						NovMonth += d.Count;
+						arrayOfMonths.push(NovMonth);
 						return h - padding - NovMonth * 4;
 					}
 					if (d.Month == "Dec") {
 						DecMonth += d.Count;
+						arrayOfMonths.push(DecMonth);
 						return h - padding - DecMonth * 4;
 					}
 				      //return h - d.Index * 4; //Height minus data value
