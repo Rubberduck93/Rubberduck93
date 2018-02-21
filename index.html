@@ -144,7 +144,7 @@
 						return xScale(d.Month) + 24;
 				  })
 				  .attr("y", function(d) {
-					if (d.Month == Jan) {
+					if (d.Month == "Jan") {
 						//JanMonth
 						JanMonth += d.Count;
 						return h - padding - JanMonth * 4;
