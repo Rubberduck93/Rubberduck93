@@ -243,13 +243,12 @@
 								}
 
 								if (paragraphID == "FV") {
-									alert("Fresh Vegetable");
-
-									// Bar Exit
-									//bars.transition().duration(500).remove();
+									//alert("Fresh Vegetable");
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
+									.transition()
+									.duration(1000)
 									.attr("fill", function(d) {
 									if (d.Index == 1) {
 										return "rgb(100,0, 0)";
@@ -271,13 +270,12 @@
 
 
 								if (paragraphID == "SF") {
-									alert("Storage Fruit");
-
-									// Bar Exit
-									//bars.transition().duration(500).remove();
+									//alert("Storage Fruit");
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
+									.transition()
+									.duration(1000)
 									.attr("fill", function(d) {
 									if (d.Index == 2) {
 										return "rgb(0,200, 0)";
@@ -298,13 +296,12 @@
 								}
 
 								if (paragraphID == "SV") {
-									alert("Storage Fruit");
-
-									// Bar Exit
-									//bars.transition().duration(500).remove();
+									//alert("Storage Fruit");
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
+									.transition()
+									.duration(1000)
 									.attr("fill", function(d) {
 									if (d.Index == 3) {
 										return "rgb(0,100, 0)";
@@ -325,7 +322,7 @@
 								}
 
 								if (paragraphID == "All") {
-									alert("Everything");
+									//alert("Everything");
 
 									var JanMonth = 0;
 									var FebMonth = 0;
@@ -343,6 +340,8 @@
 									// Bars
 							svg.selectAll("rect")
 								.data(dataset)
+								.transition()
+								.duration(1000)
 								.attr("fill", function(d) {
 								if (d.Index == 0) {
 									return "rgb(200,0, 0)";
