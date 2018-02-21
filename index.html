@@ -274,7 +274,7 @@
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
-											return d.Count * 4;
+											return yScale(d.Count * 4);
 										}
 									});
 
