@@ -303,7 +303,7 @@
 
 								if (paragraphID == "FV") {
 									//alert("Fresh Vegetable");
-									yScale.domain([0, 10]);
+									yScale.domain([0, index_1_max]);
 
 									//Update y-axis
 				          svg.select(".y.axis")
@@ -337,6 +337,13 @@
 
 								if (paragraphID == "SF") {
 									//alert("Storage Fruit");
+									yScale.domain([0, index_2_max]);
+
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
@@ -351,18 +358,25 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count*4;
+										return yScale(d.Count);
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 2) {
-											return d.Count * 4;
+											return h - padding - yScale(d.Count);
 										}
 									});
 								}
 
 								if (paragraphID == "SV") {
 									//alert("Storage Fruit");
+									yScale.domain([0, index_3_max]);
+
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
@@ -377,12 +391,12 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-										return h - padding - d.Count*4;
+										return yScale(d.Count);
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 3) {
-											return d.Count * 4;
+											return h - padding - yScale(d.Count);
 										}
 									});
 								}
