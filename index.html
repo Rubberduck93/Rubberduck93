@@ -266,14 +266,16 @@
 									return xScale(d.Month) + 24;
 									})
 									.attr("y", function(d) {
-
-										return h - padding - yScale(d.Count*4);
-
+										if (d.Index == 0) {
+											alert("Y Value = " + (h - padding - d.Count*4));
+											return h - padding - d.Count*4;
+										}
 									})
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
 											newMaxFF += d.Count;
+											alert("Height Value = " + (d.Count*4));
 											return d.Count * 4;
 										}
 									});
