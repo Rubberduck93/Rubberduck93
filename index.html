@@ -276,11 +276,18 @@
 	    .attr("transform", "rotate(-90)")
 	    .text("# of Unique Kinds of Produce");
 
-			legend = svg.append("g")
-  .attr("class","legend")
-  .attr("transform","translate(50,30)")
-  .style("font-size","12px")
-  .call(d3.legend)
+			// add a data-legend attribute to your path
+				cities.append('path')
+				    .attr('class', 'line')
+				    .attr('d', line)
+				    .attr('data-legend', 'cities')
+				 
+				// add legend to svg.
+				var legend = svg.append('g')
+				    .attr('class', 'legend')
+				    .attr('transform', 'translate(50, 30)')
+				    .style('font-size', '12px')
+				    .call(d3.legend)
 
 					d3.selectAll("p")
 					.on("click", function() {
