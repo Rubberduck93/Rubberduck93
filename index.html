@@ -267,7 +267,7 @@
 									})
 									.attr("y", function(d) {
 
-										return h - padding - yScale(d.Count);
+										return padding - yScale(d.Count);
 
 									})
 									.attr("width", w / data.length - barPadding)
