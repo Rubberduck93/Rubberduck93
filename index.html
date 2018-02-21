@@ -224,7 +224,6 @@
 				.attr("transform", "translate(" + padding + ",0)")
 				.call(yAxis);
 
-					alert(JanMonth);
 					d3.selectAll("p")
 					.on("click", function() {
 
@@ -233,7 +232,7 @@
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									//alert("Fresh Fruit");
-
+									yScale.domain([0, d3.max(dataset, function(d) { return d.Count; })]);
 									// Bars
 									svg.selectAll("rect")
 									.data(dataset)
