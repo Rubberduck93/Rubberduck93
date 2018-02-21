@@ -75,7 +75,7 @@
 
 			//Width and height
 		      var w = 800;
-		      var h = 300;
+		      var h = 500;
 		      var barPadding = 1;
 		      var padding = 100;
 		      var JanMonth = 0;
@@ -270,6 +270,8 @@
 				// text label for the y axis
 		  svg.append("text")
 		      .attr("transform", "rotate(-90)")
+					.attr("x", w)
+    			.attr("y", h - 6)
 		      .style("text-anchor", "middle")
 		      .text("Value");
 
