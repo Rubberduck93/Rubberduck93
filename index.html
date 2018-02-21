@@ -226,16 +226,11 @@
 						arrayOfMonths.push(DecMonth);
 						return yScale(DecMonth);
 					}
-				      //return h - d.Index * 4; //Height minus data value
 				  })
 				  .attr("width", w / data.length - barPadding)
 				  .attr("height", function(d) {
 				        return h - padding - yScale(d.Count);
 				  });
-
-
-
-
 
 			      //Create X axis
 			    svg.append("g") // Group element
@@ -358,12 +353,6 @@
 										}
 									});
 
-
-
-
-									//alert("masdmasmd");
-									//yScale.domain([0, newMaxFF]);
-
 								}
 
 
@@ -436,7 +425,6 @@
 								}
 
 								if (paragraphID == "SV") {
-									//alert("Storage Fruit");
 									yScale.domain([0, index_3_max]);
 
 									//Update y-axis
@@ -515,7 +503,6 @@
 								})
 								.attr("y", function(d) {
 								if (d.Month == "Jan") {
-									//JanMonth
 									JanMonth += d.Count;
 									return yScale(JanMonth);
 								}
@@ -563,7 +550,6 @@
 									DecMonth += d.Count;
 									return yScale(DecMonth);
 								}
-										//return h - d.Index * 4; //Height minus data value
 								})
 								.attr("width", w / data.length - barPadding)
 								.attr("height", function(d) {
@@ -584,4 +570,5 @@
 			Now if only we could quantify how delicious the produce is… </p>
 		<h2> Part 4: Viz 2 </h2>
 	</body>
+	<p> Iasdasdoduce is… </p>
 </html>
