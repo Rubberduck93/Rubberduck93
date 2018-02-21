@@ -258,8 +258,14 @@
 										}
 									});
 
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
+
 									yScale.domain([0, 30]);
-									alert("masdmasmd");
+									//alert("masdmasmd");
 									//yScale.domain([0, newMaxFF]);
 
 								}
