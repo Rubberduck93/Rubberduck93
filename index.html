@@ -436,6 +436,11 @@
 									//alert(d3.max(arrayOfMonths,function(a) { return d3.max(a); }));
 									yScale.domain([0, Math.max(...arrayOfMonths)]);
 									//alert(Math.max(...arrayOfMonths));
+									//Update y-axis
+				          svg.select(".y.axis")
+				          .transition()
+				          .duration(1000)
+				          .call(yAxis);
 
 									// Bars
 							svg.selectAll("rect")
