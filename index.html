@@ -585,7 +585,8 @@
 
 							marathon_dataset = data;
 
-							xScale =  d3.scaleBand().domain(['1880','1900','1920','1940','1960','1980','2000','2020'])
+							xScale = d3.scaleTime()
+                 .domain([1880,2020])
 								.range([padding, w - padding]);
 
 								yScale = d3.scaleTime()
