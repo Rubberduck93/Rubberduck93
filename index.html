@@ -679,38 +679,7 @@
 											.text("Both");
 
 
-											d3.selectAll("text")
-											.on("click", function() {
-
-												var mara_paragraphID = d3.selectAll("mara_id");
-
-												if (mara_paragraphID == "Women") {
-													alert("lul");
-													marathon_svg.selectAll("circle")
-															.append("circle")
-															.attr("cx", function(d) {
-																if (d.MaleFemale == "F") {
-																	return xScale(d.Year);
-																}
-															})
-															.attr("cy", function(d) {
-																if (d.MaleFemale == "F") {
-																	return yScale(d.Time);
-																}
-															})
-															.attr("fill",function(d) {
-																if (d.MaleFemale == "F") {
-																	return "rgb(0,200,0)";
-																}
-															})
-															.attr("r", function(d) {
-																if (d.MaleFemale == "F") {
-																	return 2;
-																}
-															});
-
-												}
-										});
+											
 
 
 					});
