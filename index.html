@@ -633,13 +633,13 @@
 
 
 										//Create Y axis
-		            svg.append("g")
+		            marathon_svg.append("g")
 		            .attr("class", "axis")
 		            .attr("transform", "translate(" + padding + ",0)")
 		            .call(yAxis);
 
 		            // SVG Axis
-		            svg.append("g") // Group element
+		            marathon_svg.append("g") // Group element
 		            .attr("class", "axis") //Assign "axis" class
 		            .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
 		            .call(xAxis);
