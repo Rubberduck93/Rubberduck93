@@ -34,10 +34,11 @@
 				-webkit-transition: all 0.25s;
 				transition: all 0.25s;
 			}
-
+			/*
 		 circle:hover {
 			 	fill: orange;
 		 }
+		 */
 
 		</style>
 	</head>
@@ -644,10 +645,11 @@
 												return "rgb(0,200,0)";
 											}
 										})
-				            .attr("r", 3);
-										//.on("mouseover",function(d) {
-
-										//})
+				            .attr("r", 3)
+										on("mouseover", function() {
+												d3.select(this)
+												.attr("fill", "orange");
+										});
 
 
 										// SVG Axis
