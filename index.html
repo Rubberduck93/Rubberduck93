@@ -631,18 +631,19 @@
 										.attr("fill","rgb(0,0,200)")
 				            .attr("r", 2);
 
+										// SVG Axis
+									 marathon_svg.append("g") // Group element
+									 .attr("class", "x axis") //Assign "axis" class
+									 .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
+									 .call(xAxis);
 
 										//Create Y axis
-		            marathon_svg.append("g")
-		            .attr("class", "axis")
-		            .attr("transform", "translate(" + padding + ",0)")
-		            .call(yAxis);
+				            marathon_svg.append("g")
+				            .attr("class", "y axis")
+				            .attr("transform", "translate(" + padding + ",0)")
+				            .call(yAxis);
 
-		            // SVG Axis
-		            marathon_svg.append("g") // Group element
-		            .attr("class", "axis") //Assign "axis" class
-		            .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
-		            .call(xAxis);
+
 					});
 
 
