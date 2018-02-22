@@ -586,7 +586,10 @@
 							marathon_dataset = data;
 
 							xScale = d3.scaleTime()
-                 .domain([1880,2020])
+                 .domain([
+                  d3.min(marathon_dataset, function(d) { return d.Year; }),
+                  d3.max(marathon_dataset, function(d) { return d.Year; })
+                ])
 								.range([padding, w - padding]);
 
 								yScale = d3.scaleTime()
