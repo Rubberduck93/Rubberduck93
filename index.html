@@ -660,22 +660,6 @@
 							])
 							 .range([h - padding, padding]);
 
-
-							 // xAxis
-							 var xAxis = d3.axisBottom(xScale).ticks(10);
-							 //Y axis
-							var yAxis = d3.axisLeft(yScale);
-
-
-
-						//Create SVG element
-						/*
-						var marathon_svg = d3.select("#marathon")
-											 .append("svg")
-											 .attr("width", w)
-											 .attr("height", h);
-						*/
-
 							marathon_svg.selectAll("circle")
 									.data(marathon_women_dataset)
 									.enter()
@@ -689,17 +673,6 @@
 									.attr("fill","rgb(200,0,0)")
 									.attr("r", 2);
 
-									// SVG Axis
-								 marathon_svg.append("g") // Group element
-								 .attr("class", "x axis") //Assign "axis" class
-								 .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
-								 .call(xAxis);
-
-									//Create Y axis
-									marathon_svg.append("g")
-									.attr("class", "y axis")
-									.attr("transform", "translate(" + padding + ",0)")
-									.call(yAxis);
 
 
 				});
