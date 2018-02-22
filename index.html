@@ -678,28 +678,34 @@
 											.style("font-size", "14px")
 											.text("Both");
 
-											if (paragraphID == "Women") {
 
+												d3.selectAll("text")
+												.on("click", function() {
 
-												marathon_svg.selectAll("circle")
-														.append("circle")
-														.attr("cx", function(d) {
-															if (d.MaleFemale == "F") {
-															 	return xScale(d.Year);
-															}
-														})
-														.attr("cy", function(d) {
-															if (d.MaleFemale == "F") {
-															 	return yScale(d.Time);
-															}
-														})
-														.attr("fill",function(d) {
-															if (d.MaleFemale == "F") {
-																return "rgb(0,200,0)";
-															}
-														})
-														.attr("r", 2);
+													var paragraphID = d3.select(this).attr("id");
 
+													if (paragraphID == "Women") {
+
+														marathon_svg.selectAll("circle")
+																.append("circle")
+																.attr("cx", function(d) {
+																	if (d.MaleFemale == "F") {
+																	 	return xScale(d.Year);
+																	}
+																})
+																.attr("cy", function(d) {
+																	if (d.MaleFemale == "F") {
+																	 	return yScale(d.Time);
+																	}
+																})
+																.attr("fill",function(d) {
+																	if (d.MaleFemale == "F") {
+																		return "rgb(0,200,0)";
+																	}
+																})
+																.attr("r", 2);
+
+													}
 											}
 
 
