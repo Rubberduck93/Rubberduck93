@@ -592,7 +592,7 @@
                 ])
 								.range([padding, w - padding]);
 
-								yScale = d3.scaleLinear()
+
                  .domain([
                   d3.min(marathon_dataset, function(d) { return d.Time; }),
                   d3.max(marathon_dataset, function(d) { return d.Time; })
@@ -601,7 +601,7 @@
 
 								 // xAxis
 								 var xAxis = d3.axisBottom(xScale)
-								 .([1880,1900,1920,1940,1960,1980,2000,2020]);
+								 .tickValues([1880,1900,1920,1940,1960,1980,2000,2020]);
 								 //Y axis
              		var yAxis = d3.axisLeft(yScale);
 
