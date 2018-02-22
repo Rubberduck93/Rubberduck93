@@ -679,10 +679,10 @@
 											.text("Both");
 
 
-											d3.selectAll("text")
+											d3.select(this).("text")
 											.on("click", function() {
 
-												var mara_paragraphID = d3.select.attr("mara_id");
+												var mara_paragraphID = d3.select(this).("mara_id");
 
 												if (mara_paragraphID == "Women") {
 													alert("lul");
