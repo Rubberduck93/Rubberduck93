@@ -602,7 +602,7 @@
 								yScale = d3.scaleTime()
                  .domain([
                   d3.min(marathon_dataset, function(d) { return d.Time; }),
-                  (04:00:00)
+                  d3.max(marathon_dataset, function(d) { return d.Time; })
                 ])
                  .range([h - padding, padding]);
 
