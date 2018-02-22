@@ -602,7 +602,7 @@
 								yScale = d3.scaleTime()
                  .domain([
                   d3.min(marathon_dataset, function(d) { return d.Time; }),
-                  d3.max(marathon_dataset, function(d) { return d.Time; })
+                  04:00
                 ])
                  .range([h - padding, padding]);
 
@@ -672,7 +672,6 @@
 									})
 									.attr("fill","rgb(200,0,0)")
 									.attr("r", 2);
-									alert(d3.max(marathon_women_dataset, function(d) { return d.Year; }));
 				});
 
 
