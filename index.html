@@ -569,20 +569,21 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
-
+						var parseTime = d3.timeFormat("%M");
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
 								Year: parseInt(d.Year),
 								Athlete: d.Athlete,
 								CountryState: d.CountryState,
-								Time: d.Time, //parsetime formattime
+								Time: parseTime(d.Time), //parsetime formattime
 								Notes: d.Notes
 							};
 			      }
 
 			      d3.csv("mens_open.csv", mensRowConverter, function(data) {
 
+							alert(d.Time);
 							//Create SVG element
 							var marathon_svg = d3.select("#marathon")
 												 .append("svg")
