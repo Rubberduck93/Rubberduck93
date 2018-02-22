@@ -111,7 +111,6 @@
 		      }
 
 		      d3.csv("green_markets.csv", rowConverter, function(data) {
-						alert(d.Count);
 
 			      //Copy data into global dataset
 						dataset = data;
@@ -583,12 +582,25 @@
 
 			      d3.csv("mens_open.csv", mensRowConverter, function(data) {
 
-							alert(d.Year);
+							dataset = data;
+
 							//Create SVG element
 							var marathon_svg = d3.select("#marathon")
 												 .append("svg")
 												 .attr("width", w)
 												 .attr("height", h);
+
+								marathon_svg.selectAll("circle")
+				            .data(dataset)
+				            .enter()
+				            .append("circle")
+				            .attr("cx", function(d) {
+				               return xScale(d.Year);
+				            })
+				            .attr("cy", function(d) {
+				               return yScale(d.Time);
+				            })
+				            .attr("r", 2);
 					});
 
 
