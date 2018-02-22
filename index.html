@@ -645,6 +645,7 @@
 					d3.csv("womens_open.csv", mensRowConverter, function(data) {
 
 						marathon_women_dataset = data;
+						alert("1");
 
 						xScale = d3.scaleTime()
 							 .domain([
@@ -659,7 +660,7 @@
 								d3.max(marathon_women_dataset, function(d) { return d.Time; })
 							])
 							 .range([h - padding, padding]);
-
+							 alert("2");
 							marathon_svg.selectAll("circle")
 									.data(marathon_women_dataset)
 									.enter()
@@ -672,7 +673,7 @@
 									})
 									.attr("fill","rgb(200,0,0)")
 									.attr("r", 2);
-
+alert("3");
 
 				});
 
