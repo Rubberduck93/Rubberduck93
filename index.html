@@ -649,6 +649,16 @@
 										.on("mouseover", function() {
 												d3.select(this)
 												.attr("fill", "orange");
+										})
+										.on("mouseout", function(d) {
+												d3.select(this)
+												.attr("fill", function(d) {
+													if (d.MaleFemale == "M") {
+														return "rgb(0,0,200)";
+													} else {
+														return "rgb(0,200,0)";
+													}
+												})
 										});
 
 
