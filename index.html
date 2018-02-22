@@ -649,7 +649,7 @@
 
 
 										// Women
-										marathon_svg.append("text")
+										marathon_svg.append("mara_text")
 							        .attr("x", 850)
 											.attr("id","Women")
 							        .attr("y", 150)
@@ -659,7 +659,7 @@
 							        .text("Women");
 
 										// Men
-										marathon_svg.append("text")
+										marathon_svg.append("mara_text")
 											.attr("x", 850)
 											.attr("id","Men")
 											.attr("y", 180)
@@ -669,7 +669,7 @@
 											.text("Men");
 
 										// Both
-										marathon_svg.append("text")
+										marathon_svg.append("mara_text")
 											.attr("x", 850)
 											.attr("id","Both")
 											.attr("y", 210)
@@ -679,7 +679,7 @@
 											.text("Both");
 
 
-											d3.selectAll("text")
+											d3.selectAll("mara_text")
 											.on("click", function() {
 
 												var mara_paragraphID = d3.select(this).attr("id");
