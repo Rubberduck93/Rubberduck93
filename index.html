@@ -682,8 +682,6 @@
 
 
 												marathon_svg.selectAll("circle")
-														.data(marathon_dataset)
-														.enter()
 														.append("circle")
 														.attr("cx", function(d) {
 															if (d.MaleFemale == "F") {
