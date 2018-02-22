@@ -637,13 +637,13 @@
 										.on("mouseover", function() {
 												d3.select(this)
 												.transition()
-												.duration(1000)
+												.duration(250)
 												.attr("fill", "orange");
 										})
 										.on("mouseout", function(d) {
 												d3.select(this)
 												.transition()
-												.duration(1000)
+												.duration(250)
 												.attr("fill", function(d) {
 													if (d.MaleFemale == "M") {
 														return "rgb(0,0,200)";
@@ -651,7 +651,11 @@
 														return "rgb(0,200,0)";
 													}
 												})
-										});
+										})
+										.append("title")
+									   .text(function(d) {
+									   		return "500";
+									   });
 
 
 										// SVG Axis
