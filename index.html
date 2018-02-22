@@ -575,7 +575,7 @@
 								Year: parseInt(d.Year),
 								Athlete: d.Athlete,
 								CountryState: d.CountryState,
-								Time: parseTime(d.Time), //parsetime formattime
+								Time: parseFormat(d.Time), //parsetime formattime
 								Notes: d.Notes
 							};
 			      }
@@ -612,7 +612,7 @@
 				               return xScale(d.Year);
 				            })
 				            .attr("cy", function(d) {
-											alert("Timdde =" + d.Time);
+											alert("Timss =" + d.Time);
 				               return 6;//yScale(d.Time);
 				            })
 				            .attr("r", 2);
