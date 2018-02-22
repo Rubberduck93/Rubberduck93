@@ -651,7 +651,7 @@
 										// Women
 										marathon_svg.append("text")
 							        .attr("x", 850)
-											.attr("id","FV")
+											.attr("id","Women")
 							        .attr("y", 150)
 							        .attr("text-anchor", "start")
 											.attr("fill","rgb(0,0,200)")
@@ -661,7 +661,7 @@
 										// Men
 										marathon_svg.append("text")
 											.attr("x", 850)
-											.attr("id","SF")
+											.attr("id","Men")
 											.attr("y", 180)
 											.attr("text-anchor", "start")
 											.attr("fill","rgb(0,200, 0)")
@@ -671,12 +671,38 @@
 										// Both
 										marathon_svg.append("text")
 											.attr("x", 850)
-											.attr("id","SF")
+											.attr("id","Both")
 											.attr("y", 210)
 											.attr("text-anchor", "start")
 											.attr("fill","rgb(0,0, 0)")
 											.style("font-size", "14px")
 											.text("Both");
+
+											if (paragraphID == "Women") {
+
+
+												marathon_svg.selectAll("circle")
+														.data(marathon_dataset)
+														.enter()
+														.append("circle")
+														.attr("cx", function(d) {
+															if (d.MaleFemale == "F") {
+															 	return xScale(d.Year);
+															}
+														})
+														.attr("cy", function(d) {
+															if (d.MaleFemale == "F") {
+															 	return yScale(d.Time);
+															}
+														})
+														.attr("fill",function(d) {
+															if (d.MaleFemale == "F") {
+																return "rgb(0,200,0)";
+															}
+														})
+														.attr("r", 2);
+
+											}
 
 
 					});
