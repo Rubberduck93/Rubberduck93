@@ -608,9 +608,11 @@
 				            .enter()
 				            .append("circle")
 				            .attr("cx", function(d) {
+											alert("Year =" + d.Year);
 				               return 3;//xScale(d.Year);
 				            })
 				            .attr("cy", function(d) {
+											alert("Time =" + d.Time);
 				               return 6;//yScale(d.Time);
 				            })
 				            .attr("r", 2);
