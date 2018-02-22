@@ -573,6 +573,7 @@
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
+								MaleFemale: d.MaleFemale,
 								Year: parseYear(d.Year),
 								Athlete: d.Athlete,
 								CountryState: d.CountryState,
@@ -582,13 +583,9 @@
 							};
 			      }
 
-						//Create SVG element
-						var marathon_svg = d3.select("#marathon")
-											 .append("svg")
-											 .attr("width", w)
-											 .attr("height", h);
 
-			      d3.csv("mens_open.csv", mensRowConverter, function(data) {
+
+			      d3.csv("marathon.csv", mensRowConverter, function(data) {
 
 							marathon_dataset = data;
 
@@ -606,12 +603,17 @@
                 ])
                  .range([h - padding, padding]);
 
+								 //Create SVG element
+		 						var marathon_svg = d3.select("#marathon")
+		 											 .append("svg")
+		 											 .attr("width", w)
+		 											 .attr("height", h);
+
+
 								 // xAxis
 								 var xAxis = d3.axisBottom(xScale).ticks(10);
 								 //Y axis
              		var yAxis = d3.axisLeft(yScale);
-
-
 
 
 								marathon_svg.selectAll("circle")
@@ -624,7 +626,13 @@
 				            .attr("cy", function(d) {
 				               return yScale(d.Time);
 				            })
-										.attr("fill","rgb(0,0,200)")
+										.attr("fill",function(d) {
+											if (d.MaleFemale == "M") {
+												return "rgb(0,0,200)";
+											} else {
+												return "rgb(0,200,0)";
+											}
+										}
 				            .attr("r", 2);
 
 										// SVG Axis
@@ -641,38 +649,6 @@
 
 
 					});
-
-					d3.csv("womens_open.csv", mensRowConverter, function(data) {
-
-						marathon_women_dataset = data;
-
-						xScale = d3.scaleTime()
-							 .domain([
-								d3.min(marathon_women_dataset, function(d) { return d.Year; }),
-								d3.max(marathon_women_dataset, function(d) { return d.Year; })
-							])
-							.range([padding, w - padding]);
-
-							yScale = d3.scaleTime()
-							 .domain([
-								d3.min(marathon_women_dataset, function(d) { return d.Time; }),
-								d3.max(marathon_women_dataset, function(d) { return d.Time; })
-							])
-							 .range([h - padding, padding]);
-
-							marathon_svg.selectAll("circle")
-									.data(marathon_women_dataset)
-									.enter()
-									.append("circle")
-									.attr("cx", function(d) {
-										 return xScale(d.Year);
-									})
-									.attr("cy", function(d) {
-										 return yScale(d.Time);
-									})
-									.attr("fill","rgb(200,0,0)")
-									.attr("r", 2);
-				});
 
 
 
