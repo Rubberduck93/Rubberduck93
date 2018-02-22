@@ -568,7 +568,7 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
-						var parseTime = d3.timeFormat("%X"); //timeParse
+						var parseTime = d3.time.format("%H:%M:%S"); //timeParse
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
