@@ -582,6 +582,12 @@
 							};
 			      }
 
+						//Create SVG element
+						var marathon_svg = d3.select("#marathon")
+											 .append("svg")
+											 .attr("width", w)
+											 .attr("height", h);
+
 			      d3.csv("mens_open.csv", mensRowConverter, function(data) {
 
 							marathon_dataset = data;
@@ -606,11 +612,7 @@
              		var yAxis = d3.axisLeft(yScale);
 
 
-							//Create SVG element
-							var marathon_svg = d3.select("#marathon")
-												 .append("svg")
-												 .attr("width", w)
-												 .attr("height", h);
+
 
 								marathon_svg.selectAll("circle")
 				            .data(marathon_dataset)
