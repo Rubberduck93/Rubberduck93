@@ -617,16 +617,9 @@
 				            .enter()
 				            .append("circle")
 				            .attr("cx", function(d) {
-											//alert("Year =" + d.Year);//
 				               return xScale(d.Year);
 				            })
 				            .attr("cy", function(d) {
-
-											//alert("Tddd =" + d.Time);
-
-											//alert(Date.getHours());
-											//alert(new Date(d.Time));
-											//alert("Tddd =" + d.Time);
 				               return yScale(d.Time);
 				            })
 										.attr("fill","rgb(0,0,200)")
@@ -646,6 +639,68 @@
 
 
 					});
+
+					d3.csv("womens_open.csv", mensRowConverter, function(data) {
+
+						marathon_women_dataset = data;
+
+						xScale = d3.scaleTime()
+							 .domain([
+								d3.min(marathon_women_dataset, function(d) { return d.Year; }),
+								d3.max(marathon_women_dataset, function(d) { return d.Year; })
+							])
+							.range([padding, w - padding]);
+
+							yScale = d3.scaleTime()
+							 .domain([
+								d3.min(marathon_women_dataset, function(d) { return d.Time; }),
+								d3.max(marathon_women_dataset, function(d) { return d.Time; })
+							])
+							 .range([h - padding, padding]);
+
+							 /*
+							 // xAxis
+							 var xAxis = d3.axisBottom(xScale).ticks(10);
+							 //Y axis
+							var yAxis = d3.axisLeft(yScale);
+							*/
+
+
+						//Create SVG element
+						/*
+						var marathon_svg = d3.select("#marathon")
+											 .append("svg")
+											 .attr("width", w)
+											 .attr("height", h);
+						*/
+
+							marathon_svg.selectAll("circle")
+									.data(marathon_women_dataset)
+									.enter()
+									.append("circle")
+									.attr("cx", function(d) {
+										 return xScale(d.Year);
+									})
+									.attr("cy", function(d) {
+										 return yScale(d.Time);
+									})
+									.attr("fill","rgb(200,0,0)")
+									.attr("r", 2);
+
+									// SVG Axis
+								 marathon_svg.append("g") // Group element
+								 .attr("class", "x axis") //Assign "axis" class
+								 .attr("transform", "translate(0," + (h - padding) + ")") // translate(x,y)
+								 .call(xAxis);
+
+									//Create Y axis
+									marathon_svg.append("g")
+									.attr("class", "y axis")
+									.attr("transform", "translate(" + padding + ",0)")
+									.call(yAxis);
+
+
+				});
 
 
 
