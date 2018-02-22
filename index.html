@@ -685,8 +685,11 @@
 
 												if (paragraphID == "Women") {
 													alert("lul");
+
 													marathon_svg.selectAll("circle")
-															.append("circle")
+															.data(dataset)
+															.transition()
+															.duration(1000)
 															.attr("cx", function(d) {
 																if (d.MaleFemale == "F") {
 																	return xScale(d.Year);
