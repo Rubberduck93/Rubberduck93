@@ -319,12 +319,12 @@
 					.style("font-size", "14px")
 					.text("Everything");
 
-					svg.selectAll("text")
+					d3.selectAll("text")
 					.on("click", function() {
 
 						//var bars = svg.selectAll("rect").data(dataset);
 
-							var paragraphID = svg.select(this).attr("id");
+							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
 									//alert("Fresh Fruit");
 									yScale.domain([0, index_0_max]);
