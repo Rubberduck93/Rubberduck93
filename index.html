@@ -568,7 +568,7 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
-						var parseTime = d3.timeFormat("%H:%M:%S"); //timeParse
+						var parseTime = d3.timeFormat("%H:%M:%S"); //%X
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
@@ -613,7 +613,8 @@
 				               return xScale(d.Year);
 				            })
 				            .attr("cy", function(d) {
-											alert("Tddd =" + d.Time);
+											alert(getHours(d.Time));
+											//alert("Tddd =" + d.Time);
 				               return 6;//yScale(d.Time);
 				            })
 				            .attr("r", 2);
