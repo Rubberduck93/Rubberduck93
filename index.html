@@ -592,7 +592,7 @@
                 ])
 								.range([padding, w - padding]);
 
-
+								yScale = d3.scaleTime()
                  .domain([
                   d3.min(marathon_dataset, function(d) { return d.Time; }),
                   d3.max(marathon_dataset, function(d) { return d.Time; })
