@@ -568,11 +568,12 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
+						var parseYear = d3.tiemParse("%Y");
 						var parseTime = d3.timeParse("%H:%M:%S");
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
-								Year: parseInt(d.Year),
+								Year: parseYear(d.Year),
 								Athlete: d.Athlete,
 								CountryState: d.CountryState,
 								//Time: parseInt(d.Time),
