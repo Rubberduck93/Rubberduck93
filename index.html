@@ -100,8 +100,6 @@
 					var index_3_max = 0;
 
 					var dataset, xScale, yScale;
-					alert(new Date().getHours());
-					//alert(new Date(02:03:01));
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -570,7 +568,7 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
-						var parseTime = d3.timeFormat("%X"); //%X
+						var parseTime = d3.timeParse("%H:%M:%S");
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
@@ -578,7 +576,7 @@
 								Athlete: d.Athlete,
 								CountryState: d.CountryState,
 								//Time: parseInt(d.Time),
-								//Time: parseTime(d.Time), //parsetime formattime
+								Time: parseTime(d.Time), //parsetime formattime
 
 
 
@@ -620,7 +618,7 @@
 				            })
 				            .attr("cy", function(d) {
 
-
+											alert("Tddd =" + d.Time);
 
 											//alert(Date.getHours());
 											//alert(new Date(d.Time));
