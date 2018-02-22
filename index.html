@@ -603,6 +603,9 @@
                 ])
                  .range([h - padding, padding]);
 
+								 var yyScale = d3.scaleBand().domain(['02:15','02:30','02:45','03:00','03:15','03:30']).
+		 					  range([h-padding,padding]);
+
 								 //Create SVG element
 		 						var marathon_svg = d3.select("#marathon")
 		 											 .append("svg")
