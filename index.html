@@ -572,11 +572,7 @@
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
-								Year: parseInt(d.Year),
-								Athlete: d.Athlete,
-								CountryState: d.CountryState,
-								Time: parseTime(d.Time), //parsetime formattime
-								Notes: d.Notes
+								Year: parseInt(d.Year)
 							};
 			      }
 
