@@ -648,6 +648,37 @@
 				            .call(yAxis);
 
 
+										// Women
+										svg.append("text")
+							        .attr("x", 850)
+											.attr("id","FV")
+							        .attr("y", 150)
+							        .attr("text-anchor", "start")
+											.attr("fill","rgb(0,0,200)")
+							        .style("font-size", "14px")
+							        .text("Women");
+
+										// Men
+										svg.append("text")
+											.attr("x", 850)
+											.attr("id","SF")
+											.attr("y", 180)
+											.attr("text-anchor", "start")
+											.attr("fill","rgb(0,200, 0)")
+											.style("font-size", "14px")
+											.text("Men");
+
+										// Both
+										svg.append("text")
+											.attr("x", 850)
+											.attr("id","SF")
+											.attr("y", 210)
+											.attr("text-anchor", "start")
+											.attr("fill","rgb(0,0, 0)")
+											.style("font-size", "14px")
+											.text("Both");
+
+
 					});
 
 
