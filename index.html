@@ -613,7 +613,7 @@
 				               return xScale(d.Year);
 				            })
 				            .attr("cy", function(d) {
-											alert(getHours(d.Time));
+											alert(d.Time.getHours());
 											//alert("Tddd =" + d.Time);
 				               return 6;//yScale(d.Time);
 				            })
