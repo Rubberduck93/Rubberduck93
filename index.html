@@ -577,7 +577,7 @@
 								CountryState: d.CountryState,
 								//Time: parseInt(d.Time),
 								//Time: parseTime(d.Time), //parsetime formattime
-								Time: new Date(d.Time);
+								Time: new Date(d.Time)
 								Notes: d.Notes
 							};
 			      }
@@ -615,6 +615,9 @@
 				            })
 				            .attr("cy", function(d) {
 
+
+
+											alert(Date.getHours());
 											alert(d.Time.getHours());
 											//alert("Tddd =" + d.Time);
 				               return 6;//yScale(d.Time);
