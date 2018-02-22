@@ -681,7 +681,7 @@
 										marathon_svg.selectAll("text")
 											.on("click", function() {
 
-												var paragraphID = marathon_svg.select(this).attr("id");
+												var paragraphID = d3.select(this).attr("id");
 
 												if (paragraphID == "Women") {
 													alert("lul");
