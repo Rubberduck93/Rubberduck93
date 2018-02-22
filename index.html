@@ -614,12 +614,12 @@
 				            })
 				            .attr("cy", function(d) {
 
-											alert("Tddd =" + d.Time);
+											//alert("Tddd =" + d.Time);
 
 											//alert(Date.getHours());
 											//alert(new Date(d.Time));
 											//alert("Tddd =" + d.Time);
-				               return 6;//yScale(d.Time);
+				               return yScale(d.Time);
 				            })
 				            .attr("r", 2);
 					});
