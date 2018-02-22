@@ -28,18 +28,6 @@
 			 font-family: verdana;
 		 }
 
-		 circle {
-				-moz-transition: all 0.25s;
-				-o-transition: all 0.25s;
-				-webkit-transition: all 0.25s;
-				transition: all 0.25s;
-			}
-			/*
-		 circle:hover {
-			 	fill: orange;
-		 }
-		 */
-
 		</style>
 	</head>
 	<body>
@@ -648,10 +636,14 @@
 				            .attr("r", 3)
 										.on("mouseover", function() {
 												d3.select(this)
+												.transition()
+												.duration(250)
 												.attr("fill", "orange");
 										})
 										.on("mouseout", function(d) {
 												d3.select(this)
+												.transition()
+												.duration(250)
 												.attr("fill", function(d) {
 													if (d.MaleFemale == "M") {
 														return "rgb(0,0,200)";
