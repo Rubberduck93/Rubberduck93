@@ -31,7 +31,7 @@
 		</style>
 	</head>
 	<body>
-		<h1> Assignment 1 - 02806 </h1>
+		<h1> 02806 - Assignment 1 </h1>
 		<h2> Part 1: DAOST Chapter 2 Questions </h2>
 		<ul>
 			<li class="para">  <em> Explain in your own words the point of the jitter plot </em>
@@ -46,7 +46,7 @@
 
 			</li>
 			<li class="para"> <em> I've discussed some strengths of the CDF - there are also weaknesses ... </em>
-
+			
 			</li>
 			<li class="para"> <em> What is a Quantile plot? What is it good for. </em>
 			<br/> A Quantile plot is a switched CDF.
@@ -80,7 +80,7 @@
 			<li class="para">  <em>  What are the two methods Janert metions for smoothing noisy data? Can you think of other ones? </em>
 				<br/> Splines and locally weighted regression (LOESS). Another way of smoothing
 			</li>
-			<li class="para">  <em>  <a> What are residuals? Why is it a good idea to plot the residuals of your fit? </a> </em>
+			<li class="para">  <em> What are residuals? Why is it a good idea to plot the residuals of your fit? </em>
 				<br/> Residuals is the difference between the straight line (prediction) and the actual data. Viewing each residual and their calculated end value is a good way of determining if the prediction line is accurate.
 			</li>
 			<li class="para"> <em> Explain in your own words the point of the smooth tube in figure 3-7. </em>
@@ -299,9 +299,6 @@
 				.style("text-decoration", "underline")
         .text("NYC Green Markets - Unique Produce Types");
 
-
-				// Add color and placement
-
 				// Fresh Fruit
 				svg.append("text")
 	        .attr("x", 850)
@@ -354,11 +351,9 @@
 					svg.selectAll("text")
 					.on("click", function() {
 
-						//var bars = svg.selectAll("rect").data(dataset);
-
 							var paragraphID = d3.select(this).attr("id");
 								if (paragraphID == "FF") {
-									//alert("Fresh Fruit");
+
 									yScale.domain([0, index_0_max]);
 
 									//Update y-axis
@@ -385,7 +380,6 @@
 									.attr("width", w / data.length - barPadding)
 									.attr("height", function(d) {
 										if (d.Index == 0) {
-											//newMaxFF += d.Count;
 											return h - padding - yScale(d.Count);
 										}
 									});
@@ -395,7 +389,7 @@
 
 
 								if (paragraphID == "FV") {
-									//alert("Fresh Vegetable");
+
 									yScale.domain([0, index_1_max]);
 
 									//Update y-axis
@@ -429,7 +423,7 @@
 
 
 								if (paragraphID == "SF") {
-									//alert("Storage Fruit");
+
 									yScale.domain([0, index_2_max]);
 
 									//Update y-axis
@@ -462,6 +456,7 @@
 								}
 
 								if (paragraphID == "SV") {
+
 									yScale.domain([0, index_3_max]);
 
 									//Update y-axis
@@ -600,8 +595,10 @@
 
 
 						/*					Viz 2 Boston Marathon								*/
+
 						var parseYear = d3.timeParse("%Y");
 						var parseTime = d3.timeParse("%H:%M:%S");
+
 						//Function for converting CSV values from strings to Dates and numbers
 			      var mensRowConverter = function(d) {
 							return {
@@ -821,13 +818,7 @@
 												}
 										});
 
-
-
 					});
-
-
-
-
 
 		</script>
 	</body>
