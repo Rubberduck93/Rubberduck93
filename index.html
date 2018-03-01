@@ -91,22 +91,34 @@
 							.x(function(d) { return xScale(d.date); })
 							.y(function(d) { return yScale(d.average); });
 
+						area = d3.area()
+							.defined(function(d) { return d.average >= 0; })
+							.x(function(d) { return xScale(d.date); })
+							.y0(function() { return yScale.range()[0]; })
+							.y1(function(d) { return yScale(d.average); });
+
+						dangerArea = d3.area()
+						.defined(function(d) { return d.average >= 350; })
+						.x(function(d) { return xScale(d.date); })
+						.y0(function() { return yScale(350); })
+						.y1(function(d) { return yScale(d.average); });
 
 						//Create SVG element
 						var svg = d3.select("body")
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
-						//Create line
+
+						//Create line/areas
 						svg.append("path")
 						.datum(dataset)
 						.attr("class", "line")
-						.attr("d", line);
+						.attr("d", area); //line before
 
 						svg.append("path")
 						.datum(dataset)
 						.attr("class", "line danger")
-						.attr("d", dangerLine);
+						.attr("d", dangerArea); //dangerLine before
 
 						//Create axes
 						svg.append("g")
