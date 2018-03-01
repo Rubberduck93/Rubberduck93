@@ -5,16 +5,27 @@
 		<title>just another week</title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<style type="text/css">
+
+		.line {
+						fill: none;
+						stroke: teal;
+						stroke-width: 0.5;
+					}
+
 		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
 
 			//Width and height
-		      var w = 500;
-		      var h = 200;
-		      var barPadding = 1;
-		      var padding = 100;
+		      var w = 800;
+		      var h = 300;
+		      var padding = 40;
+
+					var dataset, xScale, yScale, xAxis, yAxis, line;
+
+					//For converting Dates to strings
+					var formatTime = d3.timeFormat("%Y");
 
 		      //Function for converting CSV values from strings to Dates and numbers
 		      var rowConverter = function(d) {
@@ -41,6 +52,16 @@
 							.domain([0, d3.max(dataset, function(d) { return d.average; })])
 						.range([h, 0]);
 
+						//Define axes
+						xAxis = d3.axisBottom()
+								   .scale(xScale)
+								   .ticks(10)
+								   .tickFormat(formatTime);
+						//Define Y axis
+						yAxis = d3.axisLeft()
+								   .scale(yScale)
+								   .ticks(10);
+
 						//Define line generator
 						var line = d3.line()
 						.x(function(d) { return xScale(d.date); })
@@ -58,7 +79,15 @@
 						.attr("class", "line")
 						.attr("d", line);
 
-
+						//Create axes
+						svg.append("g")
+							.attr("class", "axis")
+							.attr("transform", "translate(0," + (h - padding) + ")")
+							.call(xAxis);
+						svg.append("g")
+							.attr("class", "axis")
+							.attr("transform", "translate(" + padding + ",0)")
+							.call(yAxis);
 
 					});
 
