@@ -81,7 +81,7 @@
 								   .ticks(10);
 
 						//Define line generator
-						var line = d3.line()
+						line = d3.line()
 						.defined(function(d) { return d.average >= 0 && d.average <= 350; })
 						.x(function(d) { return xScale(d.date); })
 						.y(function(d) { return yScale(d.average); });
@@ -102,6 +102,11 @@
 						.datum(dataset)
 						.attr("class", "line")
 						.attr("d", line);
+
+						svg.append("path")
+						.datum(dataset)
+						.attr("class", "line danger")
+						.attr("d", dangerLine);
 
 						//Create axes
 						svg.append("g")
