@@ -112,12 +112,12 @@
 						//Create line/areas
 						svg.append("path")
 						.datum(dataset)
-						.attr("class", "line")
+						.attr("class", "area") //line
 						.attr("d", area); //line before
 
 						svg.append("path")
 						.datum(dataset)
-						.attr("class", "line danger")
+						.attr("class", "area danger") //line danger
 						.attr("d", dangerArea); //dangerLine before
 
 						//Create axes
