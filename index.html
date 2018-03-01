@@ -64,6 +64,7 @@
 
 						//Define line generator
 						var line = d3.line()
+						.defined(function(d) { return d.average >= 0; })
 						.x(function(d) { return xScale(d.date); })
 						.y(function(d) { return yScale(d.average); });
 
