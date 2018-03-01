@@ -26,6 +26,10 @@
 
 		      d3.csv("mauna.csv", rowConverter, function(data) {
 
+						var dataset = data;
+
+						console.table(dataset,["data","average"]);
+
 					});
 
 
