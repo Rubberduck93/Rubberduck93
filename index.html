@@ -21,7 +21,7 @@
 					var w = 300;
 					var h = 300;
 					var outerRadius = w / 2;
-					var innerRadius = 0;
+					var innerRadius = w / 3; //filled = 0, w/3 = doughnut
 					var arc = d3.arc()
 					.innerRadius(innerRadius)
 					.outerRadius(outerRadius);
@@ -56,11 +56,11 @@
 					// Text
 					arcs.append("text")
 					.attr("transform", function(d) {
-					return "translate(" + arc.centroid(d) + ")";
+							return "translate(" + arc.centroid(d) + ")"; //center point of arc
 					})
 					.attr("text-anchor", "middle")
 					.text(function(d) {
-					return d.value;
+							return d.value;
 					});
 
 
