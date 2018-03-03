@@ -76,10 +76,10 @@
 				return xScale(i);
 			})
 			.attr("y", function(d) {
-				return yScale(d[0]);
+				return yScale(d[1]);
 			})
 			.attr("height", function(d) {
-				return yScale(d[1]) - yScale(d[0]);
+				return yScale(d[0]) - yScale(d[1]);
 			})
 			.attr("width", xScale.bandwidth());
 
