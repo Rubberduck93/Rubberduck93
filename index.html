@@ -56,7 +56,7 @@
 		var stack = d3.stack()
 						.order(d3.stackOrderDescending);  // <-- Flipped stacking order
 		//Load in data
-		d3.csv("manhattan_crime.csv", rowConverter, function(data) {
+		d3.csv("ev_sales_data.csv", rowConverter, function(data) {
 			var dataset = data;
 			// console.log(dataset);
 			//Now that we know the column names in the data…
@@ -75,9 +75,6 @@
 							 .range([padding, w - padding * 2]);
 			yScale = d3.scaleLinear()
 							.domain([0,d3.max(dataset, function(d) {
-									if (d == "ASSAULT 3") {
-										alert("lul");
-									}
 									var sum = 0;
 									//Loops once for each row, to calculate
 									//the total (sum) of sales of all vehicles
