@@ -74,9 +74,10 @@
 							])
 							 .range([padding, w - padding * 2]);
 			yScale = d3.scaleLinear()
-							.domain([
-								0,
-								d3.max(dataset, function(d) {
+							.domain([0,d3.max(dataset, function(d) {
+									if (d == "ASSAULT 3") {
+										alert("lul");
+									}
 									var sum = 0;
 									//Loops once for each row, to calculate
 									//the total (sum) of sales of all vehicles
