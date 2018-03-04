@@ -56,7 +56,7 @@
 		var stack = d3.stack()
 						.order(d3.stackOrderDescending);  // <-- Flipped stacking order
 		//Load in data
-		d3.csv("ev_sales_data.csv", rowConverter, function(data) {
+		d3.csv("manhattan_crime.csv", rowConverter, function(data) {
 			var dataset = data;
 			// console.log(dataset);
 			//Now that we know the column names in the data…
