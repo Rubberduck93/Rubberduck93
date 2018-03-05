@@ -53,6 +53,8 @@
 								json.features[j].properties.value = dataValue;
 								//Stop looking through the JSON
 								break;
+						}
+					}
 				}
 			//Bind data and create one path per GeoJSON feature
 						svg.selectAll("path")
@@ -62,14 +64,14 @@
 						.attr("d", path)
 						.style("fill", function(d) {
 						//Get data value
-						var value = d.properties.value;
-						if (value) {
-							//If value exists…
-							return color(value);
-						} else {
-							//If value is undefined…
-							return "#ccc";
-						}
+							var value = d.properties.value;
+							if (value) {
+								//If value exists…
+								return color(value);
+							} else {
+								//If value is undefined…
+								return "#ccc";
+							}
 						});
 			});
 
