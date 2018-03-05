@@ -95,14 +95,16 @@
 									   .attr("cy", function(d) {
 										   return projection([d.lon, d.lat])[1];
 									   })
-									   .attr("r", 5)
+										 .attr("r", function(d) {
+												return Math.sqrt(parseInt(d.population) * 0.00004);
+											})
 									   .style("fill", "yellow")
 									   .style("stroke", "gray")
 									   .style("stroke-width", 0.25)
 									   .style("opacity", 0.75)
 									   .append("title")			//Simple tooltip
 									   .text(function(d) {
-											return d.place + ": Pop. " + formatAsThousands(d.population);
+												return d.place + ": Pop. " + formatAsThousands(d.population);
 									   });
 
 								});
