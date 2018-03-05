@@ -15,11 +15,11 @@
 			var w = 500;
 			var h = 300;
 			//projection
-			var projection = d3.geoAlbersUsa().translate([w/2, h/2]);
+			var projection = d3.geoAlbersUsa().translate([w/2, h/2]).scale([500]);
 			//Define path generator, using the Albers USA projection
 			var path = d3.geoPath().projection(projection);
 
-			//Create SVG element
+			//Create SVG elements
 			var svg = d3.select("body")
 						.append("svg")
 						.attr("width", w)
