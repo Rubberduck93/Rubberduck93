@@ -182,6 +182,8 @@
 					.attr("x", w - 15)
 					.attr("y", h/2)
 					.html("&rarr;");
+
+
 				//Panning interaction
 				d3.selectAll(".pan")
 					.on("click", function() {
@@ -214,8 +216,10 @@
 						projection.translate(offset);
 						//Update all paths and circles
 						svg.selectAll("path")
+							.transition()
 							.attr("d", path);
 						svg.selectAll("circle")
+							.transition()
 							.attr("cx", function(d) {
 								return projection([d.lon, d.lat])[0];
 							})
