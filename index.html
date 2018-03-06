@@ -110,7 +110,7 @@
 							}
 						}
 					//Bind data and create one path per GeoJSON feature
-								svg.selectAll("path")
+								map.selectAll("path")
 								.data(json.features)
 								.enter()
 								.append("path")
@@ -130,7 +130,7 @@
 								//Load in cities data
 								d3.csv("us-cities.csv", function(data) {
 
-									svg.selectAll("circle")
+									map.selectAll("circle")
 									   .data(data)
 									   .enter()
 									   .append("circle")
