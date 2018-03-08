@@ -37,7 +37,7 @@
 			var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
 			//projection
 
-			var projection = d3.geoMercator().translate([w/2, h/2]).scale([500]).center();
+			var projection = d3.geoMercator().translate([w/2, h/2]).scale([500]);
 
 			//Define path generator, using the Albers USA projection
 			var path = d3.geoPath().projection(projection);
@@ -49,7 +49,8 @@
 						.attr("height", h);
 
 						//Load in GeoJSON data
-			 		 d3.json("5_boroughs.json", function(json) {
+			 		 d3.json("us-cities.json", function(json) {
+						 //5_boroughs
 						 /*
 						 color.domain([
 								 d3.min(data, function(d) { return d.value; }),
