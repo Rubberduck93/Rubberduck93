@@ -37,7 +37,7 @@
 			var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
 			//projection
 
-			var projection = d3.geoMercator().translate([w/2, h/2]).scale([100]);
+			var projection = d3.geoMercator().translate([w/2, h/2]).scale([500]).center();
 
 			//Define path generator, using the Albers USA projection
 			var path = d3.geoPath().projection(projection);
