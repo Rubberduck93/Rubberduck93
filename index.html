@@ -49,6 +49,11 @@
 						//Load in GeoJSON data
 			 		 d3.json("5_boroughs.json", function(json) {
 
+						 color.domain([
+								 d3.min(data, function(d) { return d.value; }),
+								 d3.max(data, function(d) { return d.value; })
+						 ]);
+
 							 			 //Merge the ag. data and GeoJSON
 							 			 //Loop through once for each ag. data value
 							 			 for (var i = 0; i < data.length; i++) {
