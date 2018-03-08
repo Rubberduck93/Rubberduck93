@@ -48,7 +48,7 @@
 
 						//Load in GeoJSON data
 			 		 d3.json("5_boroughs.json", function(json) {
-
+						 /*
 						 color.domain([
 								 d3.min(data, function(d) { return d.value; }),
 								 d3.max(data, function(d) { return d.value; })
@@ -72,6 +72,7 @@
 							 					 }
 							 				 }
 							 			 }
+										 */
 						 		 //Bind data and create one path per GeoJSON feature
 						 					 map.selectAll("path")
 						 					 .data(json.features)
