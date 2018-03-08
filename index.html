@@ -36,10 +36,11 @@
 			//Number formatting for population values
 			var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
 			//projection
-			//var projection = d3.GeoMercator().scale([500]);
-			//.translate([w/2, h/2])
+
+			var projection = d3.GeoMercator().translate([w/2, h/2]).scale([500]);
+
 			//Define path generator, using the Albers USA projection
-			var path = d3.geoPath().projection(d3.GeoMercator());
+			var path = d3.geoPath().projection(projection);
 
 			//Create SVG elements
 			var svg = d3.select("body")
@@ -48,7 +49,7 @@
 						.attr("height", h);
 
 						//Load in GeoJSON data
-			 		 d3.json("5_boroughs.json", function(json) {
+			 		 d3.json("us_states.json", function(json) {
 						 /*
 						 color.domain([
 								 d3.min(data, function(d) { return d.value; }),
