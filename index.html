@@ -45,9 +45,9 @@
 			//Create SVG elements
 			var svg = d3.select("body")
 						.append("svg")
+						.attr("align","center")
 						.attr("width", w)
-						.attr("height", h)
-						.center();
+						.attr("height", h);
 
 						//Load in GeoJSON data
 			 		 d3.json("5_boroughs.json", function(json) {
