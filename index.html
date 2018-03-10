@@ -83,7 +83,8 @@
 						 					 .data(json.features)
 						 					 .enter()
 						 					 .append("path")
-						 					 .attr("d", path)
+						 					 .attr("d", path);
+											 /*
 						 					 .style("fill", function(d) {
 						 					 //Get data value
 						 						 var value = d.properties.value;
@@ -95,6 +96,7 @@
 						 							 return "#ccc";
 						 						 }
 						 					 });
+											 */
 						});
 
 
