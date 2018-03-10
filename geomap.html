@@ -90,12 +90,12 @@
 			//Load in agriculture data
 			d3.csv("us-ag-productivity.csv", function(data) {
 
-						/*
+						
 						color.domain([
 								d3.min(data, function(d) { return d.value; }),
 								d3.max(data, function(d) { return d.value; })
 						]);
-						*/
+
 
 
 					//Load in GeoJSON data
@@ -103,7 +103,7 @@
 
 						//Merge the ag. data and GeoJSON
 						//Loop through once for each ag. data value
-						/*
+
 						for (var i = 0; i < data.length; i++) {
 								//Grab state name
 								var dataState = data[i].state;
@@ -120,7 +120,7 @@
 								}
 							}
 						}
-						*/
+
 					//Bind data and create one path per GeoJSON feature
 								map.selectAll("path")
 								.data(json.features)
