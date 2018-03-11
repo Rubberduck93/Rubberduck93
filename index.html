@@ -102,7 +102,7 @@
 											 //Load in cities data
 			 								d3.csv("murders.csv", function(data) {
 
-			 									map.selectAll("circle")
+			 									svg.selectAll("circle")
 			 									   .data(data)
 			 									   .enter()
 			 									   .append("circle")
