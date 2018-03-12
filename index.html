@@ -26,6 +26,7 @@
 		</style>
 	</head>
 	<body>
+		<div id="map"></div>
 		<script type="text/javascript">
 
 		//Width and height
@@ -49,7 +50,7 @@
 			var path = d3.geoPath().projection(projection);
 			///
 			//Create SVG elementsip
-			var svg = d3.select("body")///
+			var svg = d3.select("#map")///
 						.append("svg")
 						.attr("width", w)
 						.attr("height", h);
