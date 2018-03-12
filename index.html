@@ -142,13 +142,13 @@
 
 
 								//Create X axis
-						svg.append("g") // Group element
+						svg2.append("g") // Group element
 						.attr("class", "x axis") //Assign "axis" class
 						.attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 						.call(xAxis);
 
 							//Create y-axis
-						svg.append("g")
+						svg2.append("g")
 						.attr("class", "y axis") // <-- Note y added here
 						.attr("transform", "translate(" + padding + ",0)")
 						.call(yAxis);
