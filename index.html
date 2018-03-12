@@ -78,11 +78,6 @@
 						.domain([0,50])
 						.range([h-padding,padding]);
 
-						var svg2 = d3.select("#map")///
-									.append("svg")
-									.attr("width", 100)
-									.attr("height", 100);
-
 						 // xAxis
 						var xAxis = d3.axisBottom(xScale)
 						.ticks(12);
@@ -90,7 +85,7 @@
 						var yAxis = d3.axisLeft(yScale);
 
 
-						 svg2.selectAll("rect")
+						 svg.selectAll("rect")
 								.data(data)
 								.enter()
 								.append("rect")
@@ -110,13 +105,13 @@
 
 
 								//Create X axis
-						svg2.append("g") // Group element
+						svg.append("g") // Group element
 						.attr("class", "x axis") //Assign "axis" class
 						.attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 						.call(xAxis);
 
 							//Create y-axis
-						svg2.append("g")
+						svg.append("g")
 						.attr("class", "y axis") // <-- Note y added here
 						.attr("transform", "translate(" + padding + ",0)")
 						.call(yAxis);
