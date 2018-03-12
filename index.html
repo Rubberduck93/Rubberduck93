@@ -31,6 +31,9 @@
 		//Width and height
 			var w = 500;
 			var h = 400;
+			var barPadding = 1;
+			var padding = 100;
+			var wpadding = 200;
 			//colors
 			var color = d3.scaleQuantize()
 			.range(["rgb(237,248,233)", "rgb(186,228,179)",
@@ -53,51 +56,13 @@
 
 						//Load in GeoJSON data
 			 		 d3.json("boroughs.geojson", function(json) {
-						 //us-
-						 /*
-						 color.domain([
-								 d3.min(data, function(d) { return d.value; }),
-								 d3.max(data, function(d) { return d.value; })
-						 ]);
 
-							 			 //Merge the ag. data and GeoJSON
-							 			 //Loop through once for each ag. data value
-							 			 for (var i = 0; i < data.length; i++) {
-							 					 //Grab state name
-							 					 var dataState = data[i].state;
-							 					 //Grab data value, and convert from string to float
-							 					 var dataValue = parseFloat(data[i].value);
-							 					 //Find the corresponding state inside the GeoJSON
-							 					 for (var j = 0; j < json.features.length; j++) {
-							 					 var jsonState = json.features[j].properties.name;
-							 					 if (dataState == jsonState) {
-							 							 //Copy the data value into the JSON
-							 							 json.features[j].properties.value = dataValue;
-							 							 //Stop looking through the JSON
-							 							 break;
-							 					 }
-							 				 }
-							 			 }
-										 */
 						 		 //Bind data and create one path per GeoJSON feature
 						 					 svg.selectAll("path")
 						 					 .data(json.features)
 						 					 .enter()
 						 					 .append("path")
 						 					 .attr("d", path);
-											 /*
-						 					 .style("fill", function(d) {
-						 					 //Get data value
-						 						 var value = d.properties.value;
-						 						 if (value) {
-						 							 //If value exists…
-						 							 return color(value);
-						 						 } else {
-						 							 //If value is undefined…
-						 							 return "#ccc";
-						 						 }
-						 					 });
-											 */
 
 											 //Load in cities data
 			 								d3.csv("murders.csv", function(data) {
@@ -113,24 +78,80 @@
 			 									   .attr("cy", function(d) {
 			 										   return projection([d.lon, d.lat])[1];
 			 									   })
-			 										 //.attr("r", function(d) {
-			 											//	return Math.sqrt(parseInt(d.population) * 0.00004);
-			 											//})
-													 .attr("r",2)
+													 .attr("r",1)
 			 									   .style("fill", "yellow")
 			 									   .style("stroke", "gray")
 			 									   .style("stroke-width", 0.25)
 			 									   .style("opacity", 0.75);
-			 									   //.append("title")			//Simple tooltip
-			 									   //.text(function(d) {
-			 										//		return d.place + ": Pop. " + formatAsThousands(d.population);
-			 									   //});
 
-			 										 //createPanButtons();
 
 			 								});
 						});
 
+						var Hour1 = 0;
+
+
+
+						var rowConverter = function(d) {
+							return {
+								CMPLNT_FR_TM: parseInt(d.CMPLNT_FR_TM);
+							};
+			      }
+
+									//Load in cities data
+								 d3.csv("murders.csv", rowConverter, function(data) {
+
+									 var xScale = d3.scaleBand().domain(['0','1','2','3','4','5','6','7','8','9','10','11','12',
+			 					  '13','14','15','16','17','18','19','20','21','22','23']).
+			 					  range([padding,w-wpadding]).paddingInner(0.05);
+
+			 					  var yScale = d3.scaleLinear()
+			 					  .domain([0,50])
+			 					  .range([h-padding,padding]);
+
+			 						var svg2 = d3.select("body")///
+			 									.append("svg")
+			 									.attr("width", w)
+			 									.attr("height", h);
+
+									 // xAxis
+			 					  var xAxis = d3.axisBottom(xScale)
+			 					  .ticks(12);
+
+			 					  var yAxis = d3.axisLeft(yScale);
+
+
+									 svg2.selectAll("rect")
+											.data(data)
+											.enter()
+											.append("rect")
+											.attr("x", function(d, i) {
+												return xScale(d.CMPLNT_FR_TM);
+											})
+										  .attr("y", function(d) {
+											if (d.CMPLNT_FR_TM == "1") {
+												Hour1 += 1;
+												return yScale(Hour1);
+											}
+											.attr("width", w / data.length - barPadding)
+										  .attr("height", function(d) {
+										        return 2;//h - padding - yScale(d.Count);
+										  });
+
+
+											//Create X axis
+ 				 			    svg.append("g") // Group element
+ 				 			    .attr("class", "x axis") //Assign "axis" class
+ 				 			    .attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
+ 				 			    .call(xAxis);
+
+	 				 					//Create y-axis
+	 				 				svg.append("g")
+	 				 				.attr("class", "y axis") // <-- Note y added here
+	 				 				.attr("transform", "translate(" + padding + ",0)")
+	 				 				.call(yAxis);
+
+								 });
 
 		</script>
 	</body>
