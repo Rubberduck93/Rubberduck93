@@ -114,7 +114,7 @@
 									}
 									if (d.CMPLNT_FR_TM == "4") {
 										Hour4 += 1;
-										return h - padding - yScale(Hour4);
+										return yScale(Hour4);
 									}
 								});//h - padding - yScale(d.Count);
 
@@ -132,6 +132,7 @@
 						.call(yAxis);
 
 					 });
+					 alert(Hour4);
 
 
 
