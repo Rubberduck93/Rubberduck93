@@ -96,7 +96,7 @@
 						range([padding,w-wpadding]).paddingInner(0.05);
 
 						var yScale = d3.scaleLinear()
-						.domain([0,300])
+						.domain([0,500])
 						.range([h-padding,padding]);
 
 						 // xAxis
@@ -180,7 +180,7 @@
 									}
 									if (d.CMPLNT_FR_TM == "16") {
 										Hour16 += 1;
-										return yScale(Hour4);
+										return yScale(Hour16);
 									}
 									if (d.CMPLNT_FR_TM == "17") {
 										Hour17 += 1;
