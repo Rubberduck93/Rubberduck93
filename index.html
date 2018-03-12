@@ -55,6 +55,9 @@
 						.attr("height", h);
 
 						var Hour1 = 0;
+						var Hour2 = 0;
+						var Hour3 = 0;
+						var Hour4 = 0;
 
 
 						var rowConverter = function(d) {
@@ -93,6 +96,18 @@
 									if (d.CMPLNT_FR_TM == "1") {
 										Hour1 += 1;
 										return yScale(Hour1);
+									}
+									if (d.CMPLNT_FR_TM == "2") {
+										Hour2 += 1;
+										return yScale(Hour2);
+									}
+									if (d.CMPLNT_FR_TM == "3") {
+										Hour3 += 1;
+										return yScale(Hour3);
+									}
+									if (d.CMPLNT_FR_TM == "4") {
+										Hour4 += 1;
+										return yScale(Hour4);
 									}
 								})
 								.attr("width", 20)
