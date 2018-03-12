@@ -26,8 +26,6 @@
 		</style>
 	</head>
 	<body>
-		<div id="map"></div>
-		<div id="bars"></div>
 		<script type="text/javascript">
 
 		//Width and height
@@ -51,13 +49,12 @@
 			var path = d3.geoPath().projection(projection);
 			///
 			//Create SVG elementsip
-			var svg = d3.select("#map")///
+			var svg = d3.select("body")///
 						.append("svg")///
 						.attr("width", w)
 						.attr("height", h);
 
 						var Hour1 = 0;
-
 
 
 						var rowConverter = function(d) {
