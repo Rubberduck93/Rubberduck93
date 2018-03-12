@@ -54,6 +54,7 @@
 						.attr("width", w)
 						.attr("height", h);
 
+						var Hour0 = 0;
 						var Hour1 = 0;
 						var Hour2 = 0;
 						var Hour3 = 0;
@@ -90,11 +91,15 @@
 								.enter()
 								.append("rect")
 								.attr("x", function(d, i) {
-									return xScale(d.CMPLNT_FR_TM);
+									return xScale(d.CMPLNT_FR_TM) + 5;
 								})
 								.attr("y", 0)
-								.attr("width", 4)
+								.attr("width", 5)
 								.attr("height", function(d) {
+									if (d.CMPLNT_FR_TM == "0") {
+										Hour0 += 1;
+										return yScale(Hour0);
+									}
 									if (d.CMPLNT_FR_TM == "1") {
 										Hour1 += 1;
 										return yScale(Hour1);
