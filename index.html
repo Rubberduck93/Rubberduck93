@@ -26,6 +26,8 @@
 		</style>
 	</head>
 	<body>
+		<div id="bars"></div>
+		<div id="map"></div>
 		<script type="text/javascript">
 
 		//Width and height
@@ -49,10 +51,16 @@
 			var path = d3.geoPath().projection(projection);
 			///
 			//Create SVG elementsip
-			var svg = d3.select("body")///
-						.append("svg")///
-						.attr("width", w/2)
-						.attr("height", h);
+			var svgBar = d3.select("#bars")///
+					.append("svg")///
+					.attr("width", w/2)
+				  .attr("height", h);
+
+			//Create SVG elementsip
+			var svgMap = d3.select("#map")///
+					.append("svg")///
+					.attr("width", w)
+				  .attr("height", h);
 
 						var Hour0 = 0;
 						var Hour1 = 0;
@@ -83,7 +91,7 @@
 			 		 d3.json("boroughs.geojson", function(json) {
 
 						 		 //Bind data and create one path per GeoJSON feature
-						 					 svg.selectAll("path")
+						 					 svgMap.selectAll("path")
 						 					 .data(json.features)
 						 					 .enter()
 						 					 .append("path")
@@ -93,7 +101,7 @@
 			 								d3.csv("murders.csv", function(data) {
 
 
-												svg.selectAll("circle")
+												svgMap.selectAll("circle")
 			 									   .data(data)
 			 									   .enter()
 			 									   .append("circle")
@@ -140,7 +148,7 @@
 						var yAxis = d3.axisLeft(yScale);
 
 
-						 svg.selectAll("rect")
+						 svgBar.selectAll("rect")
 								.data(data)
 								.enter()
 								.append("rect")
@@ -250,13 +258,13 @@
 
 
 								//Create X axis
-						svg.append("g") // Group element
+						svgBar.append("g") // Group element
 						.attr("class", "x axis") //Assign "axis" class
 						.attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
 						.call(xAxis);
 
 							//Create y-axis
-						svg.append("g")
+						svgBar.append("g")
 						.attr("class", "y axis") // <-- Note y added here
 						.attr("transform", "translate(" + padding + ",0)")
 						.call(yAxis);
