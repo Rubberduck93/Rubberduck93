@@ -50,18 +50,19 @@
 
 			//Define path generator, using the Albers USA projection
 			var path = d3.geoPath().projection(projection);
-			///
-			//Create SVG elementsip
-			var svgBar = d3.select("#bars")///
-					.append("svg")///
-					.attr("width", w)
-				  .attr("height", h);
 
 			//Create SVG elementsip
 			var svgMap = d3.select("#map")///
 					.append("svg")///
 					.attr("width", w)
 				  .attr("height", h);
+
+			//Create SVG elementsip
+			var svgBar = d3.select("#bars")///
+					.append("svg")///
+					.attr("width", w)
+				  .attr("height", h);
+
 
 						var Hour0 = 0;
 						var Hour1 = 0;
