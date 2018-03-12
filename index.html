@@ -93,6 +93,7 @@
 									return xScale(d.CMPLNT_FR_TM);
 								})
 								.attr("y", function(d) {
+									alert(d.CMPLNT_FR_TM);
 									if (d.CMPLNT_FR_TM == "1") {
 										Hour1 += 1;
 										return yScale(Hour1);
