@@ -26,12 +26,12 @@
 		</style>
 	</head>
 	<body>
-		<div id="bars"></div>
 		<div id="map"></div>
+		<div id="bars"></div>
 		<script type="text/javascript">
 
 		//Width and height
-			var w = 1000;
+			var w = 500;
 			var h = 400;
 			var barPadding = 1;
 			var padding = 50;
@@ -53,13 +53,13 @@
 			//Create SVG elementsip
 			var svgBar = d3.select("#bars")///
 					.append("svg")///
-					.attr("width", w/2)
-				  .attr("height", h+200);
+					.attr("width", w)
+				  .attr("height", h);
 
 			//Create SVG elementsip
 			var svgMap = d3.select("#map")///
 					.append("svg")///
-					.attr("width", 500)
+					.attr("width", w)
 				  .attr("height", h);
 
 						var Hour0 = 0;
@@ -135,7 +135,7 @@
 
 						 var xScale = d3.scaleBand().domain(['0','1','2','3','4','5','6','7','8','9','10','11','12',
 						'13','14','15','16','17','18','19','20','21','22','23']).
-						range([padding,w/2-wpadding]).paddingInner(0.05);
+						range([padding,w-wpadding]).paddingInner(0.05);
 
 						var yScale = d3.scaleLinear()
 						.domain([0,400])
