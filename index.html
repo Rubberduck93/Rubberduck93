@@ -93,9 +93,7 @@
 								.attr("x", function(d, i) {
 									return xScale(d.CMPLNT_FR_TM) + 5;
 								})
-								.attr("y", 0)
-								.attr("width", 5)
-								.attr("height", function(d) {
+								.attr("y", function(d) {
 									if (d.CMPLNT_FR_TM == "0") {
 										Hour0 += 1;
 										return yScale(Hour0);
@@ -119,9 +117,9 @@
 									if (d.CMPLNT_FR_TM == "5") {
 										//Hour4 += 1;
 										return h - padding - 1;
-									}
-
-								});//h - padding - yScale(d.Count);
+								})
+								.attr("width", 5)
+								.attr("height", 1);//h - padding - yScale(d.Count);
 
 
 								//Create X axis
