@@ -129,9 +129,10 @@
 												return xScale(d.CMPLNT_FR_TM);
 											})
 										  .attr("y", function(d) {
-											if (d.CMPLNT_FR_TM == "1") {
-												Hour1 += 1;
-												return yScale(Hour1);
+												if (d.CMPLNT_FR_TM == "1") {
+													Hour1 += 1;
+													return yScale(Hour1);
+												}
 											}
 											.attr("width", w / data.length - barPadding)
 										  .attr("height", function(d) {
@@ -152,6 +153,7 @@
 	 				 				.call(yAxis);
 
 								 });
+							 });
 
 		</script>
 	</body>
