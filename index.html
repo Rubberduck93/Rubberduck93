@@ -102,7 +102,7 @@
 									}
 									if (d.CMPLNT_FR_TM == "1") {
 										Hour1 += 1;
-										return Hour1;
+										return yScale(Hour1);
 									}
 									if (d.CMPLNT_FR_TM == "2") {
 										Hour2 += 1;
@@ -114,7 +114,7 @@
 									}
 									if (d.CMPLNT_FR_TM == "4") {
 										Hour4 += 1;
-										return yScale(Hour4);
+										return h - padding yScale(Hour4);
 									}
 								});//h - padding - yScale(d.Count);
 
