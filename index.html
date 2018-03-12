@@ -59,6 +59,26 @@
 						var Hour2 = 0;
 						var Hour3 = 0;
 						var Hour4 = 0;
+						var Hour5 = 0;
+						var Hour6 = 0;
+						var Hour7 = 0;
+						var Hour8 = 0;
+						var Hour9 = 0;
+						var Hour10 = 0;
+						var Hour11 = 0;
+						var Hour12 = 0;
+						var Hour13 = 0;
+						var Hour14 = 0;
+						var Hour15 = 0;
+						var Hour16 = 0;
+						var Hour17 = 0;
+						var Hour18 = 0;
+						var Hour19 = 0;
+						var Hour20 = 0;
+						var Hour21 = 0;
+						var Hour22 = 0;
+						var Hour23 = 0;
+
 
 
 						var rowConverter = function(d) {
@@ -108,15 +128,87 @@
 									}
 									if (d.CMPLNT_FR_TM == "3") {
 										Hour3 += 1;
-										return h - padding - yScale(Hour3);
+										return yScale(Hour3);
 									}
 									if (d.CMPLNT_FR_TM == "4") {
-										//Hour4 += 1;
-										return yScale(280);
+										Hour4 += 1;
+										return yScale(Hour4);
 									}
 									if (d.CMPLNT_FR_TM == "5") {
-										//Hour4 += 1;
-										return h - padding - 1;
+										Hour5 += 1;
+										return yScale(Hour5);
+									}
+									if (d.CMPLNT_FR_TM == "6") {
+										Hour6 += 1;
+										return yScale(Hour6);
+									}
+									if (d.CMPLNT_FR_TM == "7") {
+										Hour7 += 1;
+										return yScale(Hour7);
+									}
+									if (d.CMPLNT_FR_TM == "8") {
+										Hour8 += 1;
+										return yScale(Hour8);
+									}
+									if (d.CMPLNT_FR_TM == "9") {
+										Hour9 += 1;
+										return yScale(Hour9);
+									}
+									if (d.CMPLNT_FR_TM == "10") {
+										Hour10 += 1;
+										return yScale(Hour10);
+									}
+									if (d.CMPLNT_FR_TM == "11") {
+										Hour11 += 1;
+										return yScale(Hour11);
+									}
+									if (d.CMPLNT_FR_TM == "12") {
+										Hour12 += 1;
+										return yScale(Hour12);
+									}
+									if (d.CMPLNT_FR_TM == "13") {
+										Hour13 += 1;
+										return yScale(Hour13);
+									}
+									if (d.CMPLNT_FR_TM == "14") {
+										Hour14 += 1;
+										return yScale(Hour14);
+									}
+									if (d.CMPLNT_FR_TM == "15") {
+										Hour15 += 1;
+										return yScale(Hour15);
+									}
+									if (d.CMPLNT_FR_TM == "16") {
+										Hour16 += 1;
+										return yScale(Hour4);
+									}
+									if (d.CMPLNT_FR_TM == "17") {
+										Hour17 += 1;
+										return yScale(Hour17);
+									}
+									if (d.CMPLNT_FR_TM == "18") {
+										Hour18 += 1;
+										return yScale(Hour18);
+									}
+									if (d.CMPLNT_FR_TM == "19") {
+										Hour19 += 1;
+										return yScale(Hour19);
+									}
+									if (d.CMPLNT_FR_TM == "20") {
+										Hour20 += 1;
+										return yScale(Hour20);
+									}
+									if (d.CMPLNT_FR_TM == "21") {
+										Hour21 += 1;
+										return yScale(Hour21);
+									}
+									if (d.CMPLNT_FR_TM == "22") {
+										Hour22 += 1;
+										return yScale(Hour22);
+									}
+									if (d.CMPLNT_FR_TM == "23") {
+										Hour23 += 1;
+										return yScale(Hour23);
 									}
 								})
 								.attr("width", 5)
