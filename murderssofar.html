@@ -56,6 +56,40 @@
 						.attr("width", w)
 						.attr("height", h);
 
+						//Load in GeoJSON data
+			 		 d3.json("boroughs.geojson", function(json) {
+
+						 		 //Bind data and create one path per GeoJSON feature
+						 					 svg.selectAll("path")
+						 					 .data(json.features)
+						 					 .enter()
+						 					 .append("path")
+						 					 .attr("d", path);
+
+											 //Load in cities data
+			 								d3.csv("murders.csv", function(data) {
+
+
+												svg.selectAll("circle")
+			 									   .data(data)
+			 									   .enter()
+			 									   .append("circle")
+			 									   .attr("cx", function(d) {
+			 										   return projection([d.lon, d.lat])[0];
+			 									   })
+			 									   .attr("cy", function(d) {
+			 										   return projection([d.lon, d.lat])[1];
+			 									   })
+													 .attr("r",1)
+			 									   .style("fill", "yellow")
+			 									   .style("stroke", "gray")
+			 									   .style("stroke-width", 0.25)
+			 									   .style("opacity", 0.75);
+
+
+			 								});
+						});
+
 						var Hour1 = 0;
 
 
@@ -78,7 +112,7 @@
 						.domain([0,50])
 						.range([h-padding,padding]);
 
-						var svg2 = d3.select("#map")///
+						var svg2 = d3.select("body")///
 									.append("svg")
 									.attr("width", 100)
 									.attr("height", 100);
