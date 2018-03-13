@@ -268,15 +268,6 @@
 						.attr("transform", "translate(" + padding + ",0)")
 						.call(yAxis);
 
-						// text label for the y axis
-						svgBar.append("text")
-			    .attr("text-anchor", "end")
-					.attr("x",-h/2+padding)
-			    .attr("y",padding/2)
-			    .attr("dy", ".75em")//
-			    .attr("transform", "rotate(-90)")
-			    .text("Number of Murders");
-
 						// title
 						svgBar.append("text")
 		        .attr("x", w/2)//
@@ -285,6 +276,25 @@
 		        .style("font-size", "16px")
 						.style("text-decoration", "underline")
 		        .text("NYC Murders in 2016");
+
+						// text label for the y axis
+						svgBar.append("text")
+				    .attr("text-anchor", "end")
+						.attr("x",-h/2+padding+200)
+				    .attr("y",padding/2)
+				    .attr("dy", ".75em")//
+				    .attr("transform", "rotate(-90)")
+				    .text("Number of Murders");
+
+						// text label for the x axis
+						svgBar.append("text")
+				    .attr("text-anchor", "middle")
+						.attr("x",w/2)
+				    .attr("y",0)
+				    .attr("dy", ".75em")
+				    .text("Hours of the Day");
+
+
 
 					 });
 
