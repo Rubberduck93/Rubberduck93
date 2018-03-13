@@ -280,8 +280,8 @@
 						// text label for the y axis
 						svgBar.append("text")
 				    .attr("text-anchor", "end")
-						.attr("x",-h/2+padding+200)
-				    .attr("y",padding/2)
+						.attr("x",-h/2+padding)
+				    .attr("y",padding/2-50)
 				    .attr("dy", ".75em")//
 				    .attr("transform", "rotate(-90)")
 				    .text("Number of Murders");
@@ -290,7 +290,7 @@
 						svgBar.append("text")
 				    .attr("text-anchor", "middle")
 						.attr("x",w/2)
-				    .attr("y",0)
+				    .attr("y",h-50)
 				    .attr("dy", ".75em")
 				    .text("Hours of the Day");
 
