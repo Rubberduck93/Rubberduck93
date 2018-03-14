@@ -117,8 +117,9 @@
 													 return path.centroid(d)[1];
 												})
 												.text(function(d) {
-													 return "LOL";
-
+													if (d.properties.value) {
+															return formatDecimals(d.properties.value);
+													};
 												});
 
 											 //Load in cities data
