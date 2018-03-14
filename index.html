@@ -97,6 +97,22 @@
 						 					 .attr("d", path)
 											 .style("fill", "steelblue");
 
+											 svgMap.selectAll("text")
+											 .enter()
+											 .append("text")
+											 .attr("class", "label")
+												.attr("x", function(d) {
+													 return path.centroid(d)[0];
+												})
+												.attr("y", function(d) {
+													 return path.centroid(d)[1];
+												})
+												.text(function(d) {
+													 if (d.properties.value) {
+														 return formatDecimals(d.properties.value);
+													 };
+												});
+
 											 //Load in cities data
 			 								d3.csv("murders.csv", function(data) {
 
