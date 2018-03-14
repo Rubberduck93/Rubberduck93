@@ -94,7 +94,8 @@
 						 					 .data(json.features)
 						 					 .enter()
 						 					 .append("path")
-						 					 .attr("d", path);
+						 					 .attr("d", path)
+											 .style("fill", function (d,i) { return color(i) });
 
 											 //Load in cities data
 			 								d3.csv("murders.csv", function(data) {
