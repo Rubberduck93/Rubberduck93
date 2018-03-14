@@ -104,20 +104,7 @@
 						 					 .attr("d", path)
 											 .style("fill", "steelblue");
 
-											 svgMap.selectAll("text")
-											 .data(json.features)
-											 .enter()
-											 .append("text")
-											 .attr("class", "label")
-												.attr("x", function(d) {
-													 return path.centroid(d)[0];
-												})
-												.attr("y", function(d) {
-													 return path.centroid(d)[1];
-												})
-												.text(function(d) {
-													return d.properties.BoroName;
-												});
+
 
 											 //Load in cities data
 			 								d3.csv("murders.csv", function(data) {
@@ -141,6 +128,23 @@
 
 
 			 								});
+
+
+
+											svgMap.selectAll("text")
+											.data(json.features)
+											.enter()
+											.append("text")
+											.attr("class", "label")
+											 .attr("x", function(d) {
+													return path.centroid(d)[0];
+											 })
+											 .attr("y", function(d) {
+													return path.centroid(d)[1];
+											 })
+											 .text(function(d) {
+												 return d.properties.BoroName;
+											 });
 						});
 
 
