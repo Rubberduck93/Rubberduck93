@@ -62,7 +62,7 @@
 					var h = 400;
 					var barPadding = 1;
 					var padding = 100;
-					var wpadding = 200;//
+					var wpadding = 200;
 					//colors
 					var color = d3.scaleQuantize()
 					.range(["rgb(237,248,233)", "rgb(186,228,179)",
@@ -83,39 +83,66 @@
 								.attr("width", w)
 								.attr("height", h);
 
-						//Load in GeoJSON data
-					 d3.json("boroughs.geojson", function(json) {
+								//Load in GeoJSON data
+					 		 d3.json("boroughs.geojson", function(json) {
 
-								 //Bind data and create one path per GeoJSON feature
-											 svg.selectAll("path")
-											 .data(json.features)
-											 .enter()
-											 .append("path")
-											 .attr("d", path);
+								 		 //Bind data and create one path per GeoJSON feature
+								 					 svgMap.selectAll("path")
+								 					 .data(json.features)
+								 					 .enter()
+								 					 .append("path")
+								 					 .attr("d", path)
+													 .style("fill", "steelblue");
 
-											 //Load in cities data
-											d3.csv("murders.csv", function(data) {
+													 //style("fill" function (d) {
+													 		//	if d.properties.BoroName = Bronx {
+																	//	return blue;
+															//		} ...
+														//}
+												 		//})
+
+													 svgMap.selectAll("text")
+		 											.data(json.features)
+		 											.enter()
+		 											.append("text")
+		 											.attr("class", "label")
+		 											 .attr("x", function(d) {
+		 													return path.centroid(d)[0];
+		 											 })
+		 											 .attr("y", function(d) {
+		 													return path.centroid(d)[1];
+		 											 })
+		 											 .text(function(d) {
+		 												 return d.properties.BoroName;
+		 											 });
+
+													 //Load in cities data
+					 								d3.csv("murders.csv", function(data) {
 
 
-												svg.selectAll("circle")
-													 .data(data)
-													 .enter()
-													 .append("circle")
-													 .attr("cx", function(d) {
-														 return projection([d.lon, d.lat])[0];
-													 })
-													 .attr("cy", function(d) {
-														 return projection([d.lon, d.lat])[1];
-													 })
-													 .attr("r",1)
-													 .style("fill", "yellow")
-													 .style("stroke", "gray")
-													 .style("stroke-width", 0.25)
-													 .style("opacity", 0.75);
+														svgMap.selectAll("circle")
+					 									   .data(data)
+					 									   .enter()
+					 									   .append("circle")
+					 									   .attr("cx", function(d) {
+					 										   return projection([d.lon, d.lat])[0];
+					 									   })
+					 									   .attr("cy", function(d) {
+					 										   return projection([d.lon, d.lat])[1];
+					 									   })
+															 .attr("r",1)
+					 									   .style("fill", "yellow")
+					 									   .style("stroke", "gray")
+					 									   .style("stroke-width", 0.25)
+					 									   .style("opacity", 0.15);
 
 
-											});
-						});
+					 								});
+
+
+
+
+								});
 
 
 		</script>
