@@ -87,7 +87,7 @@
 					 		 d3.json("boroughs.geojson", function(json) {
 
 								 		 //Bind data and create one path per GeoJSON feature
-								 					 svgMap.selectAll("path")
+								 					 svg.selectAll("path")
 								 					 .data(json.features)
 								 					 .enter()
 								 					 .append("path")
@@ -101,7 +101,7 @@
 														//}
 												 		//})
 
-													 svgMap.selectAll("text")
+													 svg.selectAll("text")
 		 											.data(json.features)
 		 											.enter()
 		 											.append("text")
@@ -120,7 +120,7 @@
 					 								d3.csv("murders.csv", function(data) {
 
 
-														svgMap.selectAll("circle")
+														svg.selectAll("circle")
 					 									   .data(data)
 					 									   .enter()
 					 									   .append("circle")
