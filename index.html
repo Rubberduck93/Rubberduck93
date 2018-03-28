@@ -119,7 +119,7 @@
 													 //Load in cities data
 					 								d3.csv("murders.csv", function(data) {
 
-														data = data;
+														var data = data;
 
 														var eachDay = d3.nest().key(function(d) {
 															return d.CMPLNT_FR_DT;
