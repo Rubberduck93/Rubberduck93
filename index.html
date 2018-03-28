@@ -68,6 +68,8 @@
 					.range(["rgb(237,248,233)", "rgb(186,228,179)",
 					"rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"]);
 
+					var dataset;
+
 					//Number formatting for population values
 					var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
 					//projection
@@ -119,13 +121,13 @@
 													 //Load in cities data
 					 								d3.csv("murders.csv", function(data) {
 
-														var data = data;
+														dataset = data;
 
 														var eachDay = d3.nest().key(function(d) {
 															return d.CMPLNT_FR_DT;
 														}).entries("murders.csv");
 
-														alert(eachDay);
+														//alert(eachDay);
 
 														svg.selectAll("circle")
 					 									   .data(data)
