@@ -121,10 +121,10 @@
 
 														var eachDay = d3.nest().key(function(d) {
 															return d.CMPLNT_FR_DT;
-														});//.entries("murders");
+														}).entries("murders.csv");
 
 														alert(eachDay);
-														
+
 														svg.selectAll("circle")
 					 									   .data(data)
 					 									   .enter()
