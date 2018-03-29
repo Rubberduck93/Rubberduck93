@@ -178,10 +178,11 @@
 		 						 						var yAxis = d3.axisLeft(yScale);
 
 
-														var thelength = eachDay.rollup(function(leaves) {
-																					//alert(leaves.length);
-																					return leaves.length;
-																				}).entries(dataset);
+														eachDay.rollup(function(leaves) {
+																//alert(leaves.length);
+																var thelength = leaves.length;
+																return leaves.length;
+															}).entries(dataset);
 
 
 
