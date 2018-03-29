@@ -177,12 +177,12 @@
 
 		 						 						var yAxis = d3.axisLeft(yScale);
 
-
+														/*
 														eachDay.rollup(function(leaves) {
 																alert(leaves.length);
 																return leaves.length;
 															}).entries(dataset);
-
+															*/
 
 
 														svgBar.selectAll("rect")
@@ -195,7 +195,7 @@
 																//return d.thelength;
 
 																eachDay.rollup(function(leaves) {
-																	return d.leaves.length;
+																	return leaves.length;
 																}).entries(dataset)
 
 
