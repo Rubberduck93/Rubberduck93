@@ -60,8 +60,10 @@
 		<h2 class = "center"> Part 2: Visualizing Murders over Time </h2>
 		<hr width="50%">
 		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
-		<div class="containerleft" id="map"></div>
-		<div class="containerright" id="bars"></div>
+
+		<div id="bars"></div>
+		<div id="map"></div>
+
 
 		<script type="text/javascript">
 
@@ -93,9 +95,9 @@
 					//Create SVG elementsip
 					var svg = d3.select("#map")///
 								.append("svg")///
-								.attr("width", 400)
+								.attr("width", w)
 								.attr("height", h)
-								.attr("align","left");
+								.attr("align","center");
 
 					//Create SVG elementsip
 					var svgBar = d3.select("#bars")///
