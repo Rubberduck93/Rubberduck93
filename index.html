@@ -192,7 +192,9 @@
 							 								.data(data)
 							 								.enter()
 							 								.append("rect")
-															.attr("x","200"*2)
+															.attr("x", function(d,i) {
+																return xScale(i)+3;
+															}
 															.attr("y", lengtharray.forEach(function(d) {
 																return d+300;
 																//console.log(d);
