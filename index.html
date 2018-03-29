@@ -97,9 +97,9 @@
 					//Create SVG elementsip
 					var svgBar = d3.select("#bars")///
 							.append("svg")///
-							.attr("x",500)
-							.attr("width", w+300)
-						  .attr("height", h);
+							.attr("width", w)
+						  .attr("height", h)
+							.attr("align","right");
 
 								//Load in GeoJSON data
 					 		 d3.json("boroughs.geojson", function(json) {
