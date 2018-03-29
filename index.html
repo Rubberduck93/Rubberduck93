@@ -79,6 +79,8 @@
 
 					var dataset;
 
+					var lengtharray = [];
+
 					//Number formatting for population values
 					var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
 					//projection
@@ -177,12 +179,13 @@
 
 		 						 						var yAxis = d3.axisLeft(yScale);
 
-														/*
+
 														eachDay.rollup(function(leaves) {
-																alert(leaves.length);
+																//alert(leaves.length);
+																lengtharray.push(leaves.length);
 																return leaves.length;
 															}).entries(dataset);
-															*/
+
 
 
 														svgBar.selectAll("rect")
@@ -193,11 +196,12 @@
 															.attr("y", function(d) {
 																//alert(thelength);
 																//return d.thelength;
-
+																/*
 																return d.eachDay.rollup(function(leaves) {
 																	return leaves.length;
 																}).entries(dataset)
-
+																*/
+																alert(lengtharray);
 
 
 
