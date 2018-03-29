@@ -142,14 +142,14 @@
 
 														var eachDay = d3.nest().key(function(d) {
 															return d.CMPLNT_FR_DT;
-														}).entries(dataset);
+														})
 
 														//alert(eachDay);
 
 														eachDay.rollup(function(leaves) {
 															alert(leaves.length);
 															return leaves.length;
-														});
+														}).entries(dataset);
 
 														svg.selectAll("circle")
 					 									   .data(data)
