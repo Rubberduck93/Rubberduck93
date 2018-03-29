@@ -190,11 +190,12 @@
 							 								.enter()
 							 								.append("rect")
 							 								.attr("x", "1")
-							 								.attr("y", eachDay.rollup(function(leaves) {
-																	alert(leaves.length);
-																	return leaves.length;
-																}).entries(dataset);
-							 								)
+							 								.attr("y", function(d) {
+																return eachDay.rollup(function(leaves) {
+																		alert(leaves.length);
+																		return leaves.length;
+																	}).entries(dataset);
+															})
 							 								.attr("width", 5)//
 							 								.attr("height", 1);//h - padding - yScale(d.Count);
 
