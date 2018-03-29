@@ -206,7 +206,7 @@
 																return i;
 															})
 															.attr("y", lengtharray.forEach(function(d,i) {
-																return yScale(i);
+																return yScale(i*5);//yScale(d)
 															}))
 							 								.attr("width", 5)//
 							 								.attr("height", 1);//h - padding - yScale(d.Count);
