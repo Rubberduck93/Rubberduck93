@@ -205,7 +205,11 @@
 															.attr("x", function(d,i) {
 																return i;
 															})
-															.attr("y", 100)
+															.attr("y", function(d) {
+																lengtharray.each(i) {
+																	return d.yScale(i);
+																}))
+															})
 							 								.attr("width", 5)//
 							 								.attr("height", 50);//h - padding - yScale(d.Count);
 
