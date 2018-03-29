@@ -186,28 +186,29 @@
 															}).entries(dataset);
 
 
-															//console.log(d);
-															//console.log(d + " " + i);
-																//return d.length;
-															//alert(thelength);
-															//return d.thelength;
-															/*
-															return d.eachDay.rollup(function(leaves) {
-																return leaves.length;
-															}).entries(dataset)
-															*/
-															//alert(lengtharray);
+
 
 														svgBar.selectAll("rect")
 							 								.data(data)
 							 								.enter()
 							 								.append("rect")
-															.attr("x","300")
-															.attr("y", "300")
+															.attr("x","200"*2)
+															.attr("y", lengtharray.forEach(function(d) {
+																return yScale(d);
+																//console.log(d);
+																//console.log(d + " " + i);
+																	//return d.length;
+																//alert(thelength);
+																//return d.thelength;
+																/*
+																return d.eachDay.rollup(function(leaves) {
+																	return leaves.length;
+																}).entries(dataset)
+																*/
+																//alert(lengtharray);
+															}))
 							 								.attr("width", 5)//
-							 								.attr("height", lengtharray.forEach(function(d) {
-																return d;
-															}));//h - padding - yScale(d.Count);
+							 								.attr("height", 100);//h - padding - yScale(d.Count);
 
 
 
