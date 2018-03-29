@@ -186,7 +186,7 @@
 								.enter()
 								.append("rect")
 								.attr("x", function(d, i) {
-									return xScale(i) + 3;
+									return xScale(d.CMPLNT_FR_TM) + 3;
 								})
 								.attr("y", function(d) {
 									if (d.CMPLNT_FR_TM == "0") {
