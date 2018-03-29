@@ -191,7 +191,7 @@
 							 								.append("rect")
 							 								.attr("x", "1")
 							 								.attr("y", function(d) {
-																eachDay.rollup(function(leaves) {
+																return eachDay.rollup(function(leaves) {
 																		//alert(leaves.length);
 																		return leaves.length;
 																}).entries(dataset);
