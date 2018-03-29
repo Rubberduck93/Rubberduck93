@@ -197,18 +197,22 @@
 															*/
 															//alert(lengtharray);
 
+															/*
+															lengtharray.forEach(function(d,i) {
+																return yScale(-300);
+															}))
+															*/
+
 
 														svgBar.selectAll("rect")
-							 								.data(data)
+							 								.data(lengtharray)
 							 								.enter()
 							 								.append("rect")
 															.attr("x", function(d,i) {
 																return i;
 															})
 															.attr("y", function(d) {
-																lengtharray.each(function(i) {
-																	return d.yScale(i);
-																})
+																return yScale(d);
 															})
 							 								.attr("width", 5)//
 							 								.attr("height", 50);//h - padding - yScale(d.Count);
