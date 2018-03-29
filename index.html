@@ -215,7 +215,9 @@
 																return yScale(d);
 															})
 							 								.attr("width", 1)//
-							 								.attr("height", 5);//h - padding - yScale(d.Count);
+							 								.attr("height", function(d) {
+																return yScale(d)*5;
+															});//h - padding - yScale(d.Count);
 
 
 
