@@ -209,7 +209,7 @@
 							 								.enter()
 							 								.append("rect")
 															.attr("x", function(d,i) {
-																return i;
+																return xScale(i);
 															})
 															.attr("y", function(d) {
 																return yScale(d);
