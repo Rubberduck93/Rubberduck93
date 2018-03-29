@@ -165,7 +165,7 @@
 					 									   .style("opacity", 0.15);
 
 
-														var xScale = d3.scaleLinear().domain([0,4900]).
+														var xScale = d3.scaleLinear().domain([0,2775]).
 		 						 						range([padding,w]);
 
 		 						 						var yScale = d3.scaleLinear()
@@ -209,7 +209,6 @@
 							 								.enter()
 							 								.append("rect")
 															.attr("x", function(d,i) {
-																console.log(d + " " + i);
 																return xScale(i);
 															})
 															.attr("y", function(d) {
