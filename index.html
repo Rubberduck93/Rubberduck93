@@ -144,12 +144,7 @@
 															return d.CMPLNT_FR_DT;
 														})
 
-														//alert(eachDay);
 
-														eachDay.rollup(function(leaves) {
-															alert(leaves.length);
-															return leaves.length;
-														}).entries(dataset);
 
 														svg.selectAll("circle")
 					 									   .data(data)
@@ -182,20 +177,23 @@
 
 		 						 						var yAxis = d3.axisLeft(yScale);
 
+														/*
+														eachDay.rollup(function(leaves) {
+															alert(leaves.length);
+															return leaves.length;
+														}).entries(dataset);
+														*/
 
 
 														svgBar.selectAll("rect")
 							 								.data(data)
 							 								.enter()
 							 								.append("rect")
-							 								.attr("x", function(d, i) {
-							 									return xScale(d.CMPLNT_FR_TM) + 3;
-							 								})
-							 								.attr("y", function(d) {
-							 									if (d.CMPLNT_FR_TM == "0") {
-							 										Hour0 += 1;
-							 										return yScale(Hour0);
-							 									}
+							 								.attr("x", 1)
+							 								.attr("y", eachDay.rollup(function(leaves) {
+																	alert(leaves.length);
+																	return leaves.length;
+																}).entries(dataset);
 							 								})
 							 								.attr("width", 5)//
 							 								.attr("height", 1);//h - padding - yScale(d.Count);
