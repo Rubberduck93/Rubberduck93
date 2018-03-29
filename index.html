@@ -209,13 +209,13 @@
 							 								.enter()
 							 								.append("rect")
 															.attr("x", function(d,i) {
-																return xScale(i);
+																return xScale(i)+3;
 															})
 															.attr("y", function(d) {
 																return yScale(d);
 															})
-							 								.attr("width", 10)//
-							 								.attr("height", 1);//h - padding - yScale(d.Count);
+							 								.attr("width", 5)//
+							 								.attr("height", 5);//h - padding - yScale(d.Count);
 
 
 
