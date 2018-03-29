@@ -162,9 +162,7 @@
 					 									   .style("stroke-width", 0.25)
 					 									   .style("opacity", 0.15);
 
-															 var brush = d3.brushX()
-															     .extent([[0, 0], [100, 100]])
-															     .on("brush end", brushed);
+
 
 
 														var xScale = d3.scaleLinear().domain([0,2800]).
@@ -263,13 +261,7 @@
 												.attr("dy", ".75em")
 												.text("Days");
 
-												svgBar.append("g")
-											      .attr("class", "brush")
-											      .call(brush)
-											      .call(brush.move, x.range());
 
-
-					 								});
 
 
 
@@ -278,16 +270,7 @@
 
 								});
 
-								function brushed() {
-									if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
-									var s = d3.event.selection || x2.range();
-									x.domain(s.map(x2.invert, x2));
-									focus.select(".area").attr("d", area);
-									focus.select(".axis--x").call(xAxis);
-									svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
-											.scale(width / (s[1] - s[0]))
-											.translate(-s[0], 0));
-								}
+
 
 
 		</script>
