@@ -185,7 +185,17 @@
 																return leaves.length;
 															}).entries(dataset);
 
-
+															//console.log(d);
+															//console.log(d + " " + i);
+																//return d.length;
+															//alert(thelength);
+															//return d.thelength;
+															/*
+															return d.eachDay.rollup(function(leaves) {
+																return leaves.length;
+															}).entries(dataset)
+															*/
+															//alert(lengtharray);
 
 
 														svgBar.selectAll("rect")
@@ -196,18 +206,7 @@
 																return i;
 															})
 															.attr("y", lengtharray.forEach(function(d) {
-																return d+300;
-																//console.log(d);
-																//console.log(d + " " + i);
-																	//return d.length;
-																//alert(thelength);
-																//return d.thelength;
-																/*
-																return d.eachDay.rollup(function(leaves) {
-																	return leaves.length;
-																}).entries(dataset)
-																*/
-																//alert(lengtharray);
+																return yScale(d);
 															}))
 							 								.attr("width", 5)//
 							 								.attr("height", 1);//h - padding - yScale(d.Count);
