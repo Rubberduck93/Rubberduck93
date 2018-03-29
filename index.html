@@ -170,7 +170,7 @@
 
 		 						 						var yScale = d3.scaleLinear()
 		 						 						.domain([0,10])
-		 						 						.range([h-200,padding]);
+		 						 						.range([h-padding,padding]);
 
 		 						 						 // xAxis
 		 						 						var xAxis = d3.axisBottom(xScale)
@@ -194,7 +194,7 @@
 							 								.append("rect")
 															.attr("x","200"*2)
 															.attr("y", lengtharray.forEach(function(d) {
-																return yScale(d);
+																return d;
 																//console.log(d);
 																//console.log(d + " " + i);
 																	//return d.length;
