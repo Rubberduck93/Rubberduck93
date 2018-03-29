@@ -53,6 +53,7 @@
 		<hr width="50%">
 		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
 		<div id="map"></div>
+		<div id="bars"></div>
 
 		<script type="text/javascript">
 
@@ -84,6 +85,12 @@
 								.append("svg")///
 								.attr("width", w)
 								.attr("height", h);
+
+					//Create SVG elementsip
+					var svgBar = d3.select("#bars")///
+							.append("svg")///
+							.attr("width", w)
+						  .attr("height", h);
 
 								//Load in GeoJSON data
 					 		 d3.json("boroughs.geojson", function(json) {
@@ -126,7 +133,7 @@
 														var eachDay = d3.nest().key(function(d) {
 															return d.CMPLNT_FR_DT;
 														}).rollup(function(leaves){
-															alert(leaves.length);
+															//alert(leaves.length);
 															return leaves.length;
 														}).entries(dataset);
 
@@ -147,6 +154,80 @@
 					 									   .style("stroke", "gray")
 					 									   .style("stroke-width", 0.25)
 					 									   .style("opacity", 0.15);
+
+
+														var xScale = d3.scaleBand().domain(['0','1','2','3','4','5','6','7','8','9','10','11','12',
+		 						 						'13','14','15','16','17','18','19','20','21','22','23']).
+		 						 						range([padding,w-wpadding]).paddingInner(0.05);
+
+		 						 						var yScale = d3.scaleLinear()
+		 						 						.domain([0,400])
+		 						 						.range([h-padding,padding]);
+
+		 						 						 // xAxis
+		 						 						var xAxis = d3.axisBottom(xScale)
+		 						 						.ticks(12);
+
+		 						 						var yAxis = d3.axisLeft(yScale);
+
+
+
+														svgBar.selectAll("rect")
+							 								.data(data)
+							 								.enter()
+							 								.append("rect")
+							 								.attr("x", function(d, i) {
+							 									return xScale(d.CMPLNT_FR_TM) + 3;
+							 								})
+							 								.attr("y", function(d) {
+							 									if (d.CMPLNT_FR_TM == "0") {
+							 										Hour0 += 1;
+							 										return yScale(Hour0);
+							 									}
+							 								})
+							 								.attr("width", 5)
+							 								.attr("height", 1);//h - padding - yScale(d.Count);
+
+
+
+
+														//Create X axis
+												svgBar.append("g") // Group element
+												.attr("class", "x axis") //Assign "axis" class
+												.attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
+												.call(xAxis);
+
+													//Create y-axis
+												svgBar.append("g")
+												.attr("class", "y axis") // <-- Note y added here
+												.attr("transform", "translate(" + padding + ",0)")
+												.call(yAxis);
+
+												// title
+												svgBar.append("text")
+												.attr("x", w/2)//
+												.attr("y", 50)
+												.attr("text-anchor", "middle")
+												.style("font-size", "16px")
+												.style("text-decoration", "underline")
+												.text("NYC Murders in 2016");
+
+												// text label for the y axis
+												svgBar.append("text")
+												.attr("text-anchor", "end")
+												.attr("x",-h/2+padding)
+												.attr("y",padding/2-20)
+												.attr("dy", ".75em")//
+												.attr("transform", "rotate(-90)")
+												.text("Number of Murders");
+
+												// text label for the x axis
+												svgBar.append("text")
+												.attr("text-anchor", "middle")
+												.attr("x",w/2)
+												.attr("y",h-20)
+												.attr("dy", ".75em")
+												.text("Hours of the Day");
 
 
 					 								});
