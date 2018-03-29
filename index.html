@@ -67,7 +67,7 @@
 
 
 				//Width and height
-					var w = 600;
+					var w = 500;
 					var h = 400;
 					var barPadding = 1;
 					var padding = 100;
@@ -209,7 +209,7 @@
 							 								.enter()
 							 								.append("rect")
 															.attr("x", function(d,i) {
-																return xScale(i)+3;
+																return i;
 															})
 															.attr("y", function(d) {
 																return yScale(d);
