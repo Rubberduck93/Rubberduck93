@@ -296,8 +296,7 @@
 												.text("Days");
 
 												var brush = d3.brush()
-														.on("brush", highlightBrushedCircles)
-														.on("end",circles.attr("class","brushed"));
+														.on("brush", highlightBrushedCircles);
 
 												svgBar.append("g")
 													 .call(brush);
