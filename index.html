@@ -174,6 +174,33 @@
 
 
 
+															 function highlightBrushedCircles() {
+
+	 																if (d3.event.selection != null) {
+
+	 																		// revert circles to initial style
+	 																		circles.attr("class", "non_brushed");
+
+	 																		var brush_coords = d3.brushSelection(this);
+
+	 																		// style brushed circles
+	 																		circles.filter(function (){
+
+	 																							 var cx = d3.select(this).attr("cx"),
+	 																									 cy = d3.select(this).attr("cy");
+
+	 																							 return isBrushed(brush_coords, cx, cy);
+	 																					 })
+	 																					 .attr("class", "brushed");
+	 																}
+	 														}
+
+															var brush = d3.brush()
+				                          .on("brush", highlightBrushedCircles);
+
+									            svgBar.append("g")
+									               .call(brush);
+
 
 
 														var xScale = d3.scaleLinear().domain([0,2800]).
