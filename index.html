@@ -195,11 +195,7 @@
 	 																}
 	 														}
 
-															var brush = d3.brush()
-				                          .on("brush", highlightBrushedCircles);
 
-									            svg.append("g")
-									               .call(brush);
 
 
 
@@ -298,6 +294,12 @@
 												.attr("y",h-20)
 												.attr("dy", ".75em")
 												.text("Days");
+
+												var brush = d3.brush()
+														.on("brush", highlightBrushedCircles);
+
+												svgBar.append("g")
+													 .call(brush);
 
 
 											});
