@@ -135,13 +135,6 @@
 								 					 .attr("d", path)
 													 .style("fill", "steelblue");
 
-													 //style("fill" function (d) {
-													 		//	if d.properties.BoroName = Bronx {
-																	//	return blue;
-															//		} ...
-														//}
-												 		//})
-
 													 svg.selectAll("text")
 		 											.data(json.features)
 		 											.enter()
@@ -216,9 +209,6 @@
 										        }
 
 
-
-
-
 														var xScale = d3.scaleLinear().domain([0,2800]).
 		 						 						range([padding,w-padding]);
 
@@ -238,24 +228,6 @@
 																lengtharray.push(leaves.length);
 																return leaves.length;
 															}).entries(dataset);
-
-															//console.log(d);
-															//console.log(d + " " + i);
-																//return d.length;
-															//alert(thelength);
-															//return d.thelength;
-															/*
-															return d.eachDay.rollup(function(leaves) {
-																return leaves.length;
-															}).entries(dataset)
-															*/
-															//alert(lengtharray);
-
-															/*
-															lengtharray.forEach(function(d,i) {
-																return yScale(-300);
-															}))
-															*/
 
 
 														svgBar.selectAll("rect")
