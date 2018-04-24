@@ -114,7 +114,7 @@
 												 .style("fill", "steelblue");
 
 							});
-							
+
 							//Load in GeoJSON data
 						 d3.json("kbh.geojson", function(json) {
 									 //Bind data and create one path per GeoJSON feature
@@ -125,7 +125,7 @@
 												 .attr("d", path)
 												 .style("stroke","black")
 												 .style("fill","none")
-												 .style("opacity",0.5);
+												 .style("opacity",0.1);
 												 //.style("fill", "transparent");
 												 //.style("opacity",0.5);
 							});
