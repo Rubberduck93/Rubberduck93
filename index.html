@@ -103,6 +103,19 @@
 
 
 							//Load in GeoJSON data
+						 d3.json("parking.geojson", function(json) {
+
+									 //Bind data and create one path per GeoJSON feature
+												 svg.selectAll("path")
+												 .data(json.features)
+												 .enter()
+												 .append("path")
+												 .attr("d", path)
+												 .style("fill", "steelblue");
+
+							});
+							
+							//Load in GeoJSON data
 						 d3.json("kbh.geojson", function(json) {
 									 //Bind data and create one path per GeoJSON feature
 												 svg.selectAll("path")
@@ -118,35 +131,7 @@
 							});
 
 
-								//Load in GeoJSON data
-					 		 d3.json("parking.geojson", function(json) {
 
-								 		 //Bind data and create one path per GeoJSON feature
-								 					 svg.selectAll("path")
-								 					 .data(json.features)
-								 					 .enter()
-								 					 .append("path")
-								 					 .attr("d", path)
-													 .style("fill", "steelblue");
-
-														/*
-													 svg.selectAll("text")
-		 											.data(json.features)
-		 											.enter()
-		 											.append("text")
-		 											.attr("class", "label")
-		 											 .attr("x", function(d) {
-		 													return path.centroid(d)[0];
-		 											 })
-		 											 .attr("y", function(d) {
-		 													return path.centroid(d)[1];
-		 											 })
-		 											 .text(function(d) {
-		 												 return d.properties.BoroName;
-		 											 });
-													 */
-
-								});
 
 
 
