@@ -83,7 +83,7 @@
 					//projection
 					//12.5,55.7
 
-					var projection = d3.geoMercator().translate([w/2, h/2]).scale(100).center([-74,40.6]);
+					var projection = d3.geoMercator().translate([w/2, h/2]).scale(20000).center([-74,40.6]);
 
 					//Define path generator, using the Albers USA projection
 					var path = d3.geoPath().projection(projection);
