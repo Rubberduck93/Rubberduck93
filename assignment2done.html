@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Assignment 2</title>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<style type="text/css">
+
+		.center {
+			text-align: center;
+		}
+
+		.container {
+			float: center;
+		}
+
+		.question {
+			color: black;
+			text-align: center;
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.answer {
+			color: black;
+			text-align: center;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.brushed {
+            fill: #ff3399;
+            stroke: #8e1b54;
+            opacity: 1.0;
+    }
+
+    .non_brushed {
+				fill: yellow;
+				stroke: gray;
+				stroke-width: 0.25;
+				opacity: 0.15;
+    }
+
+		</style>
+	</head>
+	<body>
+		<h1 class = "center"> Assignment 2 </h1>
+		<hr>
+		<h2 class = "center"> Part 1: Telling Data Stories </h2>
+		<hr width="50%">
+
+			<p class="question"> What is the Oxford English Dictionary's defintion of a narrative? </p>
+			<p class="answer"> A narrative is a series of occuring events and the connection between these events. </p>
+			<br/>
+			<p class="question"> What is your favorite visualization among the examples in section 3? Explain why in a few words. </p>
+			<p class="answer"> The Figure 3. Afghanistan is my favorite as it has loads of visuals and has constant feedback on every move the user performs.</p>
+			<br/>
+			<p class="question"> What's the point of Figure 7? </p>
+			<p class="answer"> To show the narrative patterns of 58 items from with different genres and sources. </p>
+			<br/>
+			<p class="question"> Use Figure 7 to find the most common design choice within each category for the Visual narrative and Narrative structure
+			<br/>	(the categories within visual narrative are 'visual structuring', 'highlighting', etc). </p>
+			<p class="answer"> Consistent Visual Platform, Feature Distinction and Object Continuity is mostly used in the Visual Narrative.
+			<br/> A User Directed Path with limited interaction, but with, however, focus on highlighting, search, navigation and instructions. Messaging is widely used in Narrative Structure as well. </p>
+			<br/>
+			<p class="question"> Check out Figure 8 and section 4.3.
+			<br/> What is your favorite genre of narrative visualization? Why? </p>
+			<p class="answer"> I prefer the <strong> Comic Strip </strong> and <strong> Film/Video/Animation </strong> as I find that combining pictures and information helps remembering new facts. </p>
+			<br/>
+		 	<p class="question"> What is your least favorite genre? Why? </p>
+			<p class="answer"> I dislike the <strong> Magazine Style </strong> as it lacks the visuals. </p>
+
+
+
+
+		<hr style="height:50pt; visibility:hidden;" />
+		<h2 class = "center"> Part 2: Visualizing Murders over Time </h2>
+		<hr width="50%">
+		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
+
+		<div class="container" id="bars"></div>
+		<div class="container" id="map"></div>
+
+
+		<script type="text/javascript">
+
+
+				//Width and height
+					var w = 1200;
+					var h = 400;
+					var barPadding = 1;
+					var padding = 100;
+					var wpadding = 200;
+					//colors
+					var color = d3.scaleQuantize()
+					.range(["rgb(237,248,233)", "rgb(186,228,179)",
+					"rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"]);
+
+					var dataset;
+
+					var lengtharray = [];
+
+					//Number formatting for population values
+					var formatAsThousands = d3.format(",");  //e.g. converts 123456 to "123,456"
+					//projection
+
+					var projection = d3.geoMercator().translate([w/2, h/2]).scale(20000).center([-74,40.6]);
+
+					//Define path generator, using the Albers USA projection
+					var path = d3.geoPath().projection(projection);
+					///
+					//Create SVG elementsip
+					var svg = d3.select("#map")///
+								.append("svg")///
+								.attr("width", w)
+								.attr("height", h)
+								.attr("align","center");
+
+					//Create SVG elementsip
+					var svgBar = d3.select("#bars")///
+							.append("svg")///
+							.attr("width", w)
+						  .attr("height", h)
+							.attr("align","center");
+
+								//Load in GeoJSON data
+					 		 d3.json("boroughs.geojson", function(json) {
+
+								 		 //Bind data and create one path per GeoJSON feature
+								 					 svg.selectAll("path")
+								 					 .data(json.features)
+								 					 .enter()
+								 					 .append("path")
+								 					 .attr("d", path)
+													 .style("fill", "steelblue");
+
+													 svg.selectAll("text")
+		 											.data(json.features)
+		 											.enter()
+		 											.append("text")
+		 											.attr("class", "label")
+		 											 .attr("x", function(d) {
+		 													return path.centroid(d)[0];
+		 											 })
+		 											 .attr("y", function(d) {
+		 													return path.centroid(d)[1];
+		 											 })
+		 											 .text(function(d) {
+		 												 return d.properties.BoroName;
+		 											 });
+
+													 //Load in cities data
+					 								d3.csv("murders.csv", function(data) {
+
+														dataset = data;
+
+														var eachDay = d3.nest().key(function(d) {
+															return d.CMPLNT_FR_DT;
+														})
+
+
+
+														var circles = svg.selectAll("circle")
+					 									   .data(data)
+					 									   .enter()
+					 									   .append("circle")
+					 									   .attr("cx", function(d) {
+					 										   return projection([d.lon, d.lat])[0];
+					 									   })
+					 									   .attr("cy", function(d) {
+					 										   return projection([d.lon, d.lat])[1];
+					 									   })
+															 .attr("r",1)
+					 									   .attr("class", "non_brushed");
+
+
+
+															 function highlightBrushedCircles() {
+
+	 																if (d3.event.selection != null) {
+
+	 																		// revert circles to initial style
+	 																		circles.attr("class", "non_brushed");
+
+	 																		var brush_coords = d3.brushSelection(this);
+
+	 																		// style brushed circles
+	 																		circles.filter(function (){
+
+	 																							 var cx = d3.select(this).attr("cx"),
+	 																									 cy = d3.select(this).attr("cy");
+
+	 																							 return isBrushed(brush_coords, cx, cy);
+	 																					 })
+																						 //.data()
+	 																					 .attr("class", "brushed");
+	 																}
+	 														}
+
+															function isBrushed(brush_coords, cx, cy) {
+
+										             var x0 = brush_coords[0][0],
+										                 x1 = brush_coords[1][0],
+										                 y0 = brush_coords[0][1],
+										                 y1 = brush_coords[1][1];
+
+										            return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+										        }
+
+
+														var xScale = d3.scaleLinear().domain([0,2800]).
+		 						 						range([padding,w-padding]);
+
+		 						 						var yScale = d3.scaleLinear()
+		 						 						.domain([0,10])
+		 						 						.range([h-padding,padding]);
+
+		 						 						 // xAxis
+		 						 						var xAxis = d3.axisBottom(xScale)
+		 						 						.ticks(12);
+
+		 						 						var yAxis = d3.axisLeft(yScale);
+
+
+														eachDay.rollup(function(leaves) {
+																//alert(leaves.length);
+																lengtharray.push(leaves.length);
+																return leaves.length;
+															}).entries(dataset);
+
+
+														svgBar.selectAll("rect")
+							 								.data(lengtharray)
+							 								.enter()
+							 								.append("rect")
+															.attr("fill","steelblue")
+															.attr("x", function(d,i) {
+																return xScale(i);
+															})
+															.attr("y", function(d) {
+																return yScale(d);
+															})
+							 								.attr("width", 1)//
+							 								.attr("height", function(d) {
+																return d*15;
+															});//h - padding - yScale(d.Count);
+
+
+
+
+														//Create X axis
+												svgBar.append("g") // Group element
+												.attr("class", "x axis") //Assign "axis" class
+												.attr("transform", "translate(0," + (h-padding) + ")") // translate(x,y)
+												.call(xAxis);
+
+													//Create y-axis
+												svgBar.append("g")
+												.attr("class", "y axis") // <-- Note y added here
+												.attr("transform", "translate(" + padding + ",0)")
+												.call(yAxis);
+
+												// title
+												svgBar.append("text")
+												.attr("x", w/2)//
+												.attr("y", 50)
+												.attr("text-anchor", "middle")
+												.style("font-size", "16px")
+												.style("text-decoration", "underline")
+												.text("NYC Murders in 2006 - 2016");
+
+												// text label for the y axis
+												svgBar.append("text")
+												.attr("text-anchor", "end")
+												.attr("x",-h/2+padding)
+												.attr("y",padding/2-20)
+												.attr("dy", ".75em")//
+												.attr("transform", "rotate(-90)")
+												.text("Number of Murders Committed");
+
+												// text label for the x axis
+												svgBar.append("text")
+												.attr("text-anchor", "middle")
+												.attr("x",w/2)
+												.attr("y",h-60)
+												.attr("dy", ".75em")
+												.text("Days");
+
+												var brush = d3.brush()
+														.on("brush", highlightBrushedCircles);
+
+												svgBar.append("g")
+													 .call(brush);
+
+
+											});
+
+
+
+
+
+								});
+
+
+
+
+		</script>
+	</body>
+</html>
