@@ -102,6 +102,11 @@
 							.attr("align","center");
 
 
+							// Questions:
+							// Increase size of parking lines?
+							// Drawing parking last, making it stand out more
+							// Even possible having two geojson on the same svg?
+
 							//Load in GeoJSON data
 						 d3.json("parking.geojson", function(json) {
 
@@ -129,6 +134,22 @@
 												 .style("opacity",0.1);
 												 //.style("fill", "transparent");
 												 //.style("opacity",0.5);
+
+												 svg.selectAll("text")
+												.data(json.features)
+												.enter()
+												.append("text")
+												.attr("class", "label")
+												 .attr("x", function(d) {
+														return path.centroid(d)[0];
+												 })
+												 .attr("y", function(d) {
+														return path.centroid(d)[1];
+												 })
+												 .text(function(d) {
+													 return d.properties.navn;
+												 });
+
 							});
 
 
