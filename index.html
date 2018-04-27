@@ -147,7 +147,7 @@
 														return path.centroid(d)[1];
 												 })
 												 .text(function(d) {
-													 return d.properties.navn + d.properties.areal_m2;
+													 return d.properties.navn;
 												 })
 												 .append('svg:tspan')
 												 .attr("x", function(d) {
@@ -156,7 +156,7 @@
 												 .attr("y", function(d) {
 														return path.centroid(d)[1]+50;
 												 })
-												 .text(function(d) { return d.properties.areal_m2; });
+												 .text(function(d) { return "Area: " + d.properties.areal_m2; });
 
 
 
