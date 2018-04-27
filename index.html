@@ -156,7 +156,7 @@
 												 .attr("y", function(d) {
 														return path.centroid(d)[1]+50;
 												 })
-												 .text(function(d) { return "Area: " + d3.format(".3n")d.properties.areal_m2/1000000 + " km^2"; });
+												 .text(function(d) { return "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2"; });
 
 
 
