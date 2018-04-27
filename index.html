@@ -147,8 +147,25 @@
 														return path.centroid(d)[1];
 												 })
 												 .text(function(d) {
-													 return d.properties.navn + <br/> + d.properties.areal_m2;
+													 return d.properties.navn;
 												 });
+
+												 svg.selectAll("text")
+												.data(json.features)
+												.enter()
+												.append("text")
+												.attr("class", "label")
+												 .attr("x", function(d) {
+														return path.centroid(d)[0]-50;
+												 })
+												 .attr("y", function(d) {
+														return path.centroid(d)[1]+50;
+												 })
+												 .text(function(d) {
+													 return d.properties.areal_m2;
+												 });
+
+
 
 							});
 
