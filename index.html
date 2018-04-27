@@ -148,7 +148,11 @@
 												 })
 												 .text(function(d) {
 													 return d.properties.navn + d.properties.areal_m2;
-												 });
+												 })
+												 .append('svg:tspan')
+												  .attr('x', 0)
+												  .attr('dy', 20)
+												  .text(function(d) { return d.properties.areal_m2; })
 
 
 
