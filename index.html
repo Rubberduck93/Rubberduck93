@@ -150,9 +150,13 @@
 													 return d.properties.navn + d.properties.areal_m2;
 												 })
 												 .append('svg:tspan')
-												  .attr('x', 0)
-												  .attr('dy', 20)
-												  .text(function(d) { return d.properties.areal_m2; })
+												 .attr("x", function(d) {
+														return path.centroid(d)[0]-50;
+												 })
+												 .attr("y", function(d) {
+														return path.centroid(d)[1]+50;
+												 })
+												 .text(function(d) { return d.properties.areal_m2; });
 
 
 
