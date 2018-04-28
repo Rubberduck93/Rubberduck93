@@ -185,7 +185,7 @@
 											 return projection(d.geometry.coordinates)[1];
 										 })
 										 .attr("r",function(d) {
-											 return d.properties.antal_pladser;
+											 return d.properties.antal_pladser/100;
 										 })
 										 .style("fill", "steelblue");
 								});
