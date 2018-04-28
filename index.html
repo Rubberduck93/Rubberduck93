@@ -132,6 +132,7 @@
 												 .attr("d", path)
 												 .style("stroke","black")
 												 .style("fill",function(d) {
+													 alert(d.properties.befolkning)
 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 												 })
 												 .style("opacity",0.1)
