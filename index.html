@@ -130,7 +130,9 @@
 												 .append("path")
 												 .attr("d", path)
 												 .style("stroke","black")
-												 .style("fill","rgb(200,0, 0)")
+												 .style("fill",function(d) { //d.properties.befolkning
+													 return "rgb(200,0, 0)";
+												 })
 												 .style("opacity",0.1);
 												 //.style("fill", "transparent");
 												 //.style("opacity",0.5);
