@@ -219,6 +219,7 @@
 					 								 })
 					 								 .style("fill", "steelblue")
 					 								 .on("mouseover", function(d) {
+														 console.log(d.properties.antal_pladser);
 					 									 d3.select(this)
 					 									 .transition()
 					 									 .duration(250)
