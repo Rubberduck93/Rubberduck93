@@ -140,12 +140,14 @@
 												 .style("opacity",0.1)
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
+													 console.log(d.properties.befolkning)
 													 d3.select(this)
 													 .transition()
 													 .duration(250)
 													 .style("fill", "orange");
 		 										})
-												.on("mouseout", function() {
+												.on("mouseout", functiond() {
+													console.log(d.properties.befolkning)
 														d3.select(this)
 														.transition()
 														.duration(250)
@@ -155,6 +157,7 @@
 															console.log(d.properties.befolkning)
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
+													 console.log(d.properties.befolkning)
 												})
 												.append("title").text(function(d) {
 													return d.properties.befolkning;
