@@ -147,7 +147,7 @@
 														.transition()
 														.duration(250)
 														.style("fill",function(d) {
-															alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
+															alert(Math.round(((this.properties.befolkning/10000)*(this.properties.befolkning/10000))*4));
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
 												})
