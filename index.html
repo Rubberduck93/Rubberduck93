@@ -141,7 +141,8 @@
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
 													 //console.log(d.properties.befolkning);
-													 svg.select("path")
+													 //d3.select(this)
+													 svg.select(this)
 													 .transition()
 													 .duration(250)
 													 .style("fill", "orange");
