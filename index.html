@@ -157,7 +157,7 @@
 															//alert(d.properties.befolkning) QUSETION NO WORKY
 															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 															//console.log(d.properties.befolkning);
-															console.log(this);
+															//console.log(this);
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
 													 //console.log(d.properties.befolkning);
@@ -219,7 +219,9 @@
 											 return d.properties.antal_pladser/80;
 										 })
 										 .style("fill", "steelblue")
-										 .on("mouseover", function() {
+										 .on("mouseover", function(d) {
+											 console.log("LUUL");
+											 console.log(d.properties.antal_pladser);
  											 d3.select(this)
  											 .transition()
  											 .duration(250)
