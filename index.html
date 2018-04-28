@@ -130,14 +130,8 @@
 												 .append("path")
 												 .attr("d", path)
 												 .style("stroke","black")
-												 .style("fill",function(d) { //d.properties.befolkning
-													 //return "rgb"+"(200"+",0,0)";
-													 //return "rgb"+"("+200+",0,0)";
-													 alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*8));
-
-													 //return "rgb"+"(0,"+Math.round(200*(d.properties.befolkning/100000)*2)+",0)";
+												 .style("fill",function(d) {
 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
-													 //return "rgb(0, " + Math.round(d * 10) + ", 0)";
 												 })
 												 .style("opacity",0.1);
 												 //.style("fill", "transparent");
@@ -173,11 +167,24 @@
 														return path.centroid(d)[1]+40;
 												 })
 												 .text(function(d) { return "Population: " + d.properties.befolkning; });//
-//
+
+									});
 
 
-							});
-
+									// P-houses
+								 d3.json("phuse.geojson", function(json) {
+										svg.selectAll("circle")
+										 .data(data)
+										 .enter()
+										 .append("circle")
+										 .attr("cx", function(d) {
+											 return projection([d.lon, d.lat])[0];
+										 })
+										 .attr("cy", function(d) {
+											 return projection([d.lon, d.lat])[1];
+										 })
+										 .attr("r",1);
+								});
 
 
 
