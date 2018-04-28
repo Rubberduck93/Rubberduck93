@@ -140,20 +140,17 @@
 												 .style("opacity",0.1)
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
-													 console.log(d.properties.befolkning);
-													 d3.select(this)
+													 //console.log(d.properties.befolkning);
+													 svg.selectAll("path")
 													 .transition()
 													 .duration(250)
 													 .style("fill", "orange");
 		 										})
 												.on("mouseout", function(d) {
-													console.log(d.properties.befolkning);
+													//console.log(d.properties.befolkning);
 														d3.select(this)
 														.transition()
 														.duration(250)
-														.text(function(d) {
-																console.log(d.properties.befolkning);
-														})
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning) QUSETION NO WORKY
 															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
@@ -163,7 +160,6 @@
 													 console.log(d.properties.befolkning);
 												})
 												.append("title").text(function(d) {
-													console.log(d.properties.befolkning);
 													return d.properties.befolkning;
 												});
 												 //.style("fill", "transparent");
