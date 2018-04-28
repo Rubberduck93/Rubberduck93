@@ -109,28 +109,6 @@
 							// alert(d.properties.befolkning) mouseover no WORKY
 							// cirle mouseover no WORKY
 
-
-
-/*
-							 svg.selectAll("circle")
-	.data(places.features)
-.enter().append("circle")
-	.attr('r',5)
-	.attr('cx',function(d) { return projection(d.geometry.coordinates)[0]})
-	.attr('cy',function(d) { return projection(d.geometry.coordinates)[1]})
-	.on("mouseover",function(d) {
-		console.log("just had a mouseover", d3.select(d));
-		d3.select(this)
-			.classed("active",true)
-	})
-	.on("mouseout",function(d){
-		d3.select(this)
-			.classed("active",false)
-	})
-
-})
-*/
-
 								//Load in GeoJSON data
 								d3.json("kbh.geojson", function(json) {
 										//Bind data and create one path per GeoJSON feature
@@ -164,7 +142,7 @@
 														 .style("fill",function(d) {
 															 //alert(d.properties.befolkning) QUSETION NO WORKY
 															 //alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
-															 //console.log(d.properties.befolkning);
+															 console.log(d.properties.befolkning);
 															 //console.log(this);
 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 														});
