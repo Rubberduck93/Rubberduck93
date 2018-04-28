@@ -133,8 +133,9 @@
 												 .style("fill",function(d) { //d.properties.befolkning
 													 //return "rgb"+"(200"+",0,0)";
 													 //return "rgb"+"("+200+",0,0)";
-													 alert((200*(d.properties.befolkning/100000)));
-													 return "rgb"+"("+100*3+",0,0)";
+													 //alert((200*(d.properties.befolkning/100000)));
+													 return "rgb"+"("+Math.round(200*(d.properties.befolkning/100000))+",0,0)";
+													 //return "rgb(0, " + Math.round(d * 10) + ", 0)";
 												 })
 												 .style("opacity",0.1);
 												 //.style("fill", "transparent");
