@@ -138,18 +138,17 @@
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
 														d3.select(this)
-
-														.alert(d.properties.befolkning)
 														.transition()
 														.duration(250)
 														.style("fill", "orange");
 		 										})
-												.on("mouseout", function(json) {
+												.on("mouseout", function(d) {
 
 														d3.select(this)
 														.transition()
 														.duration(250)
 														.style("fill",function(d) {
+															alert(d.properties.befolkning)
 															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
