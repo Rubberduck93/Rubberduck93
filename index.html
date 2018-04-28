@@ -220,7 +220,8 @@
 										svg.selectAll("path")
 										 .data(json.features)
 										 .enter()
-										 .append("circle")
+										 .append("path")
+										 .attr("d",path)
 										 .attr("cx", function(d) {
 											 //alert("ads " + projection(d.geometry.coordinates)[0]);
 											 return projection(d.geometry.coordinates)[0];
