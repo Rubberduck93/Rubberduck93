@@ -207,8 +207,12 @@
 										 })
 										 .style("fill", "steelblue")
 										 .on("mouseover", function() {
- 												d3.select(this).style("fill", "orange");
- 										});
+ 											 d3.select(this)
+ 											 .transition()
+ 											 .duration(250)
+ 											 .style("fill", "orange");
+ 									 });
+
 										/*
 										.on("mouseout", function(d) {
 												d3.select(this)
