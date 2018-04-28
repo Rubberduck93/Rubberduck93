@@ -204,7 +204,20 @@
 
 									// P-houses
 								 d3.json("phuse.geojson", function(json) {
-										svg.selectAll("circle")
+
+									 /*
+									 svg.selectAll("path")
+									 .data(json.features)
+									 .enter()
+									 .append("path")
+									 .attr("d", path)
+									 .style("stroke","black")
+									 .style("fill",function(d) {
+										 */
+
+
+
+										svg.selectAll("path")
 										 .data(json.features)
 										 .enter()
 										 .append("circle")
