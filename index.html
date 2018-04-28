@@ -140,7 +140,7 @@
 												 .style("opacity",0.1)
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
-													 svg.style("fill", "orange");
+													 svg.select(this).style("fill", "orange");
 		 										})
 												.on("mouseout", function(d) {
 														d3.select(this)
