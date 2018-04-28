@@ -140,15 +140,19 @@
 												 .style("opacity",0.1)
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
-													 d3.select(this).style("fill", "orange");
+													 d3.select(this)
+													 .transition()
+													 .duration(250)
+													 .style("fill", "orange");
 		 										})
-												.on("mouseout", function(d) {
+												.on("mouseout", function() {
 														d3.select(this)
 														.transition()
 														.duration(250)
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning) QUSETION NO WORKY
 															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
+															console.log(d.properties.befolkning)
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
 												})
