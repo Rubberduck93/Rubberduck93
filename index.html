@@ -140,13 +140,9 @@
 												 .style("opacity",0.1)
 												 .on("mouseover", function(d) {
 													 //alert(this.properties.befolkning)
-														d3.select(this)
-														.transition()
-														.duration(250)
-														.style("fill", "orange");
+													 .style("fill", "orange");
 		 										})
 												.on("mouseout", function(d) {
-
 														d3.select(this)
 														.transition()
 														.duration(250)
@@ -158,7 +154,6 @@
 												})
 												.append("title").text(function(d) {
 													return d.properties.befolkning;
-													 //return "Time: " + d.Time + "\n" + "Year: " + d.Year;
 												});
 												 //.style("fill", "transparent");
 												 //.style("opacity",0.5);
