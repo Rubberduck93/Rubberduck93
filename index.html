@@ -124,7 +124,7 @@
 							//Load in GeoJSON data
 						 d3.json("kbh.geojson", function(json) {
 									 //Bind data and create one path per GeoJSON feature
-									 alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
+
 												 svg.selectAll("path")
 												 .data(json.features)
 												 .enter()
@@ -132,6 +132,7 @@
 												 .attr("d", path)
 												 .style("stroke","black")
 												 .style("fill",function(d) {
+													 alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 												 })
 												 .style("opacity",0.1)
