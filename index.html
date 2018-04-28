@@ -135,7 +135,7 @@
 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 												 })
 												 .style("opacity",0.1)
-												 .on("mouseover", function() {
+												 .on("mouseover", function(d) {
 													 alert(d.properties.befolkning);
 														d3.select(this)
 														.transition()
