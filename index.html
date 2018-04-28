@@ -146,11 +146,14 @@
 													 .duration(250)
 													 .style("fill", "orange");
 		 										})
-												.on("mouseout", function() {
+												.on("mouseout", function(d) {
 													console.log(d.properties.befolkning);
 														d3.select(this)
 														.transition()
 														.duration(250)
+														.text(function(d) {
+																console.log(d.properties.befolkning);
+														})
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning) QUSETION NO WORKY
 															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
