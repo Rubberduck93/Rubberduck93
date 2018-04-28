@@ -135,7 +135,6 @@
 												 })
 												 .style("opacity",0.1)
 												 .on("mouseover", function() {
-
 														d3.select(this).style("fill", "orange");
 		 										});
 												 //.style("fill", "transparent");
@@ -196,7 +195,7 @@
  												d3.select(this)
  												.transition()
  												.duration(250)
- 												.attr("fill", "orange");
+ 												.style("fill", "orange");
  										});
 										/*
 										.on("mouseout", function(d) {
