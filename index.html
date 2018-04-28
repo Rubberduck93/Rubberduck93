@@ -132,7 +132,6 @@
 												 .attr("d", path)
 												 .style("stroke","black")
 												 .style("fill",function(d) {
-													 alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 												 })
 												 .style("opacity",0.1)
@@ -143,11 +142,12 @@
 														.style("fill", "orange");
 		 										})
 												.on("mouseout", function(d) {
-													alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
+
 														d3.select(this)
 														.transition()
 														.duration(250)
 														.style("fill",function(d) {
+															alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
 												})
