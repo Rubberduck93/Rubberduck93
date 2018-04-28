@@ -136,6 +136,7 @@
 												 })
 												 .style("opacity",0.1)
 												 .on("mouseover", function() {
+													 alert(d.properties.befolkning);
 														d3.select(this)
 														.transition()
 														.duration(250)
@@ -147,7 +148,7 @@
 														.transition()
 														.duration(250)
 														.style("fill",function(d) {
-															alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
+															//alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
 	 													 return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 	 												 });
 												})
