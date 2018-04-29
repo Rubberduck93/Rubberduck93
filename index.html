@@ -57,7 +57,7 @@
 		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
 
 		<div class="container" id="map"></div>
-
+		<div class="container" id="bars"></div>
 
 		<script type="text/javascript">
 
@@ -95,7 +95,7 @@
 								.attr("align","center");
 
 					//Create SVG elementsip
-					var svgBar = d3.select("#map")///
+					var svgBar = d3.select("#bars")///
 							.append("svg")///
 							.attr("width", w)
 						  .attr("height", h)//
