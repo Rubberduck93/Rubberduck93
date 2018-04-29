@@ -101,7 +101,7 @@
 						  .attr("height", h)//
 							.attr("align","center");
 
-
+							var kbhdataset;
 							// Questions:
 							// Increase size of parking lines?
 							// Drawing parking last, making it stand out more
@@ -166,6 +166,8 @@
 									d3.json("kbh.geojson", function(json) {
 											//Bind data and create one path per GeoJSON feature
 
+														kbhdataset = json;
+
 														svg.selectAll("path")
 														.data(json.features)
 														.enter()
@@ -174,6 +176,7 @@
 														.style("stroke","black")
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning)
+															console.log(kbhdataset);
 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 														})
 														.style("opacity",0.1)
