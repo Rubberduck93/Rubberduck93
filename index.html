@@ -95,7 +95,7 @@
 								.attr("align","center");
 
 					//Create SVG elementsip
-					var svgBar = d3.select("#bars")///
+					var svgBar = d3.select("#map")///
 							.append("svg")///
 							.attr("width", w)
 						  .attr("height", h)//
@@ -168,7 +168,7 @@
 
 														kbhdataset = json;
 
-														svg.selectAll("path")
+														svgBar.selectAll("path")
 														.data(kbhdataset.features)
 														.enter()
 														.append("path")
@@ -209,7 +209,7 @@
 														//.style("fill", "transparent");
 														//.style("opacity",0.5);
 
-														svg.selectAll("text")
+														svgBar.selectAll("text")
 													 .data(json.features)
 													 .enter()
 													 .append("text")
