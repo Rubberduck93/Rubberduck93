@@ -109,11 +109,21 @@
 							// alert(d.properties.befolkning) mouseover no WORKY
 							// cirle mouseover no WORKY
 
+							//define like this
+							function onMouseOver(d) {
+									 return (function() {
+									 	 // here d is accessible
+										 // d.color whaterver
+										 console.log("asddad");
+
+							});
+
+
 								//Load in GeoJSON data
 								d3.json("kbh.geojson", function(json) {
 										//Bind data and create one path per GeoJSON feature
 
-													svg.selectAll("path").append("g")
+													svg.selectAll("path")
 													.data(json.features)
 													.enter()
 													.append("path")
@@ -124,6 +134,8 @@
 														return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 													})
 													.style("opacity",0.1)
+													.on("mouseover",onMouseOver)
+													/*
 													.on("mouseover", function(i) {
 														//alert(this.properties.befolkning)
 														//console.log(d.properties.befolkning);
@@ -137,6 +149,7 @@
 														.style("fill", "orange");
 
 												 })
+												 */
 												 .on("mouseout", function(d) {
 													 //console.log(d.properties.befolkning);
 														 d3.select(this)
