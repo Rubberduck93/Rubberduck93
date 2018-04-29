@@ -160,83 +160,85 @@
 
 											});
 
+											//Load in GeoJSON data
+											d3.json("kbh.geojson", function(json) {
+													//Bind data and create one path per GeoJSON feature
+
+																svg.selectAll("path")
+																.data(json.features)
+																.enter()
+																.append("path")
+																.attr("d", path)
+																.style("stroke","black")
+																.style("fill",function(d) {
+																	//alert(d.properties.befolkning)
+																	return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
+																})
+																.style("opacity",0.1)
+																//.on("mouseover",onMouseOver(json))
+																.on("mouseover", function(d) {
+																	console.log(d.properties.befolkning);
+																	d3.select(this)
+																	.transition()
+																	.duration(250)
+																	.style("fill", "orange");
+
+															 })
+															 .on("mouseout", function(d) {
+																 //console.log(d.properties.befolkning);
+																	 d3.select(this)
+																	 .transition()
+																	 .duration(250)
+																	 .style("fill",function(d) {
+																		return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
+																	});
+																	//console.log(d.properties.befolkning);
+															 })
+															 .append("title").text(function(d) {
+																 return d.properties.befolkning;
+															 });
+																//.style("fill", "transparent");
+																//.style("opacity",0.5);
+
+																svg.selectAll("text")
+															 .data(json.features)
+															 .enter()
+															 .append("text")
+															 .attr("class", "label")
+																.attr("x", function(d) {
+																	 return path.centroid(d)[0]-50;
+																})
+																.attr("y", function(d) {
+																	 return path.centroid(d)[1];
+																})
+																.text(function(d) {
+																	return d.properties.navn;
+																})
+																.append('svg:tspan')
+																.attr("x", function(d) {
+																	 return path.centroid(d)[0]-50;
+																})
+																.attr("y", function(d) {
+																	 return path.centroid(d)[1]+20;
+																})
+																.text(function(d) { return "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2"; })
+																.append('svg:tspan')
+																.attr("x", function(d) {
+																	 return path.centroid(d)[0]-50;
+																})
+																.attr("y", function(d) {
+																	 return path.centroid(d)[1]+40;
+																})
+																.text(function(d) { return "Population: " + d.properties.befolkning;
+																});//
+
+
+												 });
+
 
 
 									});
-								//Load in GeoJSON data
-								d3.json("kbh.geojson", function(json) {
-										//Bind data and create one path per GeoJSON feature
 
-													svg.selectAll("path")
-													.data(json.features)
-													.enter()
-													.append("path")
-													.attr("d", path)
-													.style("stroke","black")
-													.style("fill",function(d) {
-														//alert(d.properties.befolkning)
-														return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
-													})
-													.style("opacity",0.1)
-													//.on("mouseover",onMouseOver(json))
-													.on("mouseover", function(d) {
-														console.log(d.properties.befolkning);
-														d3.select(this)
-														.transition()
-														.duration(250)
-														.style("fill", "orange");
-
-												 })
-												 .on("mouseout", function(d) {
-													 //console.log(d.properties.befolkning);
-														 d3.select(this)
-														 .transition()
-														 .duration(250)
-														 .style("fill",function(d) {
-															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
-														});
-														//console.log(d.properties.befolkning);
-												 })
-												 .append("title").text(function(d) {
-													 return d.properties.befolkning;
-												 });
-													//.style("fill", "transparent");
-													//.style("opacity",0.5);
-
-													svg.selectAll("text")
-												 .data(json.features)
-												 .enter()
-												 .append("text")
-												 .attr("class", "label")
-													.attr("x", function(d) {
-														 return path.centroid(d)[0]-50;
-													})
-													.attr("y", function(d) {
-														 return path.centroid(d)[1];
-													})
-													.text(function(d) {
-														return d.properties.navn;
-													})
-													.append('svg:tspan')
-													.attr("x", function(d) {
-														 return path.centroid(d)[0]-50;
-													})
-													.attr("y", function(d) {
-														 return path.centroid(d)[1]+20;
-													})
-													.text(function(d) { return "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2"; })
-													.append('svg:tspan')
-													.attr("x", function(d) {
-														 return path.centroid(d)[0]-50;
-													})
-													.attr("y", function(d) {
-														 return path.centroid(d)[1]+40;
-													})
-													.text(function(d) { return "Population: " + d.properties.befolkning;
-													});//
-
-
-									 });
 
 
 
