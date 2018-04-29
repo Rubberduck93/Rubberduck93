@@ -120,7 +120,7 @@
 										//Bind data and create one path per GeoJSON feature
 
 													svg.selectAll("path")
-													.data(json.features)
+													.data(lal.features)
 													.enter()
 													.append("path")
 													.attr("d", path)
