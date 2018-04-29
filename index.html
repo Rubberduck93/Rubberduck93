@@ -122,32 +122,14 @@
 													.style("stroke","black")
 													.style("fill",function(d) {
 														//alert(d.properties.befolkning)
+														console.log(d);
 														return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 													})
 													.style("opacity",0.1)
 													//.on("mouseover",onMouseOver(json))
 													.on("mouseover", function(d) {
-														//alert(this.properties.befolkning)
-														//console.log(d);
-														//console.log(d.properties.befolkning);
-														//console.log(json);
+														console.log(d);
 														console.log(d3.select(this));
-
-
-
-
-
-
-														//console.log(properties.befolkning);
-														//console.log(json);
-														//console.log(json.features.properties.befolkning);
-														//console.log(json.features["0"].properties.befolkning);
-													//	console.log(features["0"].properties.befolkning);
-														//console.log("hej");
-														//console.log(json.properties.antal_pladser);
-														//console.log(json.befolkning);
-														//console.log(d.properties.navn);
-														//console.log(properties.navn);
 														d3.select(this)
 														.transition()
 														.duration(250)
