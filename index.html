@@ -128,6 +128,7 @@
 														//alert(this.properties.befolkning)
 														//console.log(d.properties.befolkning);
 														console.log(d.properties.befolkning);
+														console.log(d.properties.navn);
 														d3.select(this)
 														.transition()
 														.duration(250)
@@ -140,11 +141,6 @@
 														 .transition()
 														 .duration(250)
 														 .style("fill",function(d) {
-															 //alert(d.properties.befolkning) QUSETION NO WORKY
-															 //alert(Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4));
-															// console.log(this.befolkning);s
-															// console.log(d.properties.befolkning);
-															 //console.log(this);
 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 														});
 														//console.log(d.properties.befolkning);
