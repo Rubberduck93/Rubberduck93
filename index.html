@@ -113,7 +113,7 @@
 								d3.json("kbh.geojson", function(json) {
 										//Bind data and create one path per GeoJSON feature
 
-													svg.selectAll("path")
+													svg.selectAll("path").append("g")
 													.data(json.features)
 													.enter()
 													.append("path")
@@ -194,6 +194,7 @@
 																		 .append("path")
 																		 .attr("d", path)
 																		 .style("fill", "steelblue");
+
 
 																		 // P-houses
 											 						 d3.json("phuse.geojson", function(json) {
