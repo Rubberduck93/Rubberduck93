@@ -169,20 +169,21 @@
 														kbhdataset = json;
 
 														svg.selectAll("path")
-														.data(json.features)
+														.data(kbhdataset.features)
 														.enter()
 														.append("path")
 														.attr("d", path)
 														.style("stroke","black")
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning)
-															console.log(kbhdataset.d.properties.befolkning);
+															//console.log(kbhdataset.d.properties.befolkning);
 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 														})
 														.style("opacity",0.1)
 														//.on("mouseover",onMouseOver(json))
 														.on("mouseover", function(d) {
 															console.log(d.properties.befolkning);
+
 															d3.select(this)
 															.transition()
 															.duration(250)
