@@ -109,18 +109,13 @@
 							// alert(d.properties.befolkning) mouseover no WORKY
 							// cirle mouseover no WORKY
 
-							//define like this
-							function onMouseOver(d) {
-									 console.log(d.properties.befolkning);
-							}
-
 
 								//Load in GeoJSON data
-								d3.json("kbh.geojson", function(lal) {
+								d3.json("kbh.geojson", function(json) {
 										//Bind data and create one path per GeoJSON feature
 
 													svg.selectAll("path")
-													.data(lal.features)
+													.data(json.features)
 													.enter()
 													.append("path")
 													.attr("d", path)
@@ -135,7 +130,7 @@
 														//alert(this.properties.befolkning)
 														console.log(d);
 														console.log(d.properties.befolkning);
-														console.log(lal);
+														console.log(json);
 
 
 
@@ -144,9 +139,9 @@
 
 
 														//console.log(properties.befolkning);
-														//console.log(lal);
-														//console.log(lal.features.properties.befolkning);
-														//console.log(lal.features["0"].properties.befolkning);
+														//console.log(json);
+														//console.log(json.features.properties.befolkning);
+														//console.log(json.features["0"].properties.befolkning);
 													//	console.log(features["0"].properties.befolkning);
 														//console.log("hej");
 														//console.log(json.properties.antal_pladser);
@@ -176,7 +171,7 @@
 													//.style("opacity",0.5);
 
 													svg.selectAll("text")
-												 .data(lal.features)
+												 .data(json.features)
 												 .enter()
 												 .append("text")
 												 .attr("class", "label")
@@ -214,7 +209,7 @@
 																		 .data(json.features)
 																		 .enter()
 																		 .append("path")
-																		 //.attr("e", path)
+																		 .attr("d", path)
 																		 .style("fill", "steelblue");
 
 
