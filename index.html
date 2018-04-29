@@ -176,7 +176,7 @@
 														.style("stroke","black")
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning)
-															console.log(kbhdataset);
+															console.log(kbhdataset.d.properties.befolkning);
 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 														})
 														.style("opacity",0.1)
