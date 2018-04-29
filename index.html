@@ -183,9 +183,9 @@
 														})
 														.style("opacity",0.1)
 														//.on("mouseover",onMouseOver(json))
-														.on("mouseover", function(kbhdataset.features) {
-															console.log(d);
-															console.log(d.properties.befolkning);
+														.on("mouseover", function(i) {
+															console.log(i);
+															//console.log(d.properties.befolkning);
 
 															d3.select(this)
 															.transition()
