@@ -131,11 +131,12 @@
 													})
 													.style("opacity",0.1)
 													//.on("mouseover",onMouseOver(json))
-													.on("mouseover", function() {
+													.on("mouseover", function(lal) {
 														//alert(this.properties.befolkning)
 														//console.log(d.properties.befolkning);
 														console.log(d.properties.befolkning);
 														console.log(lal);
+														console.log(.features["0"].properties.befolkning);
 														//console.log("hej");
 														//console.log(json.properties.antal_pladser);
 														//console.log(json.befolkning);
