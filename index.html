@@ -111,12 +111,7 @@
 
 							//define like this
 							function onMouseOver(d) {
-									 return (function() {
-									 	 // here d is accessible
-										 // d.color whaterver
-										 console.log(d.properties.befolkning);
-
-								});
+									 console.log(d.properties.befolkning);
 							}
 
 
@@ -141,6 +136,7 @@
 														//console.log(d.properties.befolkning);
 														console.log("hej");
 														console.log(json.properties.befolkning);
+														console.log(json.befolkning);
 														//console.log(d.properties.navn);
 														//console.log(properties.navn);
 														d3.select(this)
