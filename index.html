@@ -127,7 +127,7 @@
 													.style("opacity",0.1)
 													//.on("mouseover",onMouseOver(json))
 													.on("mouseover", function(d) {
-														console.log(d);
+														console.log(d);o
 														d3.select(this)
 														.transition()
 														.duration(250)
@@ -183,11 +183,11 @@
 												});//
 
 													//Load in GeoJSON data
-												 d3.json("parking.geojson", function(json) {
+												 d3.json("parking.geojson", function(parking) {
 
 															 //Bind data and create one path per GeoJSON feature
 																		 svg.selectAll("path")
-																		 .data(json.features)
+																		 .data(parking.features)
 																		 .enter()
 																		 .append("path")
 																		 .attr("d", path)
