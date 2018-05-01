@@ -126,7 +126,7 @@
 												 //.attr("stroke-width",1000)
 												 .style("fill", "steelblue");
 
-												 
+
 												 // P-houses
 											 d3.json("phuse.geojson", function(json) {
 
@@ -172,7 +172,7 @@
 
 														kbhdataset = json;
 
-														svg.selectAll("path")
+														svg.selectAll("path2")
 														.data(kbhdataset.features)
 														.enter()
 														.append("path")
