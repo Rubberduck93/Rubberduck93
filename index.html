@@ -108,14 +108,42 @@
 						  .attr("height", h)//
 							.attr("align","center");
 
-							var kbhdataset;
-							// Questions:
-							// Increase size of parking lines?
-							// Drawing parking last, making it stand out more
-							// Even possible having two geojson on the same svg?
-							// alert(d.properties.befolkning) mouseover no WORKY
-							// cirle mouseover no WORKY
+							// P-houses
+						d3.json("phuse.geojson", function(json) {
 
+							 svg.selectAll("path")
+								.data(json.features)
+								.enter()
+								.append("circle")
+								.attr("r",function(d) {
+									return d.properties.antal_pladser/80;
+								})
+								.attr("cx", function(d) {
+									//alert("ads " + projection(d.geometry.coordinates)[0]);
+									return projection(d.geometry.coordinates)[0];
+								})
+								.attr("cy", function(d) {
+									return projection(d.geometry.coordinates)[1];
+								})
+								.style("fill", "steelblue")
+								.on("mouseover", function(d) {
+									console.log(d.properties.antal_pladser);
+									d3.select(this)
+									.transition()
+									.duration(250)
+									.style("fill", "orange");
+							})
+							.on("mouseout", function(d) {
+								 d3.select(this)
+								 .transition()
+								 .duration(250)
+								 .style("fill", "steelblue");
+							 })
+							 .append("title").text(function(d) {
+									 return "bibu";
+							 });
+
+					 });
 
 							//Load in GeoJSON data
 
@@ -130,47 +158,27 @@
 												 .attr("stroke-width",1)
 												 .attr("d", path);
 
-												 //.attr("stroke-width",1000)
-												 //.style("fill", "steelblue");
-
 
 											//Load in GeoJSON data
 											d3.json("kbh.geojson", function(json) {
 													//Bind data and create one path per GeoJSON feature
 
-																kbhdataset = json;
-
-																//svg.selectAll("path").remove();
 																svg.append("g").attr("class","banana").selectAll("path")
 																//svg.selectAll("path2")
-																.data(kbhdataset.features)
+																.data(json.features)
 																.enter()
 																.append("path")
 																//.attr("stroke-width",50)
 																.attr("d", another)
 																.style("stroke","black")
 																.style("fill",function(d) {
-																	//alert(d.properties.befolkning)
-																	//console.log(kbhdataset.d.properties.befolkning);
-
-
 																	return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 																})
 																.style("opacity",0.1)
-																//.on("mouseover",onMouseOver(json))
-																.on("mouseover", function(i) {
-																	//console.log(i);
-																	//console.log(this);
-																	console.log(i);
-																	//console.log(d.properties.befolkning);
-																	//console.log(kbhdataset.features["0"].properties.befolkning);
-																	//console.log(kbhdataset.features.i.properties.befolkning);
-																	//console.log(kbhdataset.select(this));
-																//	console.log(d3.select(this));
+																.on("mouseover", function() {
 																	d3.select(this)
 																	.transition()
 																	.duration(250)
-
 																	.style("fill", "orange");
 
 															 })
@@ -228,45 +236,12 @@
 
 
 
+
+
 									});
 
 
-									// P-houses
-								d3.json("phuse.geojson", function(json) {
 
-									 svg.selectAll("circle")
-										.data(json.features)
-										.enter()
-										.append("circle")
-										.attr("r",function(d) {
-											return d.properties.antal_pladser/80;
-										})
-										.attr("cx", function(d) {
-											//alert("ads " + projection(d.geometry.coordinates)[0]);
-											return projection(d.geometry.coordinates)[0];
-										})
-										.attr("cy", function(d) {
-											return projection(d.geometry.coordinates)[1];
-										})
-										.style("fill", "steelblue")
-										.on("mouseover", function(d) {
-											console.log(d.properties.antal_pladser);
-											d3.select(this)
-											.transition()
-											.duration(250)
-											.style("fill", "orange");
-									})
-									.on("mouseout", function(d) {
-										 d3.select(this)
-										 .transition()
-										 .duration(250)
-										 .style("fill", "steelblue");
-									 })
-									 .append("title").text(function(d) {
-											 return "bibu";
-									 });
-
-							 });
 
 
 
