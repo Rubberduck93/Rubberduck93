@@ -117,10 +117,10 @@
 						 d3.json("parking.geojson", function(json) {
 
 									 //Bind data and create one path per GeoJSON feature
-												 svg.selectAll("line")
+												 svg.select("path")
 												 .data(json.features)
 												 .enter()
-												 .append("line")
+												 .append("path")
 												 .attr("d", path)
 												 .attr("stroke-width","500spx")
 												 //.attr("stroke-width",1000)
