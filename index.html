@@ -173,11 +173,13 @@
 
 														kbhdataset = json;
 
+														svg.selectAll("path").remove();
+
 														svg.selectAll("path2")
 														.data(kbhdataset.features)
 														.enter()
 														.append("path")
-														.attr("d", path)
+														.attr("d", another)
 														.style("stroke","black")
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning)
