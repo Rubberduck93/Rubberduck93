@@ -86,6 +86,7 @@
 
 					//Define path generator, using the Albers USA projection
 					var path = d3.geoPath().projection(projection);
+					var another = d3.geoPath().projection(projection);
 					///
 					//Create SVG elementsip
 					var svg = d3.select("#map")///
@@ -175,8 +176,8 @@
 														svg.selectAll("path2")
 														.data(kbhdataset.features)
 														.enter()
-														.append("path2")
-														.attr("d", path)
+														.append("path")
+														.attr("d", another)
 														.style("stroke","black")
 														.style("fill",function(d) {
 															//alert(d.properties.befolkning)
