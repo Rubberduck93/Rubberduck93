@@ -173,7 +173,7 @@
 
 														kbhdataset = json;
 
-														svg.selectAll("path").remove();
+														//svg.selectAll("path").remove();
 
 														svg.selectAll("path2")
 														.data(kbhdataset.features)
@@ -191,8 +191,9 @@
 														.style("opacity",0.1)
 														//.on("mouseover",onMouseOver(json))
 														.on("mouseover", function(i) {
+															//console.log(i);
+															//console.log(this);
 															console.log(i);
-															console.log(this);
 															//console.log(d.properties.befolkning);
 															//console.log(kbhdataset.features["0"].properties.befolkning);
 															//console.log(kbhdataset.features.i.properties.befolkning);
