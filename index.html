@@ -118,9 +118,9 @@
 												 svg.selectAll("path")
 												 .data(json.features)
 												 .enter()
+												 .style("stroke-width",5)
 												 .append("path")
 												 .attr("d", path)
-												 .style("stroke-width",5)
 												 .style("fill", "steelblue");
 
 
