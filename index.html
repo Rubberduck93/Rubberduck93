@@ -117,7 +117,7 @@
 						 d3.json("parking.geojson", function(json) {
 
 									 //Bind data and create one path per GeoJSON feature
-												 svg.select("path")
+												 svg.selectAll("path")
 												 .data(json.features)
 												 .enter()
 												 .append("path")
