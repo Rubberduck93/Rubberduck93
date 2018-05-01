@@ -174,11 +174,11 @@
 														kbhdataset = json;
 
 														//svg.selectAll("path").remove();
-
-														svg.selectAll("path2")
+														svg.append("g").attr("class","banana").selectAll("path")
+														//svg.selectAll("path2")
 														.data(kbhdataset.features)
 														.enter()
-														.append("svg:path")
+														.append("path")
 														.attr("d", another)
 														.style("stroke","black")
 														.style("fill",function(d) {
