@@ -85,7 +85,7 @@
 					var projection = d3.geoMercator().translate([w/2, h/2]).scale(200000).center([12.52,55.68]);
 
 					//Define path generator, using the Albers USA projection
-					var path = d3.geoPath().projection(projection);
+					var path = d3.geoPath().projection(projection).attr("stroke-width","1000");
 					///
 					//Create SVG elementsip
 					var svg = d3.select("#map")///
