@@ -50,15 +50,6 @@
 		</style>
 	</head>
 	<body>
-		<h1 class = "center"> Assignment 2 </h1>
-		<hr>
-		<h2 class = "center"> God Historie, Brush, Mulighed for download af dataset, link til explainer page </h2>
-		<hr width="50%">
-
-		<hr style="height:50pt; visibility:hidden;" />
-		<h2 class = "center"> Part 2: Visualizing Murders over Time </h2>
-		<hr width="50%">
-		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
 
 		<div class="container" id="map"></div>
 		<div class="container" id="bars"></div>
@@ -221,6 +212,12 @@
 				 									 });
 
 							});
+
+							svg.append("text")
+							.attr("x",500)
+							.attr("y",500)
+							.attr("xlink:href", "https://rubberduck93.github.io/explorerpage.html")
+							.text("LINK TO EXPLORERPAGE");
 
 
 
