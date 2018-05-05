@@ -134,7 +134,7 @@
 				 														//console.log(d.properties.befolkning);
 				 												 })
 				 												 .append("title").text(function(d) {
-				 													 return d.properties.navn + d.properties.areal_m2/1000000 + d.properties.befolkning;
+				 													 return "Town: " + d.properties.navn + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2" + "Population: " + d.properties.befolkning;
 				 												 });
 				 													//.style("fill", "transparent");
 				 													//.style("opacity",0.5);
