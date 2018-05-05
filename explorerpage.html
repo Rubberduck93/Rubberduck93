@@ -65,6 +65,25 @@
 
 		<script type="text/javascript">
 
+		//Width and height
+			var w = 1200;
+			var h = 1200;
+
+			//Create SVG elementsip
+			var svg = d3.select("#map")///
+						.append("svg")//
+						.attr("width", w)
+						.attr("height", h)
+						.append("g")
+						.attr("align","center");
+
+
+		svg.append("a")
+		.attr("xlink:href", "https://rubberduck93.github.io/")
+		.append("text")
+		.attr("x",500)
+		.attr("y",100)
+		.text("LINK TO EXPLORERPAGE");
 
 		</script>
 	</body>
