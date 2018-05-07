@@ -90,7 +90,7 @@
 			//Load in agriculture data
 			d3.csv("us-ag-productivity.csv", function(data) {
 
-						
+
 						color.domain([
 								d3.min(data, function(d) { return d.value; }),
 								d3.max(data, function(d) { return d.value; })
