@@ -50,6 +50,11 @@
 			stroke-width: 10px;
 		}
 
+		.brushedpark {
+			fill: yellow;
+			stroke-width: 20px;
+		}
+
 		.towntext {
 			color: black;
 			font-weight: bold;
@@ -101,23 +106,12 @@
 								.attr("width", w)
 								.attr("height", h)
 								.append("g")
-								//.attr("stroke-width","500")
 								.attr("align","center");
 
 					var total_spaces = 0;
-					//Create SVG elementsip
-					var svgBar = d3.select("#bars")///
-							.append("svg")///
-							.attr("width", w)
-						  .attr("height", h)//
-							.attr("align","center");
+					var counting_spaces = 0;
 
-						function brushended() {
-						  console.log('end');
-						  if (!d3.event.selection) {
-						    console.log('There is no selection');
-						  }
-						}
+
 
 							//Load in GeoJSON data
 
@@ -130,44 +124,82 @@
 								.enter()
 								.append("path")
 								.attr("stroke","steelblue")
-								.attr("stroke-width",1)
+								.attr("stroke-width",1.5)
 								.attr("fill",function(d) {
+									//console.log(path.centroid(d)[0]);
+								//	console.log(projection(d.geometry.coordinates));
 									total_spaces += d.properties.antal_pladser;
 									//console.log(d.properties.antal_pladser);
 								})
 								.attr("d", path);
 
-								console.log(total_spaces);
+								svg.append("text")
+								.attr("x",200)
+								.attr("y",340)
+								.text("Total Parking Spaces: " + total_spaces );
 
 
 
 
 								 function brushed(d) {
-			 						  // console.log( d3.event.selection );//
-										//console.log(json.feature);
-			 						  var s = d3.event.selection,
 
-												//nu = d.geometry.coordinates[0],
-			 									lal = projection(path.centroid(d)[0]),
-			 									lul = projection(path.centroid(d)[1]),
-			 									lol = path.centroid(s)[1],
-			 						      x0 = s[0][0],
-			 						      y0 = s[0][1],
-			 						      x1 = s[1][0],
-			 						      y1 = s[1][1],
-			 						      dx = s[1][0] - x0,
-			 						      dy = s[1][1] - y0;
-			 						  console.log(lal,lul);
-			 						}
+											counting_spaces = 0;
+											svg.attr("class","path").selectAll("path").attr("stroke","steelblue").attr("stroke-width",1.5);
+
+											if (d3.event.selection != null) {
+														var brush_coords = d3.brushSelection(this);
+
+														svg.selectAll("path").filter(function(d) {
+
+																var xx = path.centroid(d)[0],
+																    yy = path.centroid(d)[1];
+
+
+																return isBrushed(brush_coords,xx,yy);
+
+														}).attr("stroke","red").attr("stroke-width",1.5)
+														.attr("fill",function(d) {
+															counting_spaces += d.properties.antal_pladser;
+														} );
+
+
+											}
+
+
+								}
+								function isEnded(){
+
+									d3.select("#texting").remove();
+
+									svg.append("text")
+									.attr("x",380)
+									.attr("y",360)
+									.attr("id","texting")
+									.text(counting_spaces);
+
+								}
+
+								function isBrushed(brush_coords,xx,yy) {
+											var x0 = brush_coords[0][0],
+													 x1 = brush_coords[1][0],
+													 y0 = brush_coords[0][1],
+													 y1 = brush_coords[1][1];
+
+													 //console.log(x0 <= xx && xx <= x1 && y0 <= yy && yy <= y1);
+										return x0 <= xx && xx <= x1 && y0 <= yy && yy <= y1;
+								}
+
+
+
 
 									var brush = d3.brush()
 										 .extent([[400, 0], [1300, h]])
 										 .on("start brush", brushed)
-										 .on("end", brushended);
+										 .on("end",isEnded);
 
 
 										 svg.append("g")
-		 								 .attr("class", "brush")
+		 								 .attr("class", "brushing")
 		 								 .call(brush);
 									 //.call(d3.brush().on("brush", brushed));
 
@@ -183,7 +215,7 @@
 				 													.enter()
 				 													.append("path")
 																	.attr("stroke","black")
-				 													.attr("stroke-width",2)
+				 													.attr("stroke-width",1.5)
 				 													.attr("d", path)
 				 													.style("fill",function(d) {
 				 														return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
@@ -238,7 +270,7 @@
 																	// Zoner
 																d3.json("zoner.geojson", function(json) {
 
-																		svg.append("g").attr("class","banana").selectAll("path")
+																		svg.append("g").attr("class","zones").selectAll("path")
 																		.data(json.features)
 																		.enter()
 																		.append("path")
@@ -294,6 +326,11 @@
 																		.text(function(d) {
 					 														return "P";
 					 													});
+
+																		svg.append("text")
+																		.attr("x",200)
+																		.attr("y",380)
+																		.text("P = Parking House/Garage");
 				 												});
 
 
@@ -305,8 +342,19 @@
 
 							svg.append("text")
 							.attr("x",200)
-							.attr("y",300);
-							//.text("Details:" + "\n" + "Total Parking Spaces: " + total_spaces + "\n" + "P = Parking House/Garage")
+							.attr("y",320)
+							.text("Details:");
+
+							svg.append("text")
+							.attr("x",200)
+							.attr("y",360)
+							.text("Parking Spaces Marked: ");
+
+							svg.append("text")
+							.attr("x",380)
+							.attr("y",360)
+							.attr("id","texting")
+							.text(counting_spaces);
 
 							svg.append("a")
 							.attr("class","explainerpage")
@@ -330,6 +378,27 @@
 							 })
 							.text("Story Behind The Scene (Link)");
 
+							svg.append("a")
+							.attr("class","repopage")
+							.attr("xlink:href", "https://github.com/Rubberduck93/Rubberduck93.github.io")
+							.append("text")
+							.attr("x",200)
+							.attr("y",700)
+							.on("mouseover", function() {
+								d3.select(this)
+								.transition()
+								.duration(250)
+								.style("fill", "orange")
+								.style("font-size",18);
+							})
+							.on("mouseout", function(d) {
+								 d3.select(this)
+								 .transition()
+								 .duration(250)
+								 .style("fill", "black")
+								 .style("font-size",16);
+							 })
+							.text("Github Repository (LINK)");
 
 
 
