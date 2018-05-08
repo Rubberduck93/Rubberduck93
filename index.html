@@ -112,61 +112,67 @@
 						  .attr("height", h)//
 							.attr("align","center");
 
-							function brushed(d) {
-								  // console.log( d3.event.selection );
-								  var s = d3.event.selection,
-											lal = projection(path.centroid(d)[0]),
-											lul = projection(path.centroid(d)[1]),
-											lol = path.centroid(s)[1],
-								      x0 = s[0][0],
-								      y0 = s[0][1],
-								      x1 = s[1][0],
-								      y1 = s[1][1],
-								      dx = s[1][0] - x0,
-								      dy = s[1][1] - y0;
-								  console.log(lal,lul);
-								}
+						function brushended() {
+						  console.log('end');
+						  if (!d3.event.selection) {
+						    console.log('There is no selection');
+						  }
+						}
 
-								function brushended() {
-								  console.log('end');
-								  if (!d3.event.selection) {
-								    console.log('There is no selection');
-								  }
-								}
-
-
-							var brush = d3.brush()
-							 .extent([[0, 0], [1300, h]])
-							 .on("start brush", brushed)
-							 .on("end", brushended);
 							//Load in GeoJSON data
 
 
-						 d3.json("parking.geojson", function(json) {
+					  d3.json("parking.geojson", function(json) {
+
+
+								svg.selectAll("path").attr("class","park")
+								.data(json.features)
+								.enter()
+								.append("path")
+								.attr("stroke","steelblue")
+								.attr("stroke-width",1)
+								.attr("fill",function(d) {
+									total_spaces += d.properties.antal_pladser;
+									//console.log(d.properties.antal_pladser);
+								})
+								.attr("d", path);
+
+								console.log(total_spaces);
 
 
 
-							 		svg.append("g")
-									 .attr("class", "brush")
-									 .call(brush);
+
+								 function brushed(d) {
+			 						  // console.log( d3.event.selection );
+										//console.log(json.feature);
+			 						  var s = d3.event.selection,
+
+												//nu = d.geometry.coordinates[0],
+			 									lal = projection(path.centroid(d)[0]),
+			 									lul = projection(path.centroid(d)[1]),
+			 									lol = path.centroid(s)[1],
+			 						      x0 = s[0][0],
+			 						      y0 = s[0][1],
+			 						      x1 = s[1][0],
+			 						      y1 = s[1][1],
+			 						      dx = s[1][0] - x0,
+			 						      dy = s[1][1] - y0;
+			 						  console.log(lal,lul);
+			 						}
+
+									var brush = d3.brush()
+										 .extent([[400, 0], [1300, h]])
+										 .on("start brush", brushed)
+										 .on("end", brushended);
 
 
+										 svg.append("g")
+		 								 .attr("class", "brush")
+		 								 .call(brush);
 									 //.call(d3.brush().on("brush", brushed));
 
 									 //Bind data and create one path per GeoJSON feature
-												 svg.selectAll("path").attr("class","park")
-												 .data(json.features)
-												 .enter()
-												 .append("path")
-												 .attr("stroke","steelblue")
-												 .attr("stroke-width",1)
-												 .attr("fill",function(d) {
-													 total_spaces += d.properties.antal_pladser;
-													 //console.log(d.properties.antal_pladser);
-												 })
-												 .attr("d", path);
 
-												 console.log(total_spaces);
 
 												 //Load in GeoJSON data
 				 								d3.json("kbh.geojson", function(json) {
@@ -299,8 +305,8 @@
 
 							svg.append("text")
 							.attr("x",200)
-							.attr("y",300)
-							.text("Details:" + "\n" + "Total Parking Spaces: " + total_spaces + "\n" + "P = Parking House/Garage")
+							.attr("y",300);
+							//.text("Details:" + "\n" + "Total Parking Spaces: " + total_spaces + "\n" + "P = Parking House/Garage")
 
 							svg.append("a")
 							.attr("class","explainerpage")
