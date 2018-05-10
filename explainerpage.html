@@ -27,11 +27,19 @@
 			font-family: "Times New Roman", Times, serif;
 		}
 
+		.explainerpage {
+			color: black;
+			font-weight: bold;
+			font-size: 16px;
+			font-family: sans-serif;
+		}
+
 		</style>
 	</head>
 	<body>
 		<h1 class = "headline"> Parking in Copenhagen </h1>
 		<hr>
+		<div class="container" id="map"></div>
 		<hr style="height:20pt; visibility:hidden;" />
 		<h2 class = "headlines"> Motivation </h2>
 		<hr>
@@ -48,13 +56,13 @@
 		<h2 class = "headlines"> Contributions </h2>
 		<hr>
 
-		<div class="container" id="map"></div>
+
 
 		<script type="text/javascript">
 
 		//Width and height
-			var w = 1200;
-			var h = 1200;
+			var w = 100;
+			var h = 100;
 
 			//Create SVG elementsip
 			var svg = d3.select("#map")///
