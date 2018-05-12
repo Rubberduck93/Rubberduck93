@@ -13,39 +13,6 @@
 			font-family: sans-serif;
 		}
 
-		.container {
-			float: center;
-		}
-
-		.question {
-			color: black;
-			text-align: center;
-			font-weight: bold;
-			font-style: italic;
-			font-size: 14px;
-			font-family: sans-serif;
-		}
-
-		.answer {
-			color: black;
-			text-align: center;
-			font-size: 14px;
-			font-family: sans-serif;
-		}
-
-		.brushed {
-            fill: #ff3399;
-            stroke: #8e1b54;
-            opacity: 1.0;
-    }
-
-    .non_brushed {
-				fill: yellow;
-				stroke: gray;
-				stroke-width: 0.25;
-				opacity: 0.15;
-    }
-
 		.park {
 			stroke-width: 10px;
 		}
@@ -97,16 +64,12 @@
 				//Width and height
 					var w = 1700;
 					var h = 800;
-					var barPadding = 1;
-					var padding = 100;
-					var wpadding = 200;
 
 					var projection = d3.geoMercator().translate([w/2, h/2]).scale(200000).center([12.52,55.68]);
 
 					//Define path generator, using the Albers USA projection
 					var path = d3.geoPath().projection(projection);
-					//var another = d3.geoPath().projection(projection);
-					///
+
 					//Create SVG elementsip
 					var svg = d3.select("#map")///
 								.append("svg")//
@@ -133,10 +96,7 @@
 								.attr("stroke","steelblue")
 								.attr("stroke-width",1.5)
 								.attr("fill",function(d) {
-									//console.log(path.centroid(d)[0]);
-								//	console.log(projection(d.geometry.coordinates));
 									total_spaces += d.properties.antal_pladser;
-									//console.log(d.properties.antal_pladser);
 								})
 								.attr("d", path);
 
@@ -167,24 +127,13 @@
 
 														}).attr("stroke","red").attr("stroke-width",1.5)
 														.attr("fill",function(d) {
+															console.log(counting_spaces);
 															counting_spaces += d.properties.antal_pladser;
 														} );
 
 
 											}
 
-
-								}
-								function isEnded(){
-
-									d3.select("#texting").remove();
-
-									svg.append("text")
-									.attr("class","details")
-									.attr("x",260)
-									.attr("y",320)
-									.attr("id","texting")
-									.text(counting_spaces);
 
 								}
 
@@ -198,18 +147,33 @@
 										return x0 <= xx && xx <= x1 && y0 <= yy && yy <= y1;
 								}
 
+								function isEnded(){
+
+									d3.select("#texting").remove();
+
+									svg.append("text")
+									.attr("class","details")
+									.attr("x",260)
+									.attr("y",320)
+									.attr("id","texting")
+									.text(counting_spaces);
+
+									//console.log(counting_spaces);
+
+								}
 
 
+								var brush = d3.brush()
+									.extent([[400, 0], [1300, h]])
+									.on("start brush", brushed)
+									.on("end",isEnded);
 
-									var brush = d3.brush()
-										 .extent([[400, 0], [1300, h]])
-										 .on("start brush", brushed)
-										 .on("end",isEnded);
+
+									svg.append("g")
+									.attr("class", "brushing")
+									.call(brush);
 
 
-										 svg.append("g")
-		 								 .attr("class", "brushing")
-		 								 .call(brush);
 									 //.call(d3.brush().on("brush", brushed));
 
 									 //Bind data and create one path per GeoJSON feature
@@ -253,6 +217,7 @@
 
 
 
+
 				 													svg.append("g").attr("class","banana").selectAll("text")
 				 												 .data(json.features)
 				 												 .enter()
@@ -275,6 +240,7 @@
 				 													.text(function(d) {
 				 														return d.properties.navn;
 				 													});
+
 
 																	// Zoner
 																d3.json("zoner.geojson", function(json) {
@@ -340,7 +306,9 @@
 
 
 
+
 				 						   });
+
 
 							});
 
@@ -423,6 +391,8 @@
 								 .style("font-size",16);
 							 })
 							.text("Github Repository (Link)");
+
+
 
 
 
