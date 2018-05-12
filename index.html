@@ -92,12 +92,14 @@
 								.data(json.features)
 								.enter()
 								.append("path")
+								.attr("id","tps")
 								.attr("stroke","steelblue")
 								.attr("stroke-width",1.5)
 								.attr("fill",function(d) {
 									total_spaces += d.properties.antal_pladser;
 								})
 								.attr("d", path);
+
 
 								svg.append("text")
 								.attr("class","details")
@@ -109,7 +111,11 @@
 								 function brushed(d) {
 
 											counting_spaces = 0;
-											svg.attr("class","path").selectAll("path").attr("stroke","steelblue").attr("stroke-width",1.5);
+											//svg.attr("class","path").selectAll("path").attr("stroke","steelblue").attr("stroke-width",1.5);
+											svg.selectAll("#tps").attr("stroke","steelblue");
+											svg.selectAll("#copenhagen").attr("stroke","black");
+
+
 
 											if (d3.event.selection != null) {
 														var brush_coords = d3.brushSelection(this);
@@ -156,7 +162,7 @@
 
 
 								var brush = d3.brush()
-									.extent([[400, 0], [1300, h]])
+									.extent([[550, 0], [1350, h]])
 									.on("start brush", brushed)
 									.on("end",isEnded);
 
@@ -164,6 +170,8 @@
 									svg.append("g")
 									.attr("class", "brushing")
 									.call(brush);
+
+
 
 												 //Load in GeoJSON data
 				 								d3.json("kbh.geojson", function(json) {
@@ -173,6 +181,7 @@
 				 													.data(json.features)
 				 													.enter()
 				 													.append("path")
+																	.attr("id","copenhagen")
 																	.attr("stroke","black")
 				 													.attr("stroke-width",1.5)
 				 													.attr("d", path)
@@ -280,6 +289,7 @@
 																		.data(json.features)
 																		.enter()
 																		.append("path")
+																		.attr("id","copenhagen")
 																		.attr("stroke","black")
 																		.attr("stroke-width",2)
 																		.attr("d", path)
@@ -341,6 +351,7 @@
 				 						   });
 
 
+
 							});
 
 							svg.append("text")
@@ -383,7 +394,7 @@
 							.attr("class","explainerpage")
 							.attr("xlink:href", "https://rubberduck93.github.io/explainerpage.html")
 							.append("text")
-							.attr("x",1320)
+							.attr("x",1440)
 							.attr("y",200)
 							.on("mouseover", function() {
 								d3.select(this)
@@ -405,7 +416,7 @@
 							.attr("class","explainerpage")
 							.attr("xlink:href", "https://github.com/Rubberduck93/Rubberduck93.github.io")
 							.append("text")
-							.attr("x",1320)
+							.attr("x",1440)
 							.attr("y",240)
 							.on("mouseover", function() {
 								d3.select(this)
