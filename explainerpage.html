@@ -43,17 +43,25 @@
 		<h2 class = "headlines"> Motivation </h2>
 		<hr>
 		<p class="text"> The visualization consists of 4 different datasets: </p>
-		<li class="text"> <strong> kbh.geojson </strong> - Map of Copenhagen and all the towns within. </li>
 		<li class="text"> <strong> parking.geojson </strong> - All available parking spaces in Copenhagen. </li>
-		<li class="text"> <strong> phuse.geojson </strong> - All Parkinghouses in Copenhagen. </li>
+		<li class="text"> <strong> kbh.geojson </strong> - Map of Copenhagen and all the towns within. </li>
 		<li class="text"> <strong> zoner.geojson </strong> - All Parkingzones in Copenhagen. </li>
+		<li class="text"> <strong> phuse.geojson </strong> - All Parkinghouses in Copenhagen. </li>
 		<p class="text"> I chose these datasets because they all share valuable information regarding parking in Copenhagen. </p>
 		<p class="text"> The overall goal was to give the end user an overview of all the parking possibilities in one visualization. </p>
 		<hr style="height:30pt; visibility:hidden;" />
 		<h2 class = "headlines"> Basic stats </h2>
 		<hr>
 		<p class="text"> All of the datasets were found data.kk.dk/dataset and they are all geojson datasets. I have not used any kind of cleaning nor preprocessing for the datasets.
-		<br/>	Most of them were clean enough and small enough to handle. It may have been a mistake not to preprocess the <strong> parking.geojson </strong> because of its size (14.33 MB).</p>
+		<br/>	Most of them were clean enough and small enough to handle. It may have been a mistake not to preprocess the <strong> parking.geojson </strong> because of its size (14.33 MB).
+		<br/> The most extracted information from the geojsons were the coordinates.
+		<br/> From the <strong> parking.geojson </strong> the coordinates were drawn using D3's Path. The brush function counting the parkingspaces were located here.
+		<br/> From the <strong> kbh.geojson </strong> the coordinates were too drawn using D3's Path, else the different towns name and population numbers were used for text and coloring.
+		<br/> From the <strong> zoner.geojson </strong>
+		<br/> From the <strong> phuse.geojson </strong>
+		<br/> The order in which each geojson entered the visualization turned out to be very important for accessing data after all datasets were drawn.
+		<br/> Parking -> kbh -> zoner -> phuse.
+		</p>
 		<hr style="height:30pt; visibility:hidden;" />
 		<h2 class = "headlines"> Genre </h2>
 		<hr>
