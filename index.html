@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Assignment 2</title>
+		<title> Parking in Copenhagen </title>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<style type="text/css">
 
@@ -61,7 +61,7 @@
 		<script type="text/javascript">
 
 
-				//Width and height
+					//Width and height
 					var w = 1700;
 					var h = 800;
 
@@ -80,12 +80,11 @@
 
 					var total_spaces = 0;
 					var counting_spaces = 0;
+					var total_population = 0;
 
 
 
 							//Load in GeoJSON data
-
-
 					  d3.json("parking.geojson", function(json) {
 
 
@@ -107,8 +106,6 @@
 								.text("- Total Parking Spaces: " + total_spaces );
 
 
-
-
 								 function brushed(d) {
 
 											counting_spaces = 0;
@@ -127,7 +124,6 @@
 
 														}).attr("stroke","red").attr("stroke-width",1.5)
 														.attr("fill",function(d) {
-															console.log(counting_spaces);
 															counting_spaces += d.properties.antal_pladser;
 														} );
 
@@ -143,7 +139,6 @@
 													 y0 = brush_coords[0][1],
 													 y1 = brush_coords[1][1];
 
-													 //console.log(x0 <= xx && xx <= x1 && y0 <= yy && yy <= y1);
 										return x0 <= xx && xx <= x1 && y0 <= yy && yy <= y1;
 								}
 
@@ -157,9 +152,6 @@
 									.attr("y",320)
 									.attr("id","texting")
 									.text(counting_spaces);
-
-									//console.log(counting_spaces);
-
 								}
 
 
@@ -172,12 +164,6 @@
 									svg.append("g")
 									.attr("class", "brushing")
 									.call(brush);
-
-
-									 //.call(d3.brush().on("brush", brushed));
-
-									 //Bind data and create one path per GeoJSON feature
-
 
 												 //Load in GeoJSON data
 				 								d3.json("kbh.geojson", function(json) {
@@ -201,21 +187,25 @@
 				 														.style("fill", "orange");
 				 												 	})
 				 												 .on("mouseout", function(d) {
-				 													 //console.log(d.properties.befolkning);
 				 														 d3.select(this)
 				 														 .transition()
 				 														 .duration(250)
 				 														 .style("fill",function(d) {
 				 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
 				 														});
-				 														//console.log(d.properties.befolkning);
 				 												 })
 				 												 .append("title")
 																 .text(function(d) {
+																	 total_population += d.properties.befolkning;
 				 													 return "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2" + "\n" + "Population: " + d.properties.befolkning;
 				 												 });
 
 
+																 svg.append("text")
+								 								.attr("class","details")
+								 								.attr("x",80)
+								 								.attr("y",380)
+								 								.text("- Total Population: " + total_population);
 
 
 				 													svg.append("g").attr("class","banana").selectAll("text")
@@ -226,14 +216,55 @@
 				 													.attr("x", function(d) {//
 																		 if (d.properties.navn == "Indre By") {
 																			 return path.centroid(d)[0]+30;
-																		 } else {
+																		 }
+																		 if (d.properties.navn == "Amager Øst") {
+																			 return path.centroid(d)[0]+45;
+																		 }
+																		 if (d.properties.navn == "Valby") {
+																			 return path.centroid(d)[0]+20;
+																		 }
+																		 if (d.properties.navn == "Vesterbro-Kongens Enghave") {
+																			 return path.centroid(d)[0]-150;
+																		 }
+																		 if (d.properties.navn == "Vanløse") {
+																			 return path.centroid(d)[0]-120;
+																		 }
+																		 if (d.properties.navn == "Nørrebro") {
+																			 return path.centroid(d)[0]-100;
+																		 }
+																		 if (d.properties.navn == "Østerbro") {
+																			 return path.centroid(d)[0]+60;
+																		 }
+																		 else {
 				 														 		return path.centroid(d)[0]-50;
 																		 }
 				 													})
 				 													.attr("y", function(d) {
 																		if (d.properties.navn == "Indre By") {
 																			return path.centroid(d)[1]-40;
-																		} else {
+																		}
+																		if (d.properties.navn == "Amager Øst") {
+																			return path.centroid(d)[1]+20;
+																		}
+																		if (d.properties.navn == "Valby") {
+																			return path.centroid(d)[1]+80;
+																		}
+																		if (d.properties.navn == "Vesterbro-Kongens Enghave") {
+																			return path.centroid(d)[1]-120;
+																		}
+																		if (d.properties.navn == "Vanløse") {
+																			return path.centroid(d)[1]+20;
+																		}
+																		if (d.properties.navn == "Brønshøj-Husum") {
+																			return path.centroid(d)[1]-90;
+																		}
+																		if (d.properties.navn == "Bispebjerg") {
+																			return path.centroid(d)[1]-90;
+																		}
+																		if (d.properties.navn == "Nørrebro") {
+																			return path.centroid(d)[1]+60;
+																		}
+																		else {
 																			 return path.centroid(d)[1];
 																		}
 				 													})
