@@ -56,7 +56,6 @@
 		<h1 class = "center">Parking in Copenhagen</h1>
 		<hr>
 		<div class="container" id="map"></div>
-		<div class="container" id="bars"></div>
 
 		<script type="text/javascript">
 
@@ -87,7 +86,6 @@
 							//Load in GeoJSON data
 					  d3.json("parking.geojson", function(json) {
 
-
 								svg.selectAll("path").attr("class","park")
 								.data(json.features)
 								.enter()
@@ -108,14 +106,11 @@
 								.text("- Total parking spaces: " + total_spaces );
 
 
-								 function brushed(d) {
+								function brushed(d) {
 
 											counting_spaces = 0;
-											//svg.attr("class","path").selectAll("path").attr("stroke","steelblue").attr("stroke-width",1.5);
 											svg.selectAll("#tps").attr("stroke","steelblue");
 											svg.selectAll("#copenhagen").attr("stroke","black");
-
-
 
 											if (d3.event.selection != null) {
 														var brush_coords = d3.brushSelection(this);
@@ -132,11 +127,7 @@
 														.attr("fill",function(d) {
 															counting_spaces += d.properties.antal_pladser;
 														} );
-
-
 											}
-
-
 								}
 
 								function isBrushed(brush_coords,xx,yy) {
@@ -175,8 +166,6 @@
 
 												 //Load in GeoJSON data
 				 								d3.json("kbh.geojson", function(json) {
-				 										//Bind data and create one path per GeoJSON feature
-
 				 													svg.append("g").attr("class","banana").selectAll("path")
 				 													.data(json.features)
 				 													.enter()
@@ -318,7 +307,6 @@
 				 												d3.json("phuse.geojson", function(json) {
 
 				 													 svg.append("g").attr("class","parkingspaces").selectAll("text")
-				 													 //svg.selectAll("circle")
 				 														.data(json.features)
 				 														.enter()
 				 														.append("text")
@@ -343,10 +331,6 @@
 					 														return "P";
 					 													});
 				 												});
-
-
-
-
 
 				 						   });
 
@@ -433,18 +417,6 @@
 								 .style("font-size",16);
 							 })
 							.text("Github Repository (Link)");
-
-
-
-
-
-
-
-
-
-
-
-
 
 		</script>
 	</body>
