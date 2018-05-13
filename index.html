@@ -77,6 +77,17 @@
 								.append("g")
 								.attr("align","center");
 
+					var parking_indreby = 0;
+					var parking_amagerøst = 0;
+					var parking_amagervest = 0;
+					var parking_vesterbro = 0;
+					var parking_valby = 0;
+					var parking_vanløse = 0;
+					var parking_brønshøj = 0;
+					var parking_bispebjerg = 0;
+					var parking_østerbro = 0;
+					var parking_nørrebro = 0;
+
 					var total_spaces = 0;
 					var counting_spaces = 0;
 					var total_population = 0;
@@ -94,6 +105,36 @@
 								.attr("stroke","steelblue")
 								.attr("stroke-width",1.5)
 								.attr("fill",function(d) {
+									if (d.properties.bydel == "Indre By") {
+										parking_indreby += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Amager Øst") {
+										parking_amagerøst += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Amager Vest") {
+										parking_amagervest += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Vesterbro-Kongens Enghave") {
+										parking_vesterbro += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Valby") {
+										parking_valby += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Vanløse") {
+										parking_vanløse += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Brønshøj-Husum") {
+										parking_brønshøj += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Bispebjerg") {
+										parking_bispebjerg += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Østerbro") {
+										parking_østerbro += d.properties.antal_pladser;
+									}
+									if (d.properties.bydel == "Nørrebro") {
+										parking_nørrebro += d.properties.antal_pladser;
+									}
 									total_spaces += d.properties.antal_pladser;
 								})
 								.attr("d", path);
@@ -104,7 +145,6 @@
 								.attr("x",80)
 								.attr("y",350)
 								.text("- Total parking spaces: " + total_spaces );
-
 
 								function brushed(d) {
 
@@ -195,7 +235,58 @@
 				 												 .append("title")
 																 .text(function(d) {
 																	 total_population += d.properties.befolkning;
-				 													 return "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2" + "\n" + "Population: " + d.properties.befolkning;
+
+																	 	if (d.properties.navn == "Indre By") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_indreby +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_indreby/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Amager Øst") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_amagerøst +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_amagerøst/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Amager Vest") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_amagervest +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_amagervest/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Vesterbro-Kongens Enghave") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_vesterbro +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_vesterbro/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Valby") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_valby +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_valby/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Vanløse") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_vanløse +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_vanløse/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Brønshøj-Husum") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_brønshøj +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_brønshøj/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Bispebjerg") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_bispebjerg +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_bispebjerg/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Østerbro") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_østerbro +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_østerbro/d.properties.befolkning);
+									 									}
+									 									if (d.properties.navn == "Nørrebro") {
+																			return  "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) +
+		 																	        " km^2" + "\n" + "Population: " + d.properties.befolkning + "\n" + "Parking spaces: " + parking_nørrebro +
+		 																					"\n" + "Parking spaces per person: " + d3.format(".2n")(parking_nørrebro/d.properties.befolkning);
+									 									}
+
 				 												 });
 
 
