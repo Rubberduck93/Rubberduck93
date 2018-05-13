@@ -139,13 +139,6 @@
 								})
 								.attr("d", path);
 
-
-								svg.append("text")
-								.attr("class","details")
-								.attr("x",80)
-								.attr("y",350)
-								.text("- Total parking spaces: " + total_spaces );
-
 								function brushed(d) {
 
 											counting_spaces = 0;
@@ -292,7 +285,7 @@
 																 svg.append("text")
 								 								.attr("class","details")
 								 								.attr("x",80)
-								 								.attr("y",380)
+								 								.attr("y",350)
 								 								.text("- Total population: " + total_population);
 
 
@@ -407,6 +400,7 @@
 				 															return projection(d.geometry.coordinates)[1];
 				 														})
 																		.attr("font-size",function (d) {
+																			total_spaces += d.properties.antal_pladser;
 																			if (d.properties.antal_pladser <= 20) {
 																				return 10;
 																			}
@@ -420,7 +414,23 @@
 																		.text(function(d) {
 					 														return "P";
 					 													});
+
+																		svg.append("text")
+																		.attr("class","details")
+																		.attr("x",80)
+																		.attr("y",380)
+																		.text("- Total parking spaces: " + total_spaces );
+
+																		svg.append("text")
+																		.attr("class","details")
+																		.attr("x",80)
+																		.attr("y",410)
+																		.text("- Total parking spaces per person: " + d3.format(".3n")(total_spaces/total_population));
+
 				 												});
+
+
+
 
 				 						   });
 
