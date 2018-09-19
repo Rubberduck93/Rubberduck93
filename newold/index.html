@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Assignment 2</title>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<style type="text/css">
+
+		.center {
+			text-align: center;
+			font-weight: bold;
+			font-size: 50px;
+			font-family: sans-serif;
+		}
+
+		.container {
+			float: center;
+		}
+
+		.question {
+			color: black;
+			text-align: center;
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.answer {
+			color: black;
+			text-align: center;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.brushed {
+            fill: #ff3399;
+            stroke: #8e1b54;
+            opacity: 1.0;
+    }
+
+    .non_brushed {
+				fill: yellow;
+				stroke: gray;
+				stroke-width: 0.25;
+				opacity: 0.15;
+    }
+
+		.park {
+			stroke-width: 10px;
+		}
+
+		.towntext {
+			color: black;
+			font-weight: bold;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.parkingspaces {
+			color: black;
+			font-weight: bold;
+			font-style: italic;
+			font-family: sans-serif;
+		}
+
+		.explainerpage {
+			color: black;
+			font-weight: bold;
+			font-size: 16px;
+			font-family: sans-serif;
+		}
+
+		</style>
+	</head>
+	<body>
+		<h1 class = "center"> Visualization </h1>
+		<hr>
+		<div class="container" id="map"></div>
+		<div class="container" id="bars"></div>
+
+		<script type="text/javascript">
+
+
+				//Width and height
+					var w = 1600;
+					var h = 800;
+					var barPadding = 1;
+					var padding = 100;
+					var wpadding = 200;
+
+					var projection = d3.geoMercator().translate([w/2, h/2]).scale(200000).center([12.52,55.68]);
+
+					//Define path generator, using the Albers USA projection
+					var path = d3.geoPath().projection(projection);
+					//var another = d3.geoPath().projection(projection);
+					///
+					//Create SVG elementsip
+					var svg = d3.select("#map")///
+								.append("svg")//
+								.attr("width", w)
+								.attr("height", h)
+								.append("g")
+								//.attr("stroke-width","500")
+								.attr("align","center");
+
+					var total_spaces = 0;
+					//Create SVG elementsip
+					var svgBar = d3.select("#bars")///
+							.append("svg")///
+							.attr("width", w)
+						  .attr("height", h)//
+							.attr("align","center");
+
+						function brushended() {
+						  console.log('end');
+						  if (!d3.event.selection) {
+						    console.log('There is no selection');
+						  }
+						}
+
+							//Load in GeoJSON data
+
+
+					  d3.json("parking.geojson", function(json) {
+
+
+								svg.selectAll("path").attr("class","park")
+								.data(json.features)
+								.enter()
+								.append("path")
+								.attr("stroke","steelblue")
+								.attr("stroke-width",1)
+								.attr("fill",function(d) {
+									total_spaces += d.properties.antal_pladser;
+									//console.log(d.properties.antal_pladser);
+								})
+								.attr("d", path);
+
+								console.log(total_spaces);
+
+
+
+
+								 function brushed(d) {
+			 						  // console.log( d3.event.selection );//
+										//console.log(json.feature);
+			 						  var s = d3.event.selection,
+
+												//nu = d.geometry.coordinates[0],
+			 									lal = projection(path.centroid(d)[0]),
+			 									lul = projection(path.centroid(d)[1]),
+			 									lol = path.centroid(s)[1],
+			 						      x0 = s[0][0],
+			 						      y0 = s[0][1],
+			 						      x1 = s[1][0],
+			 						      y1 = s[1][1],
+			 						      dx = s[1][0] - x0,
+			 						      dy = s[1][1] - y0;
+			 						  console.log(lal,lul);
+			 						}
+
+									var brush = d3.brush()
+										 .extent([[400, 0], [1300, h]])
+										 .on("start brush", brushed)
+										 .on("end", brushended);
+
+
+										 svg.append("g")
+		 								 .attr("class", "brush")
+		 								 .call(brush);
+									 //.call(d3.brush().on("brush", brushed));
+
+									 //Bind data and create one path per GeoJSON feature
+
+
+												 //Load in GeoJSON data
+				 								d3.json("kbh.geojson", function(json) {
+				 										//Bind data and create one path per GeoJSON feature
+
+				 													svg.append("g").attr("class","banana").selectAll("path")
+				 													.data(json.features)
+				 													.enter()
+				 													.append("path")
+																	.attr("stroke","black")
+				 													.attr("stroke-width",2)
+				 													.attr("d", path)
+				 													.style("fill",function(d) {
+				 														return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
+				 													})
+				 													.style("opacity",0.2)
+				 													.on("mouseover", function() {
+				 														d3.select(this)
+				 														.transition()
+				 														.duration(250)
+				 														.style("fill", "orange");
+				 												 	})
+				 												 .on("mouseout", function(d) {
+				 													 //console.log(d.properties.befolkning);
+				 														 d3.select(this)
+				 														 .transition()
+				 														 .duration(250)
+				 														 .style("fill",function(d) {
+				 															return "rgb"+"(0,"+Math.round(((d.properties.befolkning/10000)*(d.properties.befolkning/10000))*4)+",0)";
+				 														});
+				 														//console.log(d.properties.befolkning);
+				 												 })
+				 												 .append("title")
+																 .text(function(d) {
+				 													 return "Town: " + d.properties.navn + "\n" + "Area: " + d3.format(".3n")(d.properties.areal_m2/1000000) + " km^2" + "\n" + "Population: " + d.properties.befolkning;
+				 												 });
+
+
+
+				 													svg.append("g").attr("class","banana").selectAll("text")
+				 												 .data(json.features)
+				 												 .enter()
+				 												 .append("text")
+				 												 .attr("class", "towntext")
+				 													.attr("x", function(d) {//
+																		 if (d.properties.navn == "Indre By") {
+																			 return path.centroid(d)[0]+30;
+																		 } else {
+				 														 		return path.centroid(d)[0]-50;
+																		 }
+				 													})
+				 													.attr("y", function(d) {
+																		if (d.properties.navn == "Indre By") {
+																			return path.centroid(d)[1]-40;
+																		} else {
+																			 return path.centroid(d)[1];
+																		}
+				 													})
+				 													.text(function(d) {
+				 														return d.properties.navn;
+				 													});
+
+																	// Zoner
+																d3.json("zoner.geojson", function(json) {
+
+																		svg.append("g").attr("class","banana").selectAll("path")
+																		.data(json.features)
+																		.enter()
+																		.append("path")
+																		.attr("stroke","black")
+																		.attr("stroke-width",2)
+																		.attr("d", path)
+																		.style("opacity",0.5)
+																		.style("fill","steelblue")
+																		.on("mouseover", function() {
+																			d3.select(this)
+																			.transition()
+																			.duration(250)
+																			.style("fill", "orange");
+																		})
+																		.on("mouseout", function(d) {
+					 														 d3.select(this)
+					 														 .transition()
+					 														 .duration(250)
+					 														 .style("fill", "steelblue");
+					 													 })
+																		 .append("title")
+																		 .text(function(d) {
+						 													 return "Zone: "+ d.properties.zone_navn + "\n" + "(" + d.properties.beskrivelse + ")";
+						 												 });
+																 });
+
+
+				 													// P-houses
+				 												d3.json("phuse.geojson", function(json) {
+
+				 													 svg.append("g").attr("class","parkingspaces").selectAll("text")
+				 													 //svg.selectAll("circle")
+				 														.data(json.features)
+				 														.enter()
+				 														.append("text")
+				 														.attr("x", function(d) {
+				 															return projection(d.geometry.coordinates)[0];
+				 														})
+				 														.attr("y", function(d) {
+				 															return projection(d.geometry.coordinates)[1];
+				 														})
+																		.attr("font-size",function (d) {
+																			if (d.properties.antal_pladser <= 20) {
+																				return 10;
+																			}
+																			if (d.properties.antal_pladser > 20 && d.properties.antal_pladser <= 100) {
+																				return 14;
+																			}
+																			if (d.properties.antal_pladser > 100) {
+																				return 18;
+																			}
+																		})
+																		.text(function(d) {
+					 														return "P";
+					 													});
+				 												});
+
+
+
+
+				 						   });
+
+							});
+
+							svg.append("text")
+							.attr("x",200)
+							.attr("y",300);
+							//.text("Details:" + "\n" + "Total Parking Spaces: " + total_spaces + "\n" + "P = Parking House/Garage")
+
+							svg.append("a")
+							.attr("class","explainerpage")
+							.attr("xlink:href", "https://rubberduck93.github.io/explainerpage.html")
+							.append("text")
+							.attr("x",1300)
+							.attr("y",300)
+							.on("mouseover", function() {
+								d3.select(this)
+								.transition()
+								.duration(250)
+								.style("fill", "orange")
+								.style("font-size",18);
+							})
+							.on("mouseout", function(d) {
+								 d3.select(this)
+								 .transition()
+								 .duration(250)
+								 .style("fill", "black")
+								 .style("font-size",16);
+							 })
+							.text("Story Behind The Scene (Link)");
+
+
+
+
+
+
+
+
+
+
+
+
+		</script>
+	</body>
+</html>

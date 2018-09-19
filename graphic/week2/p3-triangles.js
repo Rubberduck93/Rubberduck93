@@ -15,6 +15,8 @@ var pointIndex = 0;
 var triangleIndex = 0;
 var gl;
 
+var index = 0;
+
 var draw_points_on = false;
 var draw_triangle_on = false;
 
@@ -90,14 +92,14 @@ window.onload = function init()
 
 
     aPosition = gl.getAttribLocation( program, "aPosition" );
-    //gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
-    //gl.enableVertexAttribArray(aPosition);
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(aPosition);
 
     //var cBuffer = gl.createBuffer();
     //gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
     //gl.bufferData(gl.ARRAY_BUFFER, 16*maxNumVertices, gl.STATIC_DRAW );
 
-    aColors = gl.getAttribLocation( program, "aColors" );
+  //  aColors = gl.getAttribLocation( program, "aColors" );
     //gl.vertexAttribPointer(aColors, 3, gl.FLOAT, false, 0, 0);
     //gl.enableVertexAttribArray(aColors);
 
@@ -115,12 +117,21 @@ window.onload = function init()
          x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
          y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
+
+
+         gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2']*(index+0),
+         flatten(vec2(x,y)));
+
+         //gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+
          point_vertices.push(x);
          point_vertices.push(y);
 
          point_vertices.push(point_colors[pointIndex][0]);
          point_vertices.push(point_colors[pointIndex][1]);
          point_vertices.push(point_colors[pointIndex][2]);
+
+         index++;
 
         render();
 
@@ -144,9 +155,18 @@ window.onload = function init()
            triangle_vertices.push(triangle_colors[triangleIndex][1]);
            triangle_vertices.push(triangle_colors[triangleIndex][2]);
 
+           gl.bufferSubData(gl.ARRAY_BUFFER, 0,flatten(vec2(x,y)));
+
+           gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer);
+
+           gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(vec3(triangle_colors[triangleIndex][0],
+           triangle_colors[triangleIndex][1],triangle_colors[triangleIndex][2])));
+
+
          }
          else if (second){
            second = false;
+           gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
 
            var x = event.clientX; // x coordinate of a mouse pointer
            var y = event.clientY; // y coordinate of a mouse pointer
@@ -162,11 +182,19 @@ window.onload = function init()
            triangle_vertices.push(triangle_colors[triangleIndex][0]);
            triangle_vertices.push(triangle_colors[triangleIndex][1]);
            triangle_vertices.push(triangle_colors[triangleIndex][2]);
+
+           gl.bufferSubData(gl.ARRAY_BUFFER, 1,flatten(vec2(x,y)));
+
+           gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer);
+
+           gl.bufferSubData(gl.ARRAY_BUFFER, 1, flatten(vec3(triangle_colors[triangleIndex][0],
+           triangle_colors[triangleIndex][1],triangle_colors[triangleIndex][2])));
 
          } else {
 
            first = true;
            second = true;
+           gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
 
            var x = event.clientX; // x coordinate of a mouse pointer
            var y = event.clientY; // y coordinate of a mouse pointer
@@ -183,7 +211,14 @@ window.onload = function init()
            triangle_vertices.push(triangle_colors[triangleIndex][1]);
            triangle_vertices.push(triangle_colors[triangleIndex][2]);
 
+           gl.bufferSubData(gl.ARRAY_BUFFER, 2,flatten(vec2(x,y)));
 
+           gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer);
+
+           gl.bufferSubData(gl.ARRAY_BUFFER, 2, flatten(vec3(triangle_colors[triangleIndex][0],
+           triangle_colors[triangleIndex][1],triangle_colors[triangleIndex][2])));
+
+           console.log("draw");
            render();
          }
        }
@@ -198,27 +233,38 @@ window.onload = function init()
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
-
+    /*
     // Points
     var len =  point_vertices.length;
     for(var i = 0; i < len; i += 5) { //0,1 - 2,3 - 4,5    0,1-5,6-10,11
        // Pass the position of a point to a_Position variable
+
        gl.vertexAttrib3f(aPosition,  point_vertices[i],  point_vertices[i+1], 0.0);
        gl.vertexAttrib3f(aColors, point_vertices[i+2], point_vertices[i+3], point_vertices[i+4]);
        // Draw
        gl.drawArrays(gl.POINTS, 0, 1);
 
     }
+    */
 
+    //var len =  triangle_vertices.length;
+    //for(var i = 0; i<len; i+=5)
+    gl.drawArrays( gl.POINTS, 0, index );
+
+    //window.requestAnimFrame(render);
+
+    /*
     // Triangle
     var len =  triangle_vertices.length;
     for(var i = 0; i < len; i += 5) { //0,1 - 2,3 - 4,5    0,1-5,6-10,11
        // Pass the position of a point to a_Position variable
+       //bufferdata
        gl.vertexAttrib3f(aPosition, triangle_vertices[i], triangle_vertices[i+1], 0.0);
        gl.vertexAttrib3f(aColors, triangle_vertices[i+2], triangle_vertices[i+3], triangle_vertices[i+4]);
        // Draw
         gl.drawArrays(gl.TRIANGLES_FAN,0,3);
     }
+    */
 
 }
 
