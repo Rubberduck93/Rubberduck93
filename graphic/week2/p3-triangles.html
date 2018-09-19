@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Button</title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        attribute vec4 aColors;
+
+        varying vec4 vColors;
+
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+            vColors = aColors;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColors;
+        void main(void)
+        {
+            gl_FragColor = vColors;
+        }
+    </script>
+    <script type="text/javascript" src="webgl-utils.js"></script>
+    <script type="text/javascript" src="/graphic/other/MV.js"></script>
+    <script type="text/javascript" src="/graphic/other/initShaders.js"></script>
+    <script type="text/javascript" src="p3-triangles.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+      <div style="width: 100px; float:left; height:250px; margin:10px">
+        <button type="button" onclick="clear_canvas()">CLEAR CANVAS</button>
+        <p>Canvas Colors</p>
+
+        <select id="canvas_color_menu" size="7">
+        <option value="0">Default</option>
+        <option value="1">Black</option>
+        <option value="2">Red</option>
+        <option value="3">Yellow</option>
+        <option value="4">Green</option>
+        <option value="5">Blue</option>
+        <option value="6">Magenta</option>
+        <option value="7">Cyan</option>
+        </select>
+      </div>
+
+
+      <div style="width:260px; float:right; height:100px; margin:10px">
+        <button type="button" onclick="draw_points()">DRAW POINTS</button>
+        <p>Point Colors</p>
+        <select id="point_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
+        <p>Triangle Colors</p>
+        <select id="triangle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+      </div>
+
+</body>
+</html>

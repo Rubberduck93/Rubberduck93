@@ -35,16 +35,10 @@ window.onload = function init()
 
     var bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, new Float32Array(verticesData), gl.STATIC_DRAW );
-
-    // Load colors into the GPU
-
-    var colorBufferId = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, colorBufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, new Float32Array(verticesColors), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, verticesData, gl.STATIC_DRAW );
 
 
-    var FSIZE = verticesColors.BYTES_PER_ELEMENT;
+    var FSIZE = verticesData.BYTES_PER_ELEMENT;
     // Associate out shader variables with our data buffer
 
     var aPosition = gl.getAttribLocation( program, "aPosition" );
@@ -52,7 +46,7 @@ window.onload = function init()
       console.log('Failed to get the storage location of aPosition');
       return -1;
     }
-    gl.vertexAttribPointer( aPosition, 3, gl.FLOAT, false, 5 * FSIZE, 0 );
+    gl.vertexAttribPointer( aPosition, 2, gl.FLOAT, false, 5 * FSIZE, 0 );
     gl.enableVertexAttribArray( aPosition );
 
     // Associate out shader variables with our color buffer
@@ -62,7 +56,7 @@ window.onload = function init()
       console.log('Failed to get the storage location of aColor');
       return -1;
     }
-    gl.vertexAttribPointer( aColors, 4, gl.FLOAT, false, 5 * FSIZE, 2 * FSIZE );
+    gl.vertexAttribPointer( aColors, 3, gl.FLOAT, false, 5 * FSIZE, 2 * FSIZE );
     gl.enableVertexAttribArray( aColors );
 
 
@@ -73,25 +67,18 @@ window.onload = function init()
 
 function draw()
 {
-    verticesData = [
-      // X, Y
-      0.0,0.0,  0.0,
-      1.0,0.0,  0.0,
-      1.0,1.0,  0.0
-    ];
-
-    verticesColors = [
-      // R, G, B
-      1.0,0.0,0.0,  1.0,
-      0.0,1.0,0.0,  1.0,
-      0.0,0.0,1.0,  1.0
-    ];
+    verticesData = new Float32Array([
+      // X, Y   R, G, B
+      0.0,0.0,  1.0,0.0,0.0,
+      1.0,0.0,  0.0,1.0,0.0,
+      1.0,1.0,  0.0,0.0,1.0,
+    ]);
 }
 
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
-    //gl.drawArrays( gl.TRIANGLES, 0, verticesData.length/ATTRIBUTES );
-    gl.drawArrays( gl.POINTS, 0, verticesData.length/ATTRIBUTES );
+    gl.drawArrays( gl.TRIANGLES, 0, verticesData.length/5 );
+    //gl.drawArrays( gl.POINTS, 0, verticesData.length/5 );
     //gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
 }
