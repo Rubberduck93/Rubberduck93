@@ -217,8 +217,7 @@ function render()
        gl.vertexAttrib3f(aPosition, triangle_vertices[i], triangle_vertices[i+1], 0.0);
        gl.vertexAttrib3f(aColors, triangle_vertices[i+2], triangle_vertices[i+3], triangle_vertices[i+4]);
        // Draw
-
-       gl.drawArrays(gl.TRIANGLES_FAN,i,3);
+        gl.drawArrays(gl.TRIANGLES_FAN,0,3);
     }
 
 }
