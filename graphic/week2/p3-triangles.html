@@ -5,24 +5,24 @@
     <title>Button</title>
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec4 aPosition;
-        attribute vec4 aColors;
+        //attribute vec4 aColors;
 
-        varying vec4 vColors;
+        //varying vec4 vColors;
 
         void main(void)
         {
             gl_Position = aPosition;
             gl_PointSize = 20.0;
-            vColors = aColors;
+          //  vColors = aColors;
         }
     </script>
 
     <script id="fragment-shader" type="x-shader/x-fragment">
         precision mediump float;
-        varying vec4 vColors;
+      //  varying vec4 vColors;
         void main(void)
         {
-            gl_FragColor = vColors;
+            gl_FragColor = vec4(1.0,0.0,0.0,1.0);
         }
     </script>
     <script type="text/javascript" src="webgl-utils.js"></script>

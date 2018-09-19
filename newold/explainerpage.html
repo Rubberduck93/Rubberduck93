@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Assignment 2</title>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<style type="text/css">
+
+		.center {
+			text-align: center;
+		}
+
+		.container {
+			float: center;
+		}
+
+		.question {
+			color: black;
+			text-align: center;
+			font-weight: bold;
+			font-style: italic;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.answer {
+			color: black;
+			text-align: center;
+			font-size: 14px;
+			font-family: sans-serif;
+		}
+
+		.brushed {
+            fill: #ff3399;
+            stroke: #8e1b54;
+            opacity: 1.0;
+    }
+
+    .non_brushed {
+				fill: yellow;
+				stroke: gray;
+				stroke-width: 0.25;
+				opacity: 0.15;
+    }
+
+		.park {
+			stroke-width: 10px;
+		}
+
+		</style>
+	</head>
+	<body>
+		<h1 class = "left"> Explainer Page </h1>
+		<hr>
+		<h2 class = "left"> Motivation </h2>
+		<hr>
+		<h2 class = "left"> Basic stats </h2>
+		<hr>
+		<h2 class = "left"> Genre </h2>
+		<hr>
+		<h2 class = "left"> Visualizations </h2>
+		<hr>
+		<h2 class = "left"> Discussion </h2>
+		<hr>
+
+
+		<h2 class = "center"> God Historie, Brush, Mulighed for download af dataset, link til explainer page </h2>
+		<hr width="50%">
+
+		<hr style="height:50pt; visibility:hidden;" />
+		<h2 class = "center"> Part 2: Visualizing Murders over Time </h2>
+		<hr width="50%">
+		<p class="question"> Creating a visualization of murders in all of NYC over time. </p>
+
+		<div class="container" id="map"></div>
+		<div class="container" id="bars"></div>
+
+		<script type="text/javascript">
+
+		//Width and height
+			var w = 1200;
+			var h = 1200;
+
+			//Create SVG elementsip
+			var svg = d3.select("#map")///
+						.append("svg")//
+						.attr("width", w)
+						.attr("height", h)
+						.append("g")
+						.attr("align","center");
+
+
+			svg.append("a")
+			.attr("xlink:href", "https://rubberduck93.github.io/")
+			.append("text")
+			.attr("x",500)
+			.attr("y",100)
+			.text("LINK TO VISUALIZATION");
+
+		</script>
+	</body>
+</html>
