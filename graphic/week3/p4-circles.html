@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Button</title>
+    <title>Point, Triangle and Cirlces</title>
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec4 aPosition;
         attribute vec4 aColors;
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="webgl-utils.js"></script>
     <script type="text/javascript" src="/graphic/other/MV.js"></script>
     <script type="text/javascript" src="/graphic/other/initShaders.js"></script>
-    <script type="text/javascript" src="p3-triangles.js"></script>
+    <script type="text/javascript" src="p4-circles.js"></script>
 </head>
 <body>
       <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
@@ -65,6 +65,16 @@
         <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
         <p>Triangle Colors</p>
         <select id="triangle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_circle()">DRAW CIRCLE</button>
+        <p>Circle Colors</p>
+        <select id="circle_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
         <option value="2">Green</option>
