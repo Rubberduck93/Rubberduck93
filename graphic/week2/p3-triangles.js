@@ -80,22 +80,15 @@ window.onload = function init()
 
     // Associate out shader variables with our data buffer
 
-    var vBuffer = gl.createBuffer();
+    vBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
-
-    //gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(point_vertices), gl.STATIC_DRAW);
-
-    //var FSIZE = point_vertices.BYTES_PER_ELEMENT;
-
-    // Posistions
-
 
     aPosition = gl.getAttribLocation( program, "aPosition" );
     gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(aPosition);
 
-    var cBuffer = gl.createBuffer();
+    cBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, 16*maxNumVertices, gl.STATIC_DRAW );
 
@@ -108,7 +101,6 @@ window.onload = function init()
     canvas.addEventListener("mousedown", function(event){
        //gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
        if (draw_points_on) {
-         gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
 
          var x = event.clientX; // x coordinate of a mouse pointer
          var y = event.clientY; // y coordinate of a mouse pointer
@@ -117,13 +109,13 @@ window.onload = function init()
          x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
          y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-         gl.bufferSubData(gl.ARRAY_BUFFER, 8*(point_index),flatten(vec2(x,y)));
-
-         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+         gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
+         gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2']*point_index,flatten(vec2(x,y)));
 
          var t = vec4(point_colors[pointIndex]);
 
-         gl.bufferSubData(gl.ARRAY_BUFFER, 16*point_index, flatten(t));
+         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+         gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec4']*point_index, flatten(t));
 
          point_vertices.push(index);
 
@@ -135,8 +127,6 @@ window.onload = function init()
        }
        else if (draw_triangle_on) {
 
-         gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
-
          var x = event.clientX; // x coordinate of a mouse pointer
          var y = event.clientY; // y coordinate of a mouse pointer
          var rect = event.target.getBoundingClientRect() ;
@@ -144,13 +134,13 @@ window.onload = function init()
          x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
          y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-         gl.bufferSubData(gl.ARRAY_BUFFER, 8*(triangle_index),flatten(vec2(x,y)));
-
-         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+         gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
+         gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec2']*(triangle_index),flatten(vec2(x,y)));
 
          var t = vec4(triangle_colors[triangleIndex]);
 
-         gl.bufferSubData(gl.ARRAY_BUFFER, 16*(triangle_index), flatten(t));
+         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+         gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec4']*(triangle_index), flatten(t));
 
          console.log("click");
          triangle_index++;
@@ -167,7 +157,6 @@ window.onload = function init()
 
 
    } );
-
 
     gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
     render();
@@ -186,19 +175,17 @@ function render()
     console.log("Triangle Array = " + triangle_vertices);
     //gl.drawArrays( gl.TRIANGLES, 0, 1);
 
-
     var point_len = point_vertices.length;
     for(var i=0; i<point_len; i++)
     {
       gl.drawArrays( gl.POINTS, point_vertices[i], 1 );
     }
 
-
-
     var triangle_len = triangle_vertices.length;
     for(var j=0; j<triangle_len; j++)
     {
       gl.drawArrays( gl.TRIANGLE_FAN, triangle_vertices[j], 3 );
+      // 0, len*3
     }
 
 }
