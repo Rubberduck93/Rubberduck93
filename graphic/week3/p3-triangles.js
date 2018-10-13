@@ -84,12 +84,6 @@ window.onload = function init()
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
 
-    //gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(point_vertices), gl.STATIC_DRAW);
-
-    //var FSIZE = point_vertices.BYTES_PER_ELEMENT;
-
-    // Posistions
-
 
     aPosition = gl.getAttribLocation( program, "aPosition" );
     gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
