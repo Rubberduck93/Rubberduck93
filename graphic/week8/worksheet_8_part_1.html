@@ -1,0 +1,432 @@
+
+<html>
+
+<head>
+<title>Learning WebGL &mdash; lesson 5</title>
+<style type="text/css">
+
+.center {
+  text-align: left;
+  font-weight: bold;
+  font-size: 50px;
+  font-family: sans-serif;
+}
+</style>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
+<script type="text/javascript" src="../lib/webgl-utils.js"></script>
+
+<script type="text/javascript" src="../lib/initShaders.js"></script>
+<script type="text/javascript" src="../lib/MV.js"></script>
+<script type="text/javascript" src="../lib/OBJParser.js"></script>
+
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec2 vTextureCoord;
+
+    uniform sampler2D uSampler;
+
+    void main(void) {
+        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec2 vTextureCoord;
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
+    }
+</script>
+
+<script id="teapot-shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vColorTeapot;
+
+    void main(void) {
+        gl_FragColor = vColorTeapot; //vec4(1.0, 0.0, 0.0, 1.0)
+    }
+</script>
+
+<script id="teapot-shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPositionTeapot;
+    attribute vec4 aColorTeapot;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec4 vColorTeapot;
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPositionTeapot, 1.0);
+        vColorTeapot = aColorTeapot;
+    }
+</script>
+
+<body>
+  <h1 class = "center"> Worksheet 8:  Shadow mapping </h1>
+  <h2> short descriptions here </h2>
+</body>
+
+
+<script type="text/javascript">
+
+    var gl;
+
+    var theta = 0;
+
+    var vertices = []
+
+    at = vec3(0, 0, -3);
+    eye = vec3(0, 2, 2);
+    up = vec3(0, 1, 0);
+
+    light = vec3(0.0, 4.0, -2.0);
+
+    m = mat4MV();
+    m[3][3] = 0;
+    m[3][1] = -1/light[1];
+
+    function initGL(canvas) {
+        try {
+            gl = canvas.getContext("experimental-webgl");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+
+        } catch (e) {
+        }
+        if (!gl) {
+            alert("no WebGL");
+        }
+    }
+
+    function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+            return null;
+        }
+
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+            if (k.nodeType == 3) {
+                str += k.textContent;
+            }
+            k = k.nextSibling;
+        }
+
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+            return null;
+        }
+
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert(gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
+    }
+
+
+    var shaderProgram;
+
+    function initShaders() {
+        var fragmentShader = getShader(gl, "shader-fs");
+        var vertexShader = getShader(gl, "shader-vs");
+
+        shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+
+        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+            alert("Could not initialise shaders");
+        }
+
+        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+        shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+        shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+
+        //gl.useProgram(shaderProgram);
+
+        // Teapot
+        var teapotFragmentShader = getShader(gl, "teapot-shader-fs");
+        var teapotVertexShader = getShader(gl, "teapot-shader-vs");
+
+        teapotShaderProgram = gl.createProgram();
+        gl.attachShader(teapotShaderProgram, teapotVertexShader);
+        gl.attachShader(teapotShaderProgram, teapotFragmentShader);
+        gl.linkProgram(teapotShaderProgram);
+
+        if (!gl.getProgramParameter(teapotShaderProgram, gl.LINK_STATUS)) {
+            alert("Could not initialise teapot shaders");
+        }
+
+        //gl.useProgram(teapotShaderProgram);
+
+        teapotShaderProgram.pMatrixUniform = gl.getUniformLocation(teapotShaderProgram, "uPMatrix");
+        teapotShaderProgram.mvMatrixUniform = gl.getUniformLocation(teapotShaderProgram, "uMVMatrix");
+        teapotShaderProgram.samplerUniform = gl.getUniformLocation(teapotShaderProgram, "uSampler");
+    }
+
+
+    var groundTexture;
+    var redTexture;
+
+    function initTexture() {
+
+        gl.activeTexture(gl.TEXTURE0);
+        groundTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, groundTexture);
+        groundTexture.image = new Image();
+        groundTexture.image.src = "../lib/xamp23.png";
+
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, groundTexture.image);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+
+        gl.activeTexture(gl.TEXTURE1);
+        redTexture = gl.createTexture();
+        redPixel = new Uint8Array([255, 0, 0, 255]);
+        gl.bindTexture(gl.TEXTURE_2D, redTexture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,gl.RGBA, gl.UNSIGNED_BYTE, redPixel);
+
+
+        gl.activeTexture(gl.TEXTURE2);
+        blackTexture = gl.createTexture();
+        blackPixel = new Uint8Array([0, 0, 0, 175]);
+        gl.bindTexture(gl.TEXTURE_2D, blackTexture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,gl.RGBA, gl.UNSIGNED_BYTE, blackPixel);
+
+    }
+
+    var mvMatrix = mat4.create();
+    var pMatrix = mat4.create();
+
+    function initArrays(teapot) {
+          vertices = [
+            // Ground
+            vec3(-2, -1, -1),
+            vec3(2, -1, -1),
+            vec3(2, -1, -5),
+            vec3(-2, -1, -1),
+            vec3(2, -1, -5),
+            vec3(-2, -1, -5),
+
+          ];
+
+          textureCoords = [
+            // Ground
+            vec2(0, 0),
+            vec2(1, 0),
+            vec2(1, 1),
+            vec2(0, 0),
+            vec2(1, 1),
+            vec2(0, 1),
+
+          ];
+
+
+          //console.log(drawingInfo.indices);
+          //vertices.push(drawingInfo.indices);
+          //console.log(vertices);
+          //console.log(teapot);
+
+          for (var i = 0; i < teapot.objects[0].faces.length; i++) {
+          face = teapot.objects[0].faces[i];
+              for (var j = 0; j < 3; j++) {
+                  vertex = teapot.vertices[face.vIndices[j]];
+                  //normal = teapot.normals[face.nIndices[j]];
+                  vertices.push(vec3(vertex.x, vertex.y, vertex.z-2));
+                  //normals.push(vec3(normal.x, normal.y, normal.z));
+                  textureCoords.push(vec3(0, 0, 0));
+              }
+          }
+
+
+    }
+
+    function initBuffers()
+    {
+        gl.useProgram(shaderProgram);
+        shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+        shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
+        // Positions
+        positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW);
+
+        // Texture
+        textureBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(textureCoords), gl.STATIC_DRAW);
+
+        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+
+        // Teapot
+        gl.useProgram(teapotShaderProgram);
+        teapotShaderProgram.vertexPositionAttribute = gl.getAttribLocation(teapotShaderProgram, "aVertexPositionTeapot");
+        teapotShaderProgram.colorAttribute = gl.getAttribLocation(teapotShaderProgram, "aColorTeapot");
+
+        // Positions
+        teapotPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, teapotPositionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.vertices, gl.STATIC_DRAW);
+
+        // Colors
+        teapotColorBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, teapotColorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.colors, gl.STATIC_DRAW);
+
+        gl.uniformMatrix4fv(teapotShaderProgram.pMatrixUniform, false, pMatrix);
+        gl.uniformMatrix4fv(teapotShaderProgram.mvMatrixUniform, false, mvMatrix);
+
+    }
+
+    function drawScene()
+    {
+
+        // Shadows
+        theta += 0.01;
+
+        modelViewMatrix = lookAt(eye, at, up);
+
+        // rotate light source
+        light[0] = Math.sin(theta);
+        light[2] = Math.cos(theta);
+
+        // Shadows
+        shadowMVMatrix = mult(modelViewMatrix, translate(light[0], light[1] - 1.01, light[2]));
+        shadowMVMatrix = mult(shadowMVMatrix, m);
+        shadowMVMatrix = mult(shadowMVMatrix, translate(-light[0], -(light[1] - 1.01),-light[2]));
+
+        // model-view matrix for shadow then render
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        gl.useProgram(shaderProgram);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+        gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, textureBuffer);
+        gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
+        gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, 2, gl.FLOAT, false, 0, 0);
+
+        // Ground
+        gl.depthFunc(gl.LESS);
+        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, flatten(modelViewMatrix));
+        gl.uniform1i(shaderProgram.samplerUniform, 0);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        // Shadows
+        gl.depthFunc(gl.GREATER);
+        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, flatten(shadowMVMatrix) );
+        gl.uniform1i(shaderProgram.samplerUniform, 2);
+        gl.drawArrays(gl.TRIANGLES, 6, drawingInfo.indices.length);
+
+        gl.useProgram(teapotShaderProgram);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, teapotPositionBuffer);
+        gl.enableVertexAttribArray(teapotShaderProgram.vertexPositionAttribute);
+        //gl.vertexAttribPointer(teapotShaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, teapotColorBuffer);
+        gl.enableVertexAttribArray(teapotShaderProgram.colorAttribute);
+        //gl.vertexAttribPointer(teapotShaderProgram.colorAttribute, 5, gl.FLOAT, false, 0, 0);
+
+        // Teapot
+        gl.depthFunc(gl.LESS);
+        gl.uniformMatrix4fv(teapotShaderProgram.mvMatrixUniform, false, flatten(modelViewMatrix));
+        //gl.uniform1i(teapotShaderProgram.samplerUniform, 1);
+        gl.drawArrays(gl.TRIANGLES, 6, drawingInfo.indices.length);
+
+    }
+
+    function tick() {
+        requestAnimFrame(tick);
+        drawScene();
+    }
+
+    var drawingInfo;
+
+    function webGLStart() {
+        var canvas = document.getElementById("lesson05-canvas");
+
+        console.log("start");
+        initGL(canvas);
+
+        gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+
+        gl.enable(gl.BLEND);
+        gl.blendEquation(gl.FUNC_ADD);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        mat4.perspective(35, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+        teapotObj = loadFileAJAX('teapot.obj');
+        teapot = new OBJDoc('teapot.obj');
+        teapot.parse(teapotObj, 0.25, false);
+
+        drawingInfo = teapot.getDrawingInfo();
+
+        initShaders();
+        initArrays(teapot);
+        initBuffers();
+        initTexture();
+
+        tick();
+    }
+
+    function loadFileAJAX(name)
+    {
+        var xhr = new XMLHttpRequest();
+        var okStatus = (document.location.protocol === "file:" ? 0 : 200);
+        xhr.open('GET', name, false);
+        xhr.send(null);
+        return xhr.status == okStatus ? xhr.responseText : null;
+    }
+
+
+
+
+
+</script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+    <canvas id="lesson05-canvas" style="border: none;" width="500" height="500"></canvas>
+    <p> </p>
+    <a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Worksheet 7</a>
+    <a> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </a>
+    <a href="http://learningwebgl.com/blog/?p=507">Worksheet 9 &gt;&gt;</a><br />
+</body>
+
+</html>

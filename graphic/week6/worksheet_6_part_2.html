@@ -1,0 +1,332 @@
+
+<html>
+
+<head>
+<title>Learning WebGL &mdash; lesson 5</title>
+<style type="text/css">
+
+.center {
+  text-align: left;
+  font-weight: bold;
+  font-size: 50px;
+  font-family: sans-serif;
+}
+</style>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
+<script type="text/javascript" src="../lib/webgl-utils.js"></script>
+
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec2 vTextureCoord;
+
+    uniform sampler2D uSampler;
+
+    void main(void) {
+        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec2 aTextureCoord;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec2 vTextureCoord;
+
+
+    void main(void) {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vTextureCoord = aTextureCoord;
+    }
+</script>
+<body>
+  <h1 class = "center"> Worksheet 6: Texture mapping </h1>
+  <h2> short descriptions here </h2>
+  <div style="width: 100px; float:left; height:250px; margin:17px">
+    <button type="button" onclick="wrapping_mode()">Change Wrapping Mode</button>
+    <p></p>
+
+    <select id="wrapping_mode_menu" size="2">
+    <option value="0">Repeat</option>
+    <option value="1">Clamp-to-edge</option>
+    </select>
+
+
+  </div>
+
+  <div style="width: 1240px; float:right; height:250px; margin:10px">
+    <button type="button" onclick="filtering_mode()">Change Filtering Mode</button>
+    <p></p>
+
+    <select id="filtering_mode_menu" size="3">
+    <option value="0">Nearest</option>
+    <option value="1">Linear</option>
+    <option value="2">Mipmap</option>
+    </select>
+  </div>
+
+</body>
+
+
+<script type="text/javascript">
+
+    var gl;
+
+    function initGL(canvas) {
+        try {
+            gl = canvas.getContext("experimental-webgl");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+
+        } catch (e) {
+        }
+        if (!gl) {
+            alert("Could not initialise WebGL, sorry :-(");
+        }
+    }
+
+    function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+            return null;
+        }
+
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+            if (k.nodeType == 3) {
+                str += k.textContent;
+            }
+            k = k.nextSibling;
+        }
+
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+            return null;
+        }
+
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert(gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
+    }
+
+
+    var shaderProgram;
+
+    function initShaders() {
+        var fragmentShader = getShader(gl, "shader-fs");
+        var vertexShader = getShader(gl, "shader-vs");
+
+        shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+
+        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+            alert("Could not initialise shaders");
+        }
+
+        gl.useProgram(shaderProgram);
+
+        shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+        gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+        shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
+        gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
+
+        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+        shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+        shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+    }
+
+    var texSize = 64;
+    var numRows = 8;
+    var numCols = 8;
+
+    var myTexels = new Uint8Array(4*texSize*texSize);
+
+    for (var i = 0; i < texSize; ++i) {
+      for (var j = 0; j < texSize; ++j) {
+        var patchx = Math.floor(i/(texSize/numRows));
+        var patchy = Math.floor(j/(texSize/numCols));
+        var c = (patchx%2 !== patchy%2 ? 255 : 0);
+        myTexels[4*i*texSize+4*j] = c;
+        myTexels[4*i*texSize+4*j+1] = c;
+        myTexels[4*i*texSize+4*j+2] = c;
+        myTexels[4*i*texSize+4*j+3] = 255;
+      }
+    }
+
+    var repeatorclamp;
+    var nearlinemap;
+
+    function initTexture() {
+        gl.activeTexture(gl.TEXTURE0);
+        groundTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, groundTexture);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, texSize, texSize, 0,gl.RGBA, gl.UNSIGNED_BYTE, myTexels);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, nearlinemap);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, nearlinemap);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, repeatorclamp);
+
+    }
+
+
+    var mvMatrix = mat4.create();
+    var pMatrix = mat4.create();
+
+    function setMatrixUniforms() {
+        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+    }
+
+
+    var cubeVertexPositionBuffer;
+    var cubeVertexTextureBuffer;
+    var cubeVertexIndexBuffer;
+
+    function initBuffers() {
+        cubeVertexPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+        vertices = [
+
+            -4.0, -1.0,  -1.0,
+             4.0, -1.0,  -1.0,
+             4.0,  -1.0,  -21.0,
+            -4.0,  -1.0,  -21.0,
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        cubeVertexPositionBuffer.itemSize = 3;
+        cubeVertexPositionBuffer.numItems = 4; //24
+
+        cubeVertexTextureCoordBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
+        var textureCoords = [
+
+          0.0, 0.0,
+          1.0, 0.0,
+          1.0, 1.0,
+          0.0, 1.0,
+
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
+        cubeVertexTextureCoordBuffer.itemSize = 2;
+        cubeVertexTextureCoordBuffer.numItems = 4; //24
+
+        cubeVertexIndexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+        var cubeVertexIndices = [
+            0, 1, 2,      0, 2, 3,
+        ];
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
+        cubeVertexIndexBuffer.itemSize = 1;
+        cubeVertexIndexBuffer.numItems = 6; //36
+    }
+
+    function drawScene() {
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+        mat4.identity(mvMatrix);
+
+        mat4.translate(mvMatrix, [0.0, 0.0, -5.0]);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
+        gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, cubeVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        gl.uniform1i(shaderProgram.samplerUniform, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+        setMatrixUniforms();
+        gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+    }
+
+
+    function tick() {
+        requestAnimFrame(tick);
+        drawScene();
+    }
+
+    var wrapping_mode_index;
+    var filtering_mode_index;
+
+    function webGLStart() {
+        var canvas = document.getElementById("lesson05-canvas");
+        var wrapping_mode_menu = document.getElementById("wrapping_mode_menu");
+        var filtering_mode_menu = document.getElementById("filtering_mode_menu");
+
+        wrapping_mode_index = 0;
+        filtering_mode_index = 0;
+
+        console.log("start");
+        initGL(canvas);
+
+        repeatorclamp = gl.REPEAT;
+        nearlinemap = gl.NEAREST;
+
+        initShaders();
+        initBuffers();
+        initTexture();
+
+        wrapping_mode_menu.addEventListener("click", function() { wrapping_mode_index = wrapping_mode_menu.selectedIndex; });
+        filtering_mode_menu.addEventListener("click", function() { filtering_mode_index = filtering_mode_menu.selectedIndex; });
+
+        gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+        gl.enable(gl.DEPTH_TEST);
+
+        tick();
+    }
+
+
+    function wrapping_mode()
+    {
+      if (wrapping_mode_index == 0) repeatorclamp = gl.REPEAT;
+      if (wrapping_mode_index == 1) repeatorclamp = gl.CLAMP_TO_EDGE;
+      initTexture();
+    }
+
+    function filtering_mode()
+    {
+      if (filtering_mode_index == 0) nearlinemap = gl.NEAREST;
+      if (filtering_mode_index == 1) nearlinemap = gl.LINEAR;
+      if (filtering_mode_index == 2) nearlinemap = gl.LINEAR_MIPMAP_NEAREST;
+      initTexture();
+    }
+
+
+</script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+    <canvas id="lesson05-canvas" style="border: none;" width="500" height="500"></canvas>
+    <p> </p>
+    <a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Worksheet 5</a>
+    <a> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </a>
+    <a href="http://learningwebgl.com/blog/?p=507">Worksheet 7 &gt;&gt;</a><br />
+</body>
+
+</html>

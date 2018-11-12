@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 1: Getting started with WebGL</title>
+    <h1> Worksheet 1: Getting started with WebGL</h1>
+    <h2> Part 2: Shaders and buffers </h2>
+    <meta charset="UTF-8">
+    <title>Points</title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition;
+        void main(void)
+        {
+            gl_Position = vPosition;
+            gl_PointSize = 20.0;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        void main(void)
+        {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+		<script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+</body>
+<br/>
+<a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Worksheet 1 Part 1</a>
+<a href="http://learningwebgl.com/blog/?p=507">Worksheet 1 Part 2 &gt;&gt;</a><br />
+
+</html>
+
+<script type="text/javascript">
+
+  var xCenterOfCircle;
+  var yCenterOfCircle;
+  var centerOfCircle;
+  var radiusOfCircle = 0.5;
+  var ATTRIBUTES = 2;
+  var noOfFans = 360;
+  var anglePerFan;
+  var verticesData = [];
+  var canvas;
+  var gl;
+
+  window.onload = function init()
+  {
+      canvas = document.getElementById( "gl-canvas" );
+
+      gl = WebGLUtils.setupWebGL( canvas );
+      if ( !gl ) { alert( "WebGL isn't available" ); }
+
+      //
+      //  Configure WebGL
+      //
+      gl.viewport( 0.0, 0.0, canvas.width, canvas.height );
+      gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+
+      //  Load shaders and initialize attribute buffers
+
+      var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+      gl.useProgram( program );
+
+
+      draw();
+
+      // Load the data into the GPU
+
+      var bufferId = gl.createBuffer();
+      gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+      gl.bufferData( gl.ARRAY_BUFFER, new Float32Array(verticesData), gl.STATIC_DRAW );
+
+      // Associate out shader variables with our data buffer
+
+      var vPosition = gl.getAttribLocation( program, "vPosition" );
+      gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
+      gl.enableVertexAttribArray( vPosition );
+
+
+      render();
+  }
+
+
+  function draw()
+  {
+      verticesData = [
+        0.0,0.0,
+        1.0,0.0,
+        1.0,1.0
+      ];
+  }
+
+  function render()
+  {
+      gl.clear( gl.COLOR_BUFFER_BIT );
+      gl.drawArrays( gl.POINTS, 0, verticesData.length/ATTRIBUTES);
+  }
+
+</script>

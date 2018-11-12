@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title> Worksheet 1: Getting started with WebGL</title>
+		</style>
+	</head>
+	<h1> Worksheet 1: Getting started with WebGL</h1>
+	<h2> Part 1: Setup a basic WebGL application </h2>
+	<body onload="Init();">
+		<canvas id="surface" width="512" height="512">
+			Your browser does not support HTML5
+		</canvas>
+		<script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+		<script type="text/javascript" src="../lib/MV.js"></script>
+	</body>
+
+	<br/>
+	<a href="http://learningwebgl.com/blog/?p=507">Worksheet 1 Part 2 &gt;&gt;</a><br />
+</html>
+
+<script type="text/javascript">
+
+	var Init = function () {
+
+		var canvas = document.getElementById('surface');
+		var gl = canvas.getContext('webgl');
+
+		if (!gl) {
+			console.log('WebGL not supported, falling back on experimental-webgl');
+			gl = canvas.getContext('experimental-webgl');
+		}
+
+		if (!gl) {
+			alert('Your browser does not support WebGL');
+		}
+
+		gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	}
+
+</script>
