@@ -1,3 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 1: Getting started with WebGL</title>
+    <h1> Worksheet 1: Getting started with WebGL</h1>
+    <h2> Part 3: Triangles </h2>
+    <meta charset="UTF-8">
+    <title>Triangle</title>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        attribute vec4 aColors;
+
+        varying vec4 vColors;
+
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+            vColors = aColors;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColors;
+        void main(void)
+        {
+            gl_FragColor = vColors;
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+		<script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+</body>
+<br/>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_1_part_2.html">&lt;&lt; Worksheet 1 Part 2</a>
+<a> ||| </a>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_1_part_4.html">Worksheet 1 Part 4 &gt;&gt;</a><br />
+
+</html>
+
+<script type="text/javascript">
+
 var xCenterOfCircle;
 var yCenterOfCircle;
 var centerOfCircle;
@@ -82,3 +130,5 @@ function render()
     //gl.drawArrays( gl.POINTS, 0, verticesData.length/5 );
     //gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
 }
+
+</script>
