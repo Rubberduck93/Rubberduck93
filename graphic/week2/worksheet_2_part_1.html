@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 2: Input devices and interaction</title>
+    <h1> Worksheet 2: Input devices and interaction</h1>
+    <h2> Part 1: Draw Points </h2>
+    <meta charset="UTF-8">
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        void main(void)
+        {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+    <script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+</body>
+<br/>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_1_part_5.html">&lt;&lt; Worksheet 1 Part 5</a>
+<a> ||| </a>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_2_part_2.html">Worksheet 2 Part 2 &gt;&gt;</a><br />
+
+</html>
+
+<script type="text/javascript">
+
+
+var ATTRIBUTES = 2;
+
+var verticesData = [];
+var pointerData = [];
+var canvas;
+var gl;
+
+window.onload = function init()
+{
+    canvas = document.getElementById( "gl-canvas" );
+
+    gl = WebGLUtils.setupWebGL( canvas );
+    if ( !gl ) { alert( "WebGL isn't available" ); }
+
+    gl.viewport( 0.0, 0.0, canvas.width, canvas.height );
+    gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+
+    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    gl.useProgram( program );
+
+    var aPosition = gl.getAttribLocation( program, "aPosition" );
+
+    canvas.onmousedown = function(ev){ click(ev, gl, canvas, aPosition); };
+
+    gl.clear( gl.COLOR_BUFFER_BIT );
+
+    draw();
+    pass(aPosition);
+}
+
+function draw()
+{
+    verticesData = [
+      0.0,0.0,
+      1.0,0.0,
+      1.0,1.0
+    ];
+}
+
+function click(ev, gl, canvas, aPosition) {
+  var x = ev.clientX;
+  var y = ev.clientY;
+  var rect = ev.target.getBoundingClientRect() ;
+
+  x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
+  y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
+
+  verticesData.push(x);
+  verticesData.push(y);
+
+  gl.clear(gl.COLOR_BUFFER_BIT);
+
+  pass(aPosition);
+}
+
+function pass(aPosition)
+{
+  var len = verticesData.length;
+  for(var i = 0; i < len; i += 2) {
+
+    gl.vertexAttrib3f(aPosition, verticesData[i], verticesData[i+1], 0.0);
+
+    gl.drawArrays(gl.POINTS, 0, 1);
+  }
+}
+</script>

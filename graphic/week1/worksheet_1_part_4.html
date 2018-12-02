@@ -5,7 +5,6 @@
     <h1> Worksheet 1: Getting started with WebGL</h1>
     <h2> Part 4: A rotating square </h2>
     <meta charset="UTF-8">
-    <title>Square</title>
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec2 aVertexPosition;
 
@@ -67,15 +66,10 @@ let vertexBuffer;
 let vertexNumComponents;
 let vertexCount;
 
-// Rendering data shared with the
-// scalers.
-
 let uScalingFactor;
 let uGlobalColor;
 let uRotationVector;
 let aVertexPosition;
-
-// Animation timing
 
 let previousTime = 0.0;
 let degreesPerSecond = 90.0;
@@ -87,7 +81,6 @@ window.onload = function init()
 
   gl = WebGLUtils.setupWebGL( canvas );
   if ( !gl ) { alert( "WebGL isn't available" ); }
-  //  Load shaders and initialize attribute buffers
 
   program = initShaders( gl, "vertex-shader", "fragment-shader" );
   gl.useProgram( program );
@@ -97,8 +90,6 @@ window.onload = function init()
   currentScale = [1.0, aspectRatio];
 
 	draw();
-
-	// Load the data into the GPU
 
 	vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -134,12 +125,9 @@ function animateScene()
   currentRotation[0] = Math.sin(radians);
   currentRotation[1] = Math.cos(radians);
 
-	uScalingFactor =
-      gl.getUniformLocation(program, "uScalingFactor");
-  uGlobalColor =
-      gl.getUniformLocation(program, "uGlobalColor");
-  uRotationVector =
-      gl.getUniformLocation(program, "uRotationVector");
+	uScalingFactor = gl.getUniformLocation(program, "uScalingFactor");
+  uGlobalColor = gl.getUniformLocation(program, "uGlobalColor");
+  uRotationVector = gl.getUniformLocation(program, "uRotationVector");
 
 	gl.uniform2fv(uScalingFactor, currentScale);
   gl.uniform2fv(uRotationVector, currentRotation);
@@ -147,12 +135,10 @@ function animateScene()
 
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
- aVertexPosition =
-		 gl.getAttribLocation(program, "aVertexPosition");
+ aVertexPosition = gl.getAttribLocation(program, "aVertexPosition");
 
  gl.enableVertexAttribArray(aVertexPosition);
- gl.vertexAttribPointer(aVertexPosition, vertexNumComponents,
-			 gl.FLOAT, false, 0, 0);
+ gl.vertexAttribPointer(aVertexPosition, vertexNumComponents, gl.FLOAT, false, 0, 0);
 
  gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
 

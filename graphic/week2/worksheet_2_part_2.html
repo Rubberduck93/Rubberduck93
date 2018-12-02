@@ -1,3 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 2: Input devices and interaction</title>
+    <h1> Worksheet 2: Input devices and interaction</h1>
+    <h2> Part 2: Adding Buttons </h2>
+    <meta charset="UTF-8">
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        attribute vec4 aColors;
+
+        varying vec4 vColors;
+
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+            vColors = aColors;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColors;
+        void main(void)
+        {
+            gl_FragColor = vColors;
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+    <script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+      <div style="width: 100px; float:left; height:250px; margin:10px">
+        <button type="button" onclick="render()">CLEAR CANVAS</button>
+        <p>Canvas Colors</p>
+
+        <select id="canvas_color_menu" size="7">
+        <option value="0">Default</option>
+        <option value="1">Black</option>
+        <option value="2">Red</option>
+        <option value="3">Yellow</option>
+        <option value="4">Green</option>
+        <option value="5">Blue</option>
+        <option value="6">Magenta</option>
+        <option value="7">Cyan</option>
+        </select>
+      </div>
+
+
+      <div style="width:260px; float:right; height:100px; margin:10px">
+        <button type="button" onclick="draw_points()">DRAW POINTS</button>
+        <p>Point Colors</p>
+        <select id="point_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+      </div>
+
+</body>
+<br/>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_2_part_1.html">&lt;&lt; Worksheet 2 Part 1</a>
+<a> ||| </a>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_2_part_3.html">Worksheet 2 Part 3 &gt;&gt;</a><br />
+
+</html>
+
+<script type="text/javascript">
 
 var verticesData = [];
 var canvas_colors = [];
@@ -5,36 +79,26 @@ var point_colors = [];
 var canvas;
 var canvas_menu;
 var point_menu;
-var triangle_menu;
 var canvasIndex = 0;
 var pointIndex = 0;
-var triangleIndex = 0;
 var gl;
 
 var draw_points_on = false;
-var draw_triangle_on = false;
-
-
 
 window.onload = function init()
 {
     canvas = document.getElementById( "gl-canvas" );
     canvas_menu = document.getElementById("canvas_color_menu");
     point_menu = document.getElementById("point_color_menu");
-    triangle_menu = document.getElementById("triangle_color_menu");
-
 
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
-
-    //  Load shaders and initialize attribute buffers
 
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
     canvas_menu.addEventListener("click", function() { canvasIndex = canvas_menu.selectedIndex; });
     point_menu.addEventListener("click", function() { pointIndex = point_menu.selectedIndex; });
-    triangle_menu.addEventListener("click", function() { triangleIndex = triangle_menu.selectedIndex; });
 
     canvas_colors = [
       vec4(0.3921, 0.5843, 0.9294, 1.0), // default
@@ -54,21 +118,9 @@ window.onload = function init()
       vec4(0.0, 0.0, 1.0, 1.0), // blue
     ];
 
-    triangle_colors = [
-      vec4(0.0, 0.0, 0.0, 1.0), // black
-      vec4(1.0, 0.0, 0.0, 1.0), // red
-      vec4(0.0, 1.0, 0.0, 1.0), // green
-      vec4(0.0, 0.0, 1.0, 1.0), // blue
-    ];
-
-    // Load the data into the GPU
-
-    // Associate out shader variables with our data buffer
     var aPosition = gl.getAttribLocation( program, "aPosition" );
 
     var aColors = gl.getAttribLocation( program, "aColors" );
-
-    // Register function (event handler) to be called on a mouse press
 
     canvas.onmousedown = function(ev){ click(ev, gl, canvas, aPosition,aColors); };
 
@@ -89,15 +141,15 @@ function draw()
 }
 
 function click(ev, gl, canvas, aPosition, aColors) {
-  if (draw_points_on && !draw_triangle_on)
+  if (draw_points_on)
   {
-    var x = ev.clientX; // x coordinate of a mouse pointer
-    var y = ev.clientY; // y coordinate of a mouse pointer
+    var x = ev.clientX;
+    var y = ev.clientY;
     var rect = ev.target.getBoundingClientRect() ;
 
     x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
     y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
-    // Store the coordinates to g_points array
+
     verticesData.push(x);
     verticesData.push(y);
 
@@ -105,28 +157,6 @@ function click(ev, gl, canvas, aPosition, aColors) {
     verticesData.push(point_colors[pointIndex][1]);
     verticesData.push(point_colors[pointIndex][2]);
 
-    // Clear <canvas>
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    pass(aPosition,aColors);
-  }
-  if (draw_triangle_on && !draw_points_on)
-  {
-    var x = ev.clientX; // x coordinate of a mouse pointer
-    var y = ev.clientY; // y coordinate of a mouse pointer
-    var rect = ev.target.getBoundingClientRect() ;
-
-    x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
-    y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
-    // Store the coordinates to g_points array
-    verticesData.push(x);
-    verticesData.push(y);
-
-    verticesData.push(triangle_colors[triangleIndex][0]);
-    verticesData.push(triangle_colors[triangleIndex][1]);
-    verticesData.push(triangle_colors[triangleIndex][2]);
-
-    // Clear <canvas>
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     pass(aPosition,aColors);
@@ -136,11 +166,11 @@ function click(ev, gl, canvas, aPosition, aColors) {
 function pass(aPosition,aColors)
 {
   var len = verticesData.length;
-  for(var i = 0; i < len; i += 5) { //0,1 - 2,3 - 4,5    0,1-5,6-10,11
-    // Pass the position of a point to a_Position variable
+  for(var i = 0; i < len; i += 5) {
+
     gl.vertexAttrib3f(aPosition, verticesData[i], verticesData[i+1], 0.0);
     gl.vertexAttrib3f(aColors,verticesData[i+2],verticesData[i+3],verticesData[i+4]);
-    // Draw
+
     gl.drawArrays(gl.POINTS, 0, 1);
 
   }
@@ -157,15 +187,6 @@ function draw_points()
   }
 }
 
-function draw_triangle()
-{
-  if (draw_triangle_on) {
-    draw_triangle_on = false;
-  } else {
-    draw_triangle_on = true;
-  }
-}
-
 function render()
 {
     verticesData = [];
@@ -174,5 +195,6 @@ function render()
       canvas_colors[canvasIndex][2], 1.0);
     gl.clear( gl.COLOR_BUFFER_BIT );
     //gl.drawArrays( gl.POINTS, 0, verticesData.length/ATTRIBUTES);
-    //gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
 }
+
+</script>

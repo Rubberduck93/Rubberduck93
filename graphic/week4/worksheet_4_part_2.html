@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 4: Local illumination – Gouraud and Phong shading</title>
+    <h1> Worksheet 4: Local illumination – Gouraud and Phong shading</h1>
+    <h2> Part 2: Use depth buffer and back face culling to remove hidden surfaces.</h2>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+    <script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+    <script type="text/javascript" src="../lib/MV.js"></script>
+
+    <script id="shader-fs" type="x-shader/x-fragment">
+        precision mediump float;
+
+        varying vec4 vColor;
+
+        void main(void) {
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+            gl_FragColor = vColor;
+        }
+    </script>
+
+    <script id="shader-vs" type="x-shader/x-vertex">
+        attribute vec3 aVertexPosition;
+
+        varying vec4 vColor;
+
+        uniform mat4 uMVMatrix;
+        uniform mat4 uPMatrix;
+
+        void main(void) {
+            vColor = vec4((0.5 * aVertexPosition.xyz) + 0.5, 1.0);
+            gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        }
+    </script>
+</head>
+</html>
+
+<script type="text/javascript">
+
+  var gl;
+  function initGL(canvas) {
+      try {
+        gl = canvas.getContext("experimental-webgl");
+        gl.viewportWidth = canvas.width;
+        gl.viewportHeight = canvas.height;
+      } catch(e) {
+      }
+      if (!gl) {
+        alert("Could not initialise WebGL, sorry :-( ");
+      }
+  }
+
+  function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+            return null;
+        }
+
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+            if (k.nodeType == 3) {
+                str += k.textContent;
+            }
+            k = k.nextSibling;
+        }
+
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+            return null;
+        }
+
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert(gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
+  }
+
+
+  var shaderProgram;
+  function initShaders() {
+      var fragmentShader = getShader(gl, "shader-fs");
+      var vertexShader = getShader(gl, "shader-vs");
+
+      shaderProgram = gl.createProgram();
+      gl.attachShader(shaderProgram, vertexShader);
+      gl.attachShader(shaderProgram, fragmentShader);
+      gl.linkProgram(shaderProgram);
+
+      if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        alert("Could not initialise shaders");
+      }
+
+      gl.useProgram(shaderProgram);
+
+      shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+      gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+      shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+      shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+  }
+
+  var mvMatrix = mat4MV();
+  var pMatrix = mat4.create();
+
+  function setMatrixUniforms(i) {
+    gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+    gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, flatten(mvMatrix[i]));
+  }
+
+  function triangle(a, b, c) {
+    pointsArray.push(a);
+    pointsArray.push(b);
+    pointsArray.push(c);
+    index += 3;
+  }
+
+  function divideTriangle(a, b, c, count)
+  {
+    if (count > 0) {
+      var ab = normalize(mix(a, b, 0.5), true);
+      var ac = normalize(mix(a, c, 0.5), true);
+      var bc = normalize(mix(b, c, 0.5), true);
+      divideTriangle(a, ab, ac, count - 1);
+      divideTriangle(ab, b, bc, count - 1);
+      divideTriangle(bc, c, ac, count - 1);
+      divideTriangle(ab, bc, ac, count - 1);
+    }
+    else {
+      triangle(a, b, c);
+    }
+  }
+
+  function tetrahedron(a, b, c, d, n)
+  {
+    divideTriangle(a, b, c, n);
+    divideTriangle(d, c, b, n);
+    divideTriangle(a, d, b, n);
+    divideTriangle(a, c, d, n);
+  }
+
+  var sphereVertexPositionBuffer;
+
+  function initBuffers() {
+
+    var va = vec4(0.0, 0.0, -1.0, 1);
+    var vb = vec4(0.0, 0.942809, 0.333333, 1);
+    var vc = vec4(-0.816497, -0.471405, 0.333333, 1);
+    var vd = vec4(0.816497, -0.471405, 0.333333, 1);
+
+    tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
+
+    sphereVertexPositionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexPositionBuffer);
+    gl.bufferData( gl.ARRAY_BUFFER, flatten(pointsArray), gl.STATIC_DRAW);
+
+  }
+
+  function drawScene() {
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.cullFace(gl.FRONT);
+    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+    mat4.identity(mvMatrix);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexPositionBuffer);
+    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 4, gl.FLOAT, false, 0, 0);
+
+    mvMatrix[0] = translate([0.0, 0.0, -4.0]);
+    mvMatrix[0] = mult(mvMatrix[0], rotate(degree, [1, 1, 1]));
+    setMatrixUniforms(0);
+    for( var i = 0; i < index; i += 3) {
+        gl.drawArrays( gl.TRIANGLES, i, 3 );
+    }
+
+  }
+
+  function tick() {
+      degree++;
+      requestAnimFrame(tick);
+      drawScene();
+  }
+
+  function increment_subdivision()
+  {
+    numTimesToSubdivide++;
+    index = 0;
+    pointsArray = [];
+    initBuffers();
+  }
+
+  function decrement_subdivision()
+  {
+    numTimesToSubdivide--;
+    index = 0;
+    pointsArray = [];
+    initBuffers();
+  }
+
+  var numTimesToSubdivide;
+  var index;
+  var degree;
+  var pointsArray;
+
+  function webGLStart() {
+      var canvas = document.getElementById("gl-canvas");
+      numTimesToSubdivide = 0;
+      index = 0;
+      degree = 0;
+      pointsArray = [];
+
+      initGL(canvas);
+      initShaders();
+      initBuffers();
+
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.enable(gl.DEPTH_TEST);
+
+      tick();
+  }
+
+</script>
+
+<body onload="webGLStart();">
+  <canvas id="gl-canvas" style="border: none;" width="500" height="500"></canvas>
+  <br/>
+  <button type="button" onclick="increment_subdivision()">Increment Subdivision++</button>
+  <button type="button" onclick="decrement_subdivision()">Decrement Subdivision--</button>
+  <br/><br/>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_3_part_1.html">&lt;&lt; Worksheet 3 Part 1</a>
+  <a> ||| </a>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_3_part_3.html">Worksheet 3 Part 3 &gt;&gt;</a><br />
+</body>

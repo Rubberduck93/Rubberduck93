@@ -2,17 +2,11 @@
 <html>
 
 <head>
-<title>Learning WebGL &mdash; lesson 5</title>
-<style type="text/css">
-
-.center {
-  text-align: left;
-  font-weight: bold;
-  font-size: 50px;
-  font-family: sans-serif;
-}
-</style>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title> Worksheet 6: Texture mapping </title>
+  <h1> Worksheet 6: Texture mapping </h1>
+  <h2> Part 1: Chess Board</h2>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
 
 <script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
 <script type="text/javascript" src="../lib/webgl-utils.js"></script>
@@ -44,11 +38,6 @@
         vTextureCoord = aTextureCoord;
     }
 </script>
-<body>
-  <h1 class = "center"> Worksheet 6: Texture mapping </h1>
-  <h2> short descriptions here </h2>
-</body>
-
 
 <script type="text/javascript">
 
@@ -243,7 +232,7 @@
     }
 
     function webGLStart() {
-        var canvas = document.getElementById("lesson05-canvas");
+        var canvas = document.getElementById("gl-canvas");
         var wrapping_mode_menu = document.getElementById("wrapping_mode_menu");
         var filtering_mode_menu = document.getElementById("filtering_mode_menu");
 
@@ -262,16 +251,12 @@
 
 </script>
 
-
-</head>
-
-
 <body onload="webGLStart();">
-    <canvas id="lesson05-canvas" style="border: none;" width="500" height="500"></canvas>
-    <p> </p>
-    <a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Worksheet 5</a>
-    <a> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </a>
-    <a href="http://learningwebgl.com/blog/?p=507">Worksheet 7 &gt;&gt;</a><br />
+  <canvas id="gl-canvas" style="border: none;" width="500" height="500"></canvas>
+  <br/><br/>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_4_part_3.html">&lt;&lt; Worksheet 5 Part 1234</a>
+  <a> ||| </a>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_6_part_1.html">Worksheet 6 Part 2 &gt;&gt;</a><br />
 </body>
 
 </html>

@@ -1,3 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 2: Input devices and interaction</title>
+    <h1> Worksheet 2: Input devices and interaction</h1>
+    <h2> Part 4: Circle drawing mode added</h2>
+    <meta charset="UTF-8">
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        attribute vec4 aColors;
+
+        varying vec4 vColors;
+
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+            vColors = aColors;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColors;
+        void main(void)
+        {
+            gl_FragColor = vColors;
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+    <script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+      <div style="width: 100px; float:left; height:250px; margin:10px">
+        <button type="button" onclick="clear_canvas()">CLEAR CANVAS</button>
+        <p>Canvas Colors</p>
+
+        <select id="canvas_color_menu" size="7">
+        <option value="0">Default</option>
+        <option value="1">Black</option>
+        <option value="2">Red</option>
+        <option value="3">Yellow</option>
+        <option value="4">Green</option>
+        <option value="5">Blue</option>
+        <option value="6">Magenta</option>
+        <option value="7">Cyan</option>
+        </select>
+      </div>
+
+
+      <div style="width:260px; float:right; height:100px; margin:10px">
+        <button type="button" onclick="draw_points()">DRAW POINTS</button>
+        <p>Point Colors</p>
+        <select id="point_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
+        <p>Triangle Colors</p>
+        <select id="triangle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_circle()">DRAW CIRCLE</button>
+        <p>Circle Colors</p>
+        <select id="circle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+      </div>
+
+</body>
+<br/>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_2_part_3.html">&lt;&lt; Worksheet 2 Part 3</a>
+<a> ||| </a>
+<a href="https://rubberduck93.github.io/graphic/week1/worksheet_3_part_1.html">Worksheet 3 Part 1 &gt;&gt;</a><br />
+
+</html>
+
+
+
+<script type="text/javascript">
+
 
 var verticesData = [];
 var canvas_colors = [];
@@ -54,11 +151,8 @@ window.onload = function init()
     triangle_menu = document.getElementById("triangle_color_menu");
     circle_menu = document.getElementById("circle_color_menu");
 
-
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
-
-    //  Load shaders and initialize attribute buffers
 
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
@@ -99,10 +193,6 @@ window.onload = function init()
       vec4(0.0, 1.0, 0.0, 1.0), // green
       vec4(0.0, 0.0, 1.0, 1.0), // blue
     ];
-
-    // Load the data into the GPU
-
-    // Associate out shader variables with our data buffer
 
     var vBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
@@ -348,3 +438,7 @@ function draw_points()
     draw_points_on = true;
   }
 }
+
+
+
+</script>

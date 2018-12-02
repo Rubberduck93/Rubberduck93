@@ -5,7 +5,6 @@
     <h1> Worksheet 1: Getting started with WebGL</h1>
     <h2> Part 3: Triangles </h2>
     <meta charset="UTF-8">
-    <title>Triangle</title>
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec4 aPosition;
         attribute vec4 aColors;
@@ -65,29 +64,19 @@ window.onload = function init()
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    //
-    //  Configure WebGL
-    //
     gl.viewport( 0.0, 0.0, canvas.width, canvas.height );
     gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
-
-    //  Load shaders and initialize attribute buffers
 
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
-
     draw();
-
-    // Load the data into the GPU
 
     var bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
     gl.bufferData( gl.ARRAY_BUFFER, verticesData, gl.STATIC_DRAW );
 
-
     var FSIZE = verticesData.BYTES_PER_ELEMENT;
-    // Associate out shader variables with our data buffer
 
     var aPosition = gl.getAttribLocation( program, "aPosition" );
     if (aPosition < 0) {
@@ -97,8 +86,6 @@ window.onload = function init()
     gl.vertexAttribPointer( aPosition, 2, gl.FLOAT, false, 5 * FSIZE, 0 );
     gl.enableVertexAttribArray( aPosition );
 
-    // Associate out shader variables with our color buffer
-
     var aColors = gl.getAttribLocation( program, "aColors" );
     if(aColors < 0) {
       console.log('Failed to get the storage location of aColor');
@@ -106,8 +93,6 @@ window.onload = function init()
     }
     gl.vertexAttribPointer( aColors, 3, gl.FLOAT, false, 5 * FSIZE, 2 * FSIZE );
     gl.enableVertexAttribArray( aColors );
-
-
 
     render();
 }
@@ -127,8 +112,6 @@ function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, verticesData.length/5 );
-    //gl.drawArrays( gl.POINTS, 0, verticesData.length/5 );
-    //gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
 }
 
 </script>

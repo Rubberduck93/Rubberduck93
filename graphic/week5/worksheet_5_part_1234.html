@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Worksheet 5: Rendering a triangle mesh</title>
+    <h1> Worksheet 5: Rendering a triangle mesh</h1>
+    <h2> Part 1, 2, 3, 4</h2>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  </head>
+
+  <script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
+  <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+  <script type="text/javascript" src="../lib/initShaders.js"></script>
+  <script type="text/javascript" src="../lib/webgl-debug.js"></script>
+  <script type="text/javascript" src="../lib/cuon-utils.js"></script>
+  <script type="text/javascript" src="../lib/cuon-matrix.js"></script>
+  <script type="text/javascript" src="../lib/MV.js"></script>
+  <script type="text/javascript" src="OBJParser.js"></script>
+
+  <script id="shader-fs" type="x-shader/x-fragment">
+      precision mediump float;
+
+      varying vec4 vColor;
+
+      void main(void) {
+          gl_FragColor = vColor;
+      }
+  </script>
+
+  <script id="shader-vs" type="x-shader/x-vertex">
+      attribute vec4 aVertexPosition;
+      attribute vec4 aVertexNormal;
+      attribute vec4 aVertexColor;
+
+      varying vec4 vColor;
+      uniform vec4 lightPosition;
+      uniform float shininess;
+      uniform vec4 ambientProduct;
+      uniform vec4 specularProduct;
+
+      uniform mat4 uMVMatrix;
+      uniform mat4 vMatrix;
+      uniform mat3 uNormalMatrix;
+
+      void main(void) {
+          vec3 L;
+          if(lightPosition.w == 0.0) L = normalize(lightPosition.xyz);
+          else L = normalize( lightPosition.xyz - ((vMatrix * aVertexPosition).xyz) );
+
+          vec3 H = normalize( L + -normalize( (vMatrix * aVertexPosition).xyz ) );
+
+          vec3 N = normalize( uNormalMatrix * aVertexNormal.xyz);
+
+          float Kd = max( dot(L, N), 0.0 );
+          vec4 diffuseProduct = Kd * (aVertexColor * vec4( 1.0, 1.0, 1.0, 1.0 ));
+
+          float Ks = pow( max(dot(N, H), 0.0), shininess );
+          vec4  specular = Ks * specularProduct;
+
+          if( dot(L, N) < 0.0 ) {
+              specular = vec4(0.0, 0.0, 0.0, 1.0);
+          }
+          gl_Position = uMVMatrix * aVertexPosition;
+          vColor = ambientProduct + diffuseProduct + specular;
+          vColor.a = 1.0;
+      }
+  </script>
+
+</html>
+
+<script type="text/javascript">
+
+var gl;
+
+function initGL(canvas) {
+      try {
+        gl = canvas.getContext("experimental-webgl");
+        gl.viewportWidth = canvas.width;
+        gl.viewportHeight = canvas.height;
+      } catch(e) {
+      }
+      if (!gl) {
+        alert("Could not initialise WebGL ");
+      }
+}
+
+function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+            return null;
+        }
+
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+            if (k.nodeType == 3) {
+                str += k.textContent;
+            }
+            k = k.nextSibling;
+        }
+
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+            shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+            return null;
+        }
+
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            alert(gl.getShaderInfoLog(shader));
+            return null;
+        }
+
+        return shader;
+  }
+
+var shaderProgram;
+function initShaders(canvas) {
+    var fragmentShader = getShader(gl, "shader-fs");
+    var vertexShader = getShader(gl, "shader-vs");
+
+    shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+      alert("Could not initialise shaders");
+    }
+
+    gl.useProgram(shaderProgram);
+
+    gl.uniform4fv( gl.getUniformLocation(shaderProgram, "ambientProduct"), flatten(mult(vec4(0.2, 0.2, 0.2, 1.0 ), vec4( 0.0, 0.0, 0.0, 1.0 ))));
+    gl.uniform4fv( gl.getUniformLocation(shaderProgram, "specularProduct"), flatten(mult(vec4( 1.0, 1.0, 1.0, 1.0 ), vec4( 0.0, 0.0, 0.0, 1.0 ))));
+    gl.uniform4fv( gl.getUniformLocation(shaderProgram, "lightPosition"), flatten(vec4(1.0, 1.0, 1.0, 0.0 )) );
+    gl.uniform1f( gl.getUniformLocation(shaderProgram, "shininess"), 20);
+
+    shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+    shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
+    gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
+
+    shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
+    gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+
+    shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+    shaderProgram.vMatrixUniform = gl.getUniformLocation(shaderProgram, "vMatrix");
+    shaderProgram.normalMatrixUniform = gl.getUniformLocation(shaderProgram, "uNormalMatrix");
+
+    var model = initVertexBuffers();
+    if (!model) {
+        console.log('Failed to set the vertex information');
+        return;
+    }
+
+    // define projection and view matrices
+    var projectionMatrix = perspective(45, canvas.width / canvas.height, 0.1, 5000.0);
+    var eye = [0.0, 500.0, 200.0];
+    var at = [0.0, 0.0, 0.0];
+    var up = [0.0, 1.0, 0.0];
+    var viewMatrix = lookAt(eye, at, up);
+
+    // calculate viewProjection Matrix
+    var viewProjMatrix = mult(projectionMatrix, viewMatrix);
+
+    // Start reading the OBJ file
+    readOBJFile('teapot.obj', model, 30, true);
+
+    var tick = function() {   // Start drawing
+        render(viewMatrix, viewProjMatrix, model);
+        requestAnimationFrame(tick);
+      };
+    tick();
+}
+
+function webGLStart() {
+  var canvas = document.getElementById("gl-canvas");
+
+  initGL(canvas);
+  initShaders(canvas);
+
+  gl.clearColor(0.2, 0.2, 0.2, 1.0);
+  gl.enable(gl.DEPTH_TEST);
+
+}
+
+// Create an buffer object and perform an initial configuration
+function initVertexBuffers() {
+  var o = new Object(); // Utilize Object object to return multiple buffer objects
+  o.vertexBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexPositionAttribute, 3, gl.FLOAT);
+  o.normalBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexNormalAttribute, 3, gl.FLOAT);
+  o.colorBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexColorAttribute, 4, gl.FLOAT);
+  o.indexBuffer = gl.createBuffer();
+  if (!o.vertexBuffer || !o.normalBuffer || !o.colorBuffer || !o.indexBuffer) { return null; }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+  return o;
+}
+
+// Create a buffer object, assign it to attribute variables, and enable the assignment
+function createEmptyArrayBuffer(gl, a_attribute, num, type) {
+  var buffer =  gl.createBuffer();  // Create a buffer object
+  if (!buffer) {
+    console.log('Failed to create the buffer object');
+    return null;
+  }
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);  // Assign the buffer object to the attribute variable
+  gl.enableVertexAttribArray(a_attribute);  // Enable the assignment
+
+  return buffer;
+}
+
+// Read a file
+function readOBJFile(fileName, gl, model, scale, reverse) {
+  var request = new XMLHttpRequest();
+
+  request.onreadystatechange = function() {
+    if (request.readyState === 4 && request.status !== 404) {
+      onReadOBJFile(request.responseText, fileName, gl, model, scale, reverse);
+    }
+  }
+  request.open('GET', fileName, true); // Create a request to acquire the file
+  request.send();                      // Send the request
+}
+
+var g_objDoc = null;      // The information of OBJ file
+var g_drawingInfo = null; // The information for drawing 3D model
+
+function onReadOBJFile(fileString, fileName, o, scale, reverse) {
+    var objDoc = new OBJDoc(fileName);  // Create a OBJDoc object
+    var result = objDoc.parse(fileString, scale, reverse); // Parse the file
+    if (!result) {
+      g_objDoc = null;
+      g_drawingInfo = null;
+      console.log("OBJ file parsing error.");
+      return;
+    }
+    g_objDoc = objDoc;
+}
+
+var g_modelMatrix = mat4MV();
+var g_mvpMatrix = mat4MV();
+var g_normalMatrix = [];
+
+function render(viewMatrix, viewProjMatrix, model) {
+  if (g_objDoc != null && g_objDoc.isMTLComplete()){ // OBJ and all MTLs are available
+    g_drawingInfo = onReadComplete(model, g_objDoc);
+    g_objDoc = null;
+  }
+
+  if (!g_drawingInfo) return;
+
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  // Clear color and depth buffers
+
+  // rotate the object
+  g_modelMatrix = mult(g_modelMatrix, rotate(1, [0, 1, 0]));
+
+  g_normalMatrix = [
+      vec3(g_modelMatrix[0][0], g_modelMatrix[0][1], g_modelMatrix[0][2]),
+      vec3(g_modelMatrix[1][0], g_modelMatrix[1][1], g_modelMatrix[1][2]),
+      vec3(g_modelMatrix[2][0], g_modelMatrix[2][1], g_modelMatrix[2][2])
+  ];
+
+  gl.uniformMatrix3fv(shaderProgram.normalMatrixUniform, false, flatten(g_normalMatrix));
+
+  // Calculate the model view project matrix and pass it to uMvpMatrix
+  g_mvpMatrix = viewProjMatrix;
+  g_mvpMatrix = mult(g_mvpMatrix, g_modelMatrix);
+  gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, flatten(g_mvpMatrix));
+
+  gl.uniformMatrix4fv(shaderProgram.vMatrixUniform, false, flatten(viewMatrix));
+  // Draw
+  gl.drawElements(gl.TRIANGLES, g_drawingInfo.indices.length, gl.UNSIGNED_SHORT, 0);
+}
+
+function onReadComplete(model, objDoc) {
+    // Acquire the vertex coordinates and colors from OBJ file
+    var drawingInfo = objDoc.getDrawingInfo();
+
+    // Write date into the buffer object
+    gl.bindBuffer(gl.ARRAY_BUFFER, model.vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.vertices, gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, model.normalBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.normals, gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, model.colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.colors, gl.STATIC_DRAW);
+
+    // Write the indices to the buffer object
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.indexBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, drawingInfo.indices, gl.STATIC_DRAW);
+
+    return drawingInfo;
+}
+
+</script>
+
+<body onload="webGLStart();">
+  <canvas id="gl-canvas" style="border: none;" width="500" height="500"></canvas>
+  <br/><br/>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_4_part_3.html">&lt;&lt; Worksheet 4 Part 3</a>
+  <a> ||| </a>
+  <a href="https://rubberduck93.github.io/graphic/week1/worksheet_6_part_1.html">Worksheet 6 Part 1 &gt;&gt;</a><br />
+</body>
