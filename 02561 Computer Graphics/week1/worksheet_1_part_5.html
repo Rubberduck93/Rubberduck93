@@ -40,14 +40,19 @@
 
 var xCenterOfCircle;
 var yCenterOfCircle;
+var bounch = 0;
 var centerOfCircle;
 var radiusOfCircle = 0.5;
 var ATTRIBUTES = 1;
 var noOfFans = 360;
 var anglePerFan;
 var verticesData = [];
+var program;
 var canvas;
 var gl;
+
+var circle_down = false;
+var circle_up = true;
 
 window.onload = function init()
 {
@@ -56,34 +61,22 @@ window.onload = function init()
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-
     gl.viewport( 0.0, 0.0, canvas.width, canvas.height );
     gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
 
-
-    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
     drawCircle();
 
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, flatten(verticesData), gl.STATIC_DRAW );
-
-    var vPosition = gl.getAttribLocation( program, "vPosition" );
-    gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
-    gl.enableVertexAttribArray( vPosition );
-
-
-    render();
 }
 
 
 function drawCircle()
 {
     xCenterOfCircle = 0;
-    yCenterOfCircle = 0;
-    centerOfCircle = vec2(0, 0);
+    yCenterOfCircle = 0+bounch;
+    centerOfCircle = vec2(xCenterOfCircle, yCenterOfCircle);
     anglePerFan = (2*Math.PI) / noOfFans;
     verticesData = [centerOfCircle];
 
@@ -96,13 +89,40 @@ function drawCircle()
         var point = vec2(xCoordinate, yCoordinate);
         verticesData.push(point);
    }
-}
 
-function render()
-{
-    gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
-}
+   var bufferId = gl.createBuffer();
+   gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+   gl.bufferData( gl.ARRAY_BUFFER, flatten(verticesData), gl.STATIC_DRAW );
 
+   var vPosition = gl.getAttribLocation( program, "vPosition" );
+   gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
+   gl.enableVertexAttribArray( vPosition );
+
+   gl.clear( gl.COLOR_BUFFER_BIT );
+   gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
+
+   if(circle_up)
+   {
+     if(bounch > -0.5) bounch -= 0.01;
+     else
+     {
+       circle_up = false;
+       circle_down = true;
+     }
+   }
+
+   if(circle_down)
+   {
+     if(bounch < 0.25) bounch += 0.01;
+     else
+     {
+       circle_up = true;
+       circle_down = false;
+     }
+   }
+
+
+   requestAnimFrame(drawCircle);
+}
 
 </script>

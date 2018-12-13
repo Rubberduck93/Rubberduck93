@@ -41,6 +41,7 @@
 <script type="text/javascript">
 
   var gl;
+
   function initGL(canvas) {
       try {
         gl = canvas.getContext("experimental-webgl");
@@ -51,68 +52,6 @@
       if (!gl) {
         alert("Could not initialise WebGL, sorry :-( ");
       }
-  }
-
-  function getShader(gl, id) {
-        var shaderScript = document.getElementById(id);
-        if (!shaderScript) {
-            return null;
-        }
-
-        var str = "";
-        var k = shaderScript.firstChild;
-        while (k) {
-            if (k.nodeType == 3) {
-                str += k.textContent;
-            }
-            k = k.nextSibling;
-        }
-
-        var shader;
-        if (shaderScript.type == "x-shader/x-fragment") {
-            shader = gl.createShader(gl.FRAGMENT_SHADER);
-        } else if (shaderScript.type == "x-shader/x-vertex") {
-            shader = gl.createShader(gl.VERTEX_SHADER);
-        } else {
-            return null;
-        }
-
-        gl.shaderSource(shader, str);
-        gl.compileShader(shader);
-
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-            alert(gl.getShaderInfoLog(shader));
-            return null;
-        }
-
-        return shader;
-  }
-
-
-  var shaderProgram;
-  function initShaders() {
-      var fragmentShader = getShader(gl, "shader-fs");
-      var vertexShader = getShader(gl, "shader-vs");
-
-      shaderProgram = gl.createProgram();
-      gl.attachShader(shaderProgram, vertexShader);
-      gl.attachShader(shaderProgram, fragmentShader);
-      gl.linkProgram(shaderProgram);
-
-      if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        alert("Could not initialise shaders");
-      }
-
-      gl.useProgram(shaderProgram);
-
-      shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-      gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-      shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
-      gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
-
-      shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-      shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
   }
 
   var mvMatrix = mat4MV();
@@ -232,6 +171,7 @@
     // ** Body ** \\
     mvMatrix[0] = translate([0, 0, -12]);
     mvMatrix[0] = mult(mvMatrix[0], rotate(30,[1, 1, 1]));
+    mvMatrix[0] = mult(mvMatrix[0], scalem(1, 1, 1));
 
     // Roll
     mvMatrix[0] = mult(mvMatrix[0], rotate(roll_airplane,[0,0,0.5]));
@@ -386,16 +326,12 @@
 
   }
 
-  function tick() {
-      requestAnimFrame(tick);
-      drawScene();
-
-  }
-
   function airplane_rollright()
   {
+
       angle_timer -= 0.01;
       roll_airplane += 0.4;
+      drawScene();
 
       if (roll_airplane  < document.getElementById("rollRight").value)
       {
@@ -417,7 +353,7 @@
         angle_timer  +=0.01;
         roll_airplane -= 0.4;
       }
-
+      drawScene();
       if (angle_timer  >= 0.01 || angle_timer  <= -0.01)
       {
         requestAnimFrame(airplane_rollstabilize);
@@ -429,7 +365,7 @@
   {
       angle_timer  += 0.01;
       roll_airplane -= 0.4;
-
+      drawScene();
       if (roll_airplane > document.getElementById("rollLeft").value)
       {
         requestAnimFrame(airplane_rollleft);
@@ -439,6 +375,7 @@
   function airplane_pitchup()
   {
       pitch_airplane -= 0.2;
+      drawScene();
       if (pitch_airplane > document.getElementById("pitchUp").value)
       {
         requestAnimFrame(airplane_pitchup);
@@ -449,6 +386,7 @@
   {
       if (pitch_airplane >= 0.2) pitch_airplane -= 0.2;
       if (pitch_airplane <= -0.2) pitch_airplane += 0.2;
+      drawScene();
       if (pitch_airplane >= 0.2 || pitch_airplane <= -0.2)
       {
         requestAnimFrame(airplane_pitchstabilize);
@@ -458,6 +396,7 @@
   function airplane_pitchdown()
   {
       pitch_airplane += 0.2;
+      drawScene();
       if (pitch_airplane < document.getElementById("pitchDown").value)
       {
         requestAnimFrame(airplane_pitchdown);
@@ -467,6 +406,7 @@
   function airplane_yawright()
   {
       yaw_airplane -= 0.2;
+      drawScene();
       if (yaw_airplane > document.getElementById("yawRight").value)
       {
         requestAnimFrame(airplane_yawright);
@@ -477,7 +417,7 @@
   {
     if (yaw_airplane >= 0.2) yaw_airplane -= 0.2;
     if (yaw_airplane <= -0.2) yaw_airplane += 0.2;
-
+    drawScene();
     if (yaw_airplane >= 0.2 || yaw_airplane <= -0.2)
     {
       requestAnimFrame(airplane_yawstabilize);
@@ -487,6 +427,7 @@
   function airplane_yawleft()
   {
       yaw_airplane += 0.2;
+      drawScene();
       if (yaw_airplane < document.getElementById("yawLeft").value)
       {
         requestAnimFrame(airplane_yawleft);
@@ -496,19 +437,30 @@
   function webGLStart() {
       var canvas = document.getElementById("gl-canvas");
       initGL(canvas);
-      initShaders();
-      initBuffers();
 
-      gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
+      shaderProgram = initShaders( gl, "shader-vs", "shader-fs" );
+      gl.useProgram( shaderProgram );
+
+      shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+      gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+      shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
+      gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+
+      shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+      shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+
+      initBuffers();
+      //gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
       gl.enable(gl.DEPTH_TEST);
 
-      tick();
+      drawScene();
   }
 
 </script>
 
 <body onload="webGLStart();">
-  <canvas id="gl-canvas" style="border: none;" width="600" height="600"></canvas>
+  <canvas id="gl-canvas" style="background: url('../lib/clouds.jpg')" width="600" height="600"></canvas>
   <div style="width:280px; float:left; height:10px; margin:10px">
       <h2>Roll:</h2>
       <button type="button" onclick="airplane_rollstabilize()">Roll Stabilize</button>
@@ -545,7 +497,8 @@
   <a href="https://rubberduck93.github.io/02561%20Computer%20Graphics/week3/worksheet_3_part_3.html">&lt;&lt; Worksheet 3 Part 3</a>
   <a> ||| </a>
   <a href="https://rubberduck93.github.io/02561%20Computer%20Graphics/week4/worksheet_4_part_1.html">Worksheet 4 Part 1 &gt;&gt;</a><br />
-
+  <br/> <br/>
+  <a> Reference: </a> <a href="https://www.flyhpa.com/2017/08/weather-back-to-basics-clouds/"> Cloud Image </a>
 
 
 </body>

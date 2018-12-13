@@ -1,3 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> Worksheet 2: Input devices and interaction</title>
+    <h1> Worksheet 2: Input devices and interaction</h1>
+    <h2> Part 4: Circle drawing mode added</h2>
+    <meta charset="UTF-8">
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 aPosition;
+        attribute vec4 aColors;
+
+        varying vec4 vColors;
+
+        void main(void)
+        {
+            gl_Position = aPosition;
+            gl_PointSize = 20.0;
+            vColors = aColors;
+        }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float;
+        varying vec4 vColors;
+        void main(void)
+        {
+            gl_FragColor = vColors;
+        }
+    </script>
+    <script type="text/javascript" src="../lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="../lib/initShaders.js"></script>
+    <script type="text/javascript" src="../lib/MV.js"></script>
+</head>
+<body>
+      <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
+      Oops ... your browser doesn't support the HTML5 canvas element
+      </canvas>
+      <div style="width: 100px; float:left; height:250px; margin:10px">
+        <button type="button" onclick="clear_canvas()">CLEAR CANVAS</button>
+        <p>Canvas Colors</p>
+
+        <select id="canvas_color_menu" size="7">
+        <option value="0">Default</option>
+        <option value="1">Black</option>
+        <option value="2">Red</option>
+        <option value="3">Yellow</option>
+        <option value="4">Green</option>
+        <option value="5">Blue</option>
+        <option value="6">Magenta</option>
+        <option value="7">Cyan</option>
+        </select>
+      </div>
+
+
+      <div style="width:260px; float:right; height:100px; margin:10px">
+        <button type="button" onclick="draw_points()">DRAW POINTS</button>
+        <p>Point Colors</p>
+        <select id="point_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
+        <p>Triangle Colors</p>
+        <select id="triangle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+
+        <p> --- </p>
+        <button type="button" onclick="draw_circle()">DRAW CIRCLE</button>
+        <p>Circle Colors</p>
+        <select id="circle_color_menu" size="4">
+        <option value="0">Black</option>
+        <option value="1">Red</option>
+        <option value="2">Green</option>
+        <option value="3">Blue</option>
+        </select>
+      </div>
+
+</body>
+<br/>
+<a href="https://rubberduck93.github.io/02561%20Computer%20Graphics/week2/worksheet_2_part_3.html">&lt;&lt; Worksheet 2 Part 3</a>
+<a> ||| </a>
+<a href="https://rubberduck93.github.io/02561%20Computer%20Graphics/week3/worksheet_3_part_1.html">Worksheet 3 Part 1 &gt;&gt;</a><br />
+
+</html>
+
+
+
+<script type="text/javascript">
+
 
 var verticesData = [];
 var canvas_colors = [];
@@ -35,16 +132,19 @@ var circle_index = 0;
 
 var ATTRIBUTES = 1;
 var noOfFans = 360;
-var anglePerFan = (2*Math.PI) / noOfFans;
+var anglePerFan;
 var firstClick = true;
 
 
-var center_x = 0;
-var center_y = 0;
-var radiusOfCircle = 0;
+var xCenterOfCircle;
+var yCenterOfCircle;
+var centerOfCircle;
+var radiusOfCircle;
 
 var aPosition;
-var aColors
+var aColors;
+
+var program;
 
 window.onload = function init()
 {
@@ -54,13 +154,10 @@ window.onload = function init()
     triangle_menu = document.getElementById("triangle_color_menu");
     circle_menu = document.getElementById("circle_color_menu");
 
-
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    //  Load shaders and initialize attribute buffers
-
-    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
     canvas_menu.addEventListener("click", function() { canvasIndex = canvas_menu.selectedIndex; });
@@ -100,10 +197,6 @@ window.onload = function init()
       vec4(0.0, 0.0, 1.0, 1.0), // blue
     ];
 
-    // Load the data into the GPU
-
-    // Associate out shader variables with our data buffer
-
     var vBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, 8*maxNumVertices, gl.STATIC_DRAW);
@@ -120,8 +213,6 @@ window.onload = function init()
     gl.vertexAttribPointer(aColors, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(aColors);
 
-    //canvas.onmousedown = function(ev){ click(ev, gl, canvas, aPosition,aColors); };
-
     canvas.addEventListener("mousedown", function(event){
        //gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
        if (draw_points_on) {
@@ -131,23 +222,10 @@ window.onload = function init()
          var y = event.clientY; // y coordinate of a mouse pointer
          var rect = event.target.getBoundingClientRect() ;
 
-         x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
-         y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
+         xCoordinate = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
+         yCoordinate = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-         gl.bufferSubData(gl.ARRAY_BUFFER, 8*(point_index),flatten(vec2(x,y)));
-
-         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-
-         var t = vec4(point_colors[pointIndex]);
-
-         gl.bufferSubData(gl.ARRAY_BUFFER, 16*point_index, flatten(t));
-
-         point_vertices.push(index);
-
-         point_index++;
-         index++;
-
-         render();
+         drawPoints();
 
        }
        else if (draw_triangle_on) {
@@ -185,34 +263,16 @@ window.onload = function init()
          if (firstClick)
          {
            firstClick = false;
-           gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
 
            var x = event.clientX; // x coordinate of a mouse pointer
            var y = event.clientY; // y coordinate of a mouse pointer
            var rect = event.target.getBoundingClientRect() ;
 
-           center_x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
-           center_y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
+           xCenterOfCircle = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
+           yCenterOfCircle = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-           var centerOfCircle = vec2(center_x,center_y);
-
-           gl.bufferSubData(gl.ARRAY_BUFFER, 8*(circle_index),flatten(centerOfCircle));
-
-           gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-
-           var t = vec4(circle_colors[circleIndex]);
-
-           gl.bufferSubData(gl.ARRAY_BUFFER, 16*(circle_index), flatten(t));
-
-           //circle_vertices.push(centerOfCircle);
-
-           circle_index++;
-           index++;
-
-           console.log("first");
          } else {
            firstClick = true;
-           gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
 
            var x = event.clientX; // x coordinate of a mouse pointer
            var y = event.clientY; // y coordinate of a mouse pointer
@@ -221,37 +281,12 @@ window.onload = function init()
            x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
            y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-           var a = x - center_x;
-           var b = y - center_y;
+           var a = x - xCenterOfCircle;
+           var b = y - yCenterOfCircle;
 
            radiusOfCircle = Math.sqrt( a*a + b*b );
 
-           console.log(radiusOfCircle);
-           for(var i = 0; i <= noOfFans; i++)
-           {
-              //var cindex = ATTRIBUTES * i + 2;
-              var angle = anglePerFan * (i+1);
-              var xCoordinate = center_x + Math.cos(angle) * radiusOfCircle;
-              var yCoordinate = center_y + Math.sin(angle) * radiusOfCircle;
-              var cpoint = vec2(xCoordinate, yCoordinate);
-
-              gl.bufferSubData(gl.ARRAY_BUFFER, 8*(circle_index),flatten(cpoint));
-
-              gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-
-              var t = vec4(circle_colors[circleIndex]);
-
-              gl.bufferSubData(gl.ARRAY_BUFFER, 16*(circle_index), flatten(t));
-
-              circle_index++;
-              //circle_vertices.push(cpoint);
-              index++;
-
-
-          }
-           circle_vertices.push(0);
-           console.log("second");
-           render();
+           drawCircle();
          }
        }
 
@@ -259,7 +294,8 @@ window.onload = function init()
 
 
     gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
-    render();
+    gl.clear( gl.COLOR_BUFFER_BIT );
+    //render();
 
 }
 
@@ -348,3 +384,71 @@ function draw_points()
     draw_points_on = true;
   }
 }
+
+function drawPoints()
+{
+   var point = vec2(xCoordinate, yCoordinate);
+   point_vertices.push(point);
+
+   var bufferId = gl.createBuffer();
+   gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+   gl.bufferData( gl.ARRAY_BUFFER, flatten(point_vertices), gl.STATIC_DRAW );
+
+   var aPosition = gl.getAttribLocation( program, "aPosition" );
+   gl.vertexAttribPointer( aPosition, 2, gl.FLOAT, false, 0, 0 );
+   gl.enableVertexAttribArray( aPosition );
+
+   var cBuffer = gl.createBuffer();
+   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+   gl.bufferData(gl.ARRAY_BUFFER, 16*maxNumVertices, gl.STATIC_DRAW );
+
+   var aColors = gl.getAttribLocation( program, "aColors" );
+   gl.vertexAttribPointer(aColors, 4, gl.FLOAT, false, 0, 0);
+   gl.enableVertexAttribArray(aColors);
+
+   gl.clear( gl.COLOR_BUFFER_BIT );
+   gl.drawArrays( gl.POINTS, 0, point_vertices.length );
+
+}
+
+function drawCircle()
+{
+    centerOfCircle = vec2(xCenterOfCircle, yCenterOfCircle);
+    anglePerFan = (2*Math.PI) / noOfFans;
+    verticesData = [centerOfCircle];
+
+    for(var i = 0; i <= noOfFans; i++)
+    {
+        var index = ATTRIBUTES * i + 2;
+        var angle = anglePerFan * (i+1);
+        var xCoordinate = xCenterOfCircle + Math.cos(angle) * radiusOfCircle;
+        var yCoordinate = yCenterOfCircle + Math.sin(angle) * radiusOfCircle;
+        var point = vec2(xCoordinate, yCoordinate);
+        verticesData.push(point);
+   }
+
+   var bufferId = gl.createBuffer();
+   gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+   gl.bufferData( gl.ARRAY_BUFFER, flatten(verticesData), gl.STATIC_DRAW );
+
+   var aPosition = gl.getAttribLocation( program, "aPosition" );
+   gl.vertexAttribPointer( aPosition, 2, gl.FLOAT, false, 0, 0 );
+   gl.enableVertexAttribArray( aPosition );
+
+   var cBuffer = gl.createBuffer();
+   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
+   gl.bufferData(gl.ARRAY_BUFFER, 16*maxNumVertices, gl.STATIC_DRAW );
+
+   var aColors = gl.getAttribLocation( program, "aColors" );
+   gl.vertexAttribPointer(aColors, 4, gl.FLOAT, false, 0, 0);
+   gl.enableVertexAttribArray(aColors);
+
+   gl.clear( gl.COLOR_BUFFER_BIT );
+   gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length );
+
+}
+
+
+
+
+</script>
