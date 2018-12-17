@@ -35,7 +35,7 @@
       <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
       Oops ... your browser doesn't support the HTML5 canvas element
       </canvas>
-      <div style="width: 100px; float:left; height:250px; margin:10px">
+      <div style="width: 120px; float:left; height:250px; margin:10px">
         <button type="button" onclick="render()">CLEAR CANVAS</button>
         <p>Canvas Colors</p>
 
@@ -51,7 +51,7 @@
         </select>
         </br> </br>
         <button type="button" onclick="draw_points()">DRAW POINTS</button>
-        <p>Point Colors</p>
+        <p>Point Colors <a id="points"> </a></p>
         <select id="point_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -96,6 +96,8 @@ window.onload = function init()
 
     canvas_menu.addEventListener("click", function() { canvasIndex = canvas_menu.selectedIndex; });
     point_menu.addEventListener("click", function() { pointIndex = point_menu.selectedIndex; });
+
+    document.getElementById("points").innerHTML = "OFF";
 
     canvas_colors = [
       vec4(0.3921, 0.5843, 0.9294, 1.0), // default
@@ -179,8 +181,10 @@ function draw_points()
 {
   if (draw_points_on) {
     draw_points_on = false;
+    document.getElementById("points").innerHTML = "OFF";
   } else {
     draw_points_on = true;
+    document.getElementById("points").innerHTML = "ON";
   }
 }
 

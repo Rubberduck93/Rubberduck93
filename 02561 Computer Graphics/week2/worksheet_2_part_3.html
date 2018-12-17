@@ -35,7 +35,7 @@
       <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
       Oops ... your browser doesn't support the HTML5 canvas element
       </canvas>
-      <div style="width: 100px; float:left; height:250px; margin:10px">
+      <div style="width: 120px; float:left; height:250px; margin:10px">
         <button type="button" onclick="clear_canvas()">CLEAR CANVAS</button>
         <p>Canvas Colors</p>
 
@@ -51,7 +51,7 @@
         </select>
         </br> </br>
         <button type="button" onclick="draw_points()">DRAW POINTS</button>
-        <p>Point Colors</p>
+        <p>Point Colors <a id="points"> </a></p>
         <select id="point_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -61,9 +61,9 @@
       </div>
 
 
-      <div style="width:120px; float:left; height:100px; margin:10px">
+      <div style="width:140px; float:left; height:100px; margin:10px">
         <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
-        <p>Triangle Colors</p>
+        <p>Triangle Colors <a id="triangles"> </a></p>
         <select id="triangle_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -125,7 +125,8 @@ window.onload = function init()
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    //  Load shaders and initialize attribute buffers
+    document.getElementById("points").innerHTML = "OFF";
+    document.getElementById("triangles").innerHTML = "OFF";
 
     var program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
@@ -159,9 +160,7 @@ window.onload = function init()
       vec4(0.0, 0.0, 1.0, 1.0), // blue
     ];
 
-    // Load the data into the GPU
 
-    // Associate out shader variables with our data buffer
 
     vBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
@@ -225,7 +224,6 @@ window.onload = function init()
          gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
          gl.bufferSubData(gl.ARRAY_BUFFER, sizeof['vec4']*(triangle_index), flatten(t));
 
-         console.log("click");
          triangle_index++;
 
          if (triangle_index%3==0 && triangle_index != 0)
@@ -250,14 +248,6 @@ function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
 
-    //var len =  triangle_vertices.length;
-    //for(var i = 0; i<len; i+=5)
-    console.log("Index = " + index);
-
-    console.log("Point Array = " + point_vertices);
-    console.log("Triangle Array = " + triangle_vertices);
-    //gl.drawArrays( gl.TRIANGLES, 0, 1);
-
     var point_len = point_vertices.length;
     for(var i=0; i<point_len; i++)
     {
@@ -268,7 +258,6 @@ function render()
     for(var j=0; j<triangle_len; j++)
     {
       gl.drawArrays( gl.TRIANGLE_FAN, triangle_vertices[j], 3 );
-      // 0, len*3
     }
 
 }
@@ -290,11 +279,11 @@ function clear_canvas()
 function draw_triangle()
 {
   if (draw_triangle_on) {
-    console.log("Triangle OFF");
     draw_triangle_on = false;
+    document.getElementById("triangles").innerHTML = "OFF";
   } else {
-    console.log("Triangle ON");
     draw_triangle_on = true;
+    document.getElementById("triangles").innerHTML = "ON";
   }
 }
 
@@ -302,11 +291,11 @@ function draw_triangle()
 function draw_points()
 {
   if (draw_points_on) {
-    console.log("Points OFF");
     draw_points_on = false;
+    document.getElementById("points").innerHTML = "OFF";
   } else {
-    console.log("Points ON");
     draw_points_on = true;
+    document.getElementById("points").innerHTML = "ON";
   }
 }
 

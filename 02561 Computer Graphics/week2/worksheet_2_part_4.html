@@ -35,7 +35,7 @@
       <canvas id="gl-canvas" width="512" height="512"  style="border:1px solid #000000;">
       Oops ... your browser doesn't support the HTML5 canvas element
       </canvas>
-      <div style="width: 100px; float:left; height:250px; margin:10px">
+      <div style="width: 120px; float:left; height:250px; margin:10px">
         <button type="button" onclick="clear_canvas()">CLEAR CANVAS</button>
         <p>Canvas Colors</p>
 
@@ -51,7 +51,7 @@
         </select>
         </br> </br>
         <button type="button" onclick="draw_points()">DRAW POINTS</button>
-        <p>Point Colors</p>
+        <p>Point Colors <a id="points"> </a></p>
         <select id="point_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -61,9 +61,9 @@
       </div>
 
 
-      <div style="width:120px; float:left; height:100px; margin:10px">
+      <div style="width:140px; float:left; height:100px; margin:10px">
         <button type="button" onclick="draw_triangle()">DRAW TRIANGLE</button>
-        <p>Triangle Colors</p>
+        <p>Triangle Colors <a id="triangles"> </a></p>
         <select id="triangle_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -73,7 +73,7 @@
 
         <p> --- </p>
         <button type="button" onclick="draw_circle()">DRAW CIRCLE</button>
-        <p>Circle Colors</p>
+        <p>Circle Colors <a id="circles"> </a></p>
         <select id="circle_color_menu" size="4">
         <option value="0">Black</option>
         <option value="1">Red</option>
@@ -115,6 +115,10 @@ var pointIndex = 0;
 var triangleIndex = 0;
 var circleIndex = 0;
 
+var xCenterOfCircle = 0;
+var yCenterOfCircle = 0;
+var radiusOfCircle = 0;
+
 var gl;
 
 var draw_points_on = false;
@@ -134,13 +138,9 @@ var noOfFans = 360;
 var anglePerFan = (2*Math.PI) / noOfFans;
 var firstClick = true;
 
-
-var center_x = 0;
-var center_y = 0;
-var radiusOfCircle = 0;
-
 var aPosition;
-var aColors
+var aColors;
+var program;
 
 window.onload = function init()
 {
@@ -153,7 +153,11 @@ window.onload = function init()
     gl = WebGLUtils.setupWebGL( canvas );
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
-    var program = initShaders( gl, "vertex-shader", "fragment-shader" );
+    document.getElementById("points").innerHTML = "OFF";
+    document.getElementById("triangles").innerHTML = "OFF";
+    document.getElementById("circles").innerHTML = "OFF";
+
+    program = initShaders( gl, "vertex-shader", "fragment-shader" );
     gl.useProgram( program );
 
     canvas_menu.addEventListener("click", function() { canvasIndex = canvas_menu.selectedIndex; });
@@ -209,7 +213,6 @@ window.onload = function init()
     gl.vertexAttribPointer(aColors, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(aColors);
 
-    //canvas.onmousedown = function(ev){ click(ev, gl, canvas, aPosition,aColors); };
 
     canvas.addEventListener("mousedown", function(event){
        //gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
@@ -258,7 +261,6 @@ window.onload = function init()
 
          gl.bufferSubData(gl.ARRAY_BUFFER, 16*(triangle_index), flatten(t));
 
-         console.log("click");
          triangle_index++;
 
          if (triangle_index%3==0 && triangle_index != 0)
@@ -280,25 +282,9 @@ window.onload = function init()
            var y = event.clientY; // y coordinate of a mouse pointer
            var rect = event.target.getBoundingClientRect() ;
 
-           center_x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
-           center_y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
+           xCenterOfCircle = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
+           yCenterOfCircle = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-           var centerOfCircle = vec2(center_x,center_y);
-
-           gl.bufferSubData(gl.ARRAY_BUFFER, 8*(circle_index),flatten(centerOfCircle));
-
-           gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-
-           var t = vec4(circle_colors[circleIndex]);
-
-           gl.bufferSubData(gl.ARRAY_BUFFER, 16*(circle_index), flatten(t));
-
-           //circle_vertices.push(centerOfCircle);
-
-           circle_index++;
-           index++;
-
-           console.log("first");
          } else {
            firstClick = true;
            gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer);
@@ -310,37 +296,12 @@ window.onload = function init()
            x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
            y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
 
-           var a = x - center_x;
-           var b = y - center_y;
+           var a = x - xCenterOfCircle;
+           var b = y - yCenterOfCircle;
 
            radiusOfCircle = Math.sqrt( a*a + b*b );
 
-           console.log(radiusOfCircle);
-           for(var i = 0; i <= noOfFans; i++)
-           {
-              //var cindex = ATTRIBUTES * i + 2;
-              var angle = anglePerFan * (i+1);
-              var xCoordinate = center_x + Math.cos(angle) * radiusOfCircle;
-              var yCoordinate = center_y + Math.sin(angle) * radiusOfCircle;
-              var cpoint = vec2(xCoordinate, yCoordinate);
-
-              gl.bufferSubData(gl.ARRAY_BUFFER, 8*(circle_index),flatten(cpoint));
-
-              gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-
-              var t = vec4(circle_colors[circleIndex]);
-
-              gl.bufferSubData(gl.ARRAY_BUFFER, 16*(circle_index), flatten(t));
-
-              circle_index++;
-              //circle_vertices.push(cpoint);
-              index++;
-
-
-          }
-           circle_vertices.push(0);
-           console.log("second");
-           render();
+           drawCircle();
          }
        }
 
@@ -352,42 +313,57 @@ window.onload = function init()
 
 }
 
+function drawCircle()
+{
+
+    centerOfCircle = vec2(xCenterOfCircle, yCenterOfCircle);
+    anglePerFan = (2*Math.PI) / noOfFans;
+    verticesData = [centerOfCircle];
+
+    for(var i = 0; i <= noOfFans; i++)
+    {
+        var index = ATTRIBUTES * i + 2;
+        var angle = anglePerFan * (i+1);
+        var xCoordinate = xCenterOfCircle + Math.cos(angle) * radiusOfCircle;
+        var yCoordinate = yCenterOfCircle + Math.sin(angle) * radiusOfCircle;
+        var point = vec2(xCoordinate, yCoordinate);
+        verticesData.push(point);
+   }
+
+   var bufferId = gl.createBuffer();
+   gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
+   gl.bufferData( gl.ARRAY_BUFFER, flatten(verticesData), gl.STATIC_DRAW );
+
+   var vPosition = gl.getAttribLocation( program, "aPosition" );
+   gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
+   gl.enableVertexAttribArray( vPosition );
+
+   gl.clear( gl.COLOR_BUFFER_BIT );
+   gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
+}
+
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
 
-    //var len =  triangle_vertices.length;
-    //for(var i = 0; i<len; i+=5)
-    console.log("Index = " + index);
-
-    console.log("Point Array = " + point_vertices);
-    console.log("Triangle Array = " + triangle_vertices);
-    console.log("Circle Array = " + circle_vertices);
-    //gl.drawArrays( gl.TRIANGLES, 0, 1);
-
-
     var point_len = point_vertices.length;
     for(var i=0; i<point_len; i++)
     {
-      console.log("point");
       gl.drawArrays( gl.POINTS, point_vertices[i], 1 );
     }
 
     var triangle_len = triangle_vertices.length;
     for(var j=0; j<triangle_len; j++)
     {
-      console.log("triangle");
       gl.drawArrays( gl.TRIANGLE_FAN, triangle_vertices[j], 3 );
     }
 
     var circle_len = circle_vertices.length;
     for(var k=0; k<circle_len; k++)
     {
-      console.log("circle");
       gl.drawArrays( gl.TRIANGLE_FAN, circle_vertices[k], circle_vertices.length/ATTRIBUTES );
     }
 
-    //gl.drawArrays( gl.TRIANGLE_FAN, 0, 360 );
 }
 
 
@@ -407,22 +383,22 @@ function clear_canvas()
 function draw_circle()
 {
   if (draw_circle_on) {
-    console.log("Circle OFF");
     draw_circle_on = false;
+    document.getElementById("circles").innerHTML = "OFF";
   } else {
-    console.log("Circle ON");
     draw_circle_on = true;
+    document.getElementById("circles").innerHTML = "ON";
   }
 }
 
 function draw_triangle()
 {
   if (draw_triangle_on) {
-    console.log("Triangle OFF");
     draw_triangle_on = false;
+    document.getElementById("triangles").innerHTML = "OFF";
   } else {
-    console.log("Triangle ON");
     draw_triangle_on = true;
+    document.getElementById("triangles").innerHTML = "ON";
   }
 }
 
@@ -430,16 +406,13 @@ function draw_triangle()
 function draw_points()
 {
   if (draw_points_on) {
-    console.log("Points OFF");
     draw_points_on = false;
+    document.getElementById("points").innerHTML = "OFF";
   } else {
-    console.log("Points ON");
     draw_points_on = true;
+    document.getElementById("points").innerHTML = "ON";
   }
 }
-
-
-
 
 
 </script>
