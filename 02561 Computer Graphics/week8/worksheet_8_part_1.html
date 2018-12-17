@@ -2,16 +2,12 @@
 <html>
 
 <head>
-<title>Learning WebGL &mdash; lesson 5</title>
-<style type="text/css">
+  <title> Worksheet 8: Shadow mapping </title>
+  <h1> Worksheet 8: Shadow mapping </h1>
+  <h2> Part 1: Scene and projection shadows </h2>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+</head>
 
-.center {
-  text-align: left;
-  font-weight: bold;
-  font-size: 50px;
-  font-family: sans-serif;
-}
-</style>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
 <script type="text/javascript" src="../lib/glMatrix-0.9.5.min.js"></script>
@@ -54,7 +50,7 @@
     varying vec4 vColorTeapot;
 
     void main(void) {
-        gl_FragColor = vColorTeapot; //vec4(1.0, 0.0, 0.0, 1.0)
+        gl_FragColor = vColorTeapot;
     }
 </script>
 
@@ -72,12 +68,6 @@
         vColorTeapot = aColorTeapot;
     }
 </script>
-
-<body>
-  <h1 class = "center"> Worksheet 8:  Shadow mapping </h1>
-  <h2> short descriptions here </h2>
-</body>
-
 
 <script type="text/javascript">
 
@@ -165,8 +155,6 @@
         shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
         shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
 
-        //gl.useProgram(shaderProgram);
-
         // Teapot
         var teapotFragmentShader = getShader(gl, "teapot-shader-fs");
         var teapotVertexShader = getShader(gl, "teapot-shader-vs");
@@ -179,8 +167,6 @@
         if (!gl.getProgramParameter(teapotShaderProgram, gl.LINK_STATUS)) {
             alert("Could not initialise teapot shaders");
         }
-
-        //gl.useProgram(teapotShaderProgram);
 
         teapotShaderProgram.pMatrixUniform = gl.getUniformLocation(teapotShaderProgram, "uPMatrix");
         teapotShaderProgram.mvMatrixUniform = gl.getUniformLocation(teapotShaderProgram, "uMVMatrix");
@@ -209,7 +195,6 @@
         redPixel = new Uint8Array([255, 0, 0, 255]);
         gl.bindTexture(gl.TEXTURE_2D, redTexture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0,gl.RGBA, gl.UNSIGNED_BYTE, redPixel);
-
 
         gl.activeTexture(gl.TEXTURE2);
         blackTexture = gl.createTexture();
@@ -245,19 +230,11 @@
 
           ];
 
-
-          //console.log(drawingInfo.indices);
-          //vertices.push(drawingInfo.indices);
-          //console.log(vertices);
-          //console.log(teapot);
-
           for (var i = 0; i < teapot.objects[0].faces.length; i++) {
           face = teapot.objects[0].faces[i];
               for (var j = 0; j < 3; j++) {
                   vertex = teapot.vertices[face.vIndices[j]];
-                  //normal = teapot.normals[face.nIndices[j]];
                   vertices.push(vec3(vertex.x, vertex.y, vertex.z-2));
-                  //normals.push(vec3(normal.x, normal.y, normal.z));
                   textureCoords.push(vec3(0, 0, 0));
               }
           }
@@ -349,16 +326,12 @@
 
         gl.bindBuffer(gl.ARRAY_BUFFER, teapotPositionBuffer);
         gl.enableVertexAttribArray(teapotShaderProgram.vertexPositionAttribute);
-        //gl.vertexAttribPointer(teapotShaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, teapotColorBuffer);
         gl.enableVertexAttribArray(teapotShaderProgram.colorAttribute);
-        //gl.vertexAttribPointer(teapotShaderProgram.colorAttribute, 5, gl.FLOAT, false, 0, 0);
-
         // Teapot
         gl.depthFunc(gl.LESS);
         gl.uniformMatrix4fv(teapotShaderProgram.mvMatrixUniform, false, flatten(modelViewMatrix));
-        //gl.uniform1i(teapotShaderProgram.samplerUniform, 1);
         gl.drawArrays(gl.TRIANGLES, 6, drawingInfo.indices.length);
 
     }
@@ -371,9 +344,8 @@
     var drawingInfo;
 
     function webGLStart() {
-        var canvas = document.getElementById("lesson05-canvas");
+        var canvas = document.getElementById("gl-canvas");
 
-        console.log("start");
         initGL(canvas);
 
         gl.clearColor(0.3921, 0.5843, 0.9294, 1.0);
@@ -386,10 +358,10 @@
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        mat4.perspective(35, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+        mat4.perspective(60, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
-        teapotObj = loadFileAJAX('teapot.obj');
-        teapot = new OBJDoc('teapot.obj');
+        teapotObj = loadFileAJAX('../week5/teapot.obj');
+        teapot = new OBJDoc('../week5/teapot.obj');
         teapot.parse(teapotObj, 0.25, false);
 
         drawingInfo = teapot.getDrawingInfo();
@@ -412,21 +384,12 @@
     }
 
 
-
-
-
 </script>
 
-
-</head>
-
-
 <body onload="webGLStart();">
-    <canvas id="lesson05-canvas" style="border: none;" width="500" height="500"></canvas>
-    <p> </p>
-    <a href="http://learningwebgl.com/blog/?p=507">&lt;&lt; Worksheet 7</a>
-    <a> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </a>
-    <a href="http://learningwebgl.com/blog/?p=507">Worksheet 9 &gt;&gt;</a><br />
+  <canvas id="gl-canvas" style="border: none;" width="500" height="500"></canvas>
+  <br/><br/>
+  <a href="https://rubberduck93.github.io/02561%20Computer%20Graphics/week7/worksheet_7_part_4.html">&lt;&lt; Worksheet 7 Part 4</a>
 </body>
 
 </html>

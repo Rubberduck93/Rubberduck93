@@ -295,33 +295,6 @@
     setMatrixUniforms(5);
     gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
-    /*
-    // ** Vertical Yaw ** \\
-    mvMatrix[6] = translate([0, 0, -12]);
-    mvMatrix[6] = mult(mvMatrix[6], rotate(30,[1, 1, 1]));
-    mvMatrix[6] = mult(mvMatrix[6], scalem(1, 1, 1));
-
-    // Roll
-    mvMatrix[6] = mult(mvMatrix[6], rotate(roll_airplane,[0,0,0.5]));
-
-    // Pitch
-    mvMatrix[6] = mult(mvMatrix[6], rotate(pitch_airplane,[0.5,0,0]));
-
-    // Yaw
-    mvMatrix[6] = mult(mvMatrix[6], rotate(yaw_airplane,[0,0.5,0]));
-
-    mvMatrix[6] = mult(mvMatrix[6], rotate(-yaw_airplane*0.2,[0,0.5,0]));
-
-    mvMatrix[6] = mult(mvMatrix[6],translate([0, 1.4, -3.8]));
-    mvMatrix[6] = mult(mvMatrix[6], scalem(0.2, 0.4, 1.2));
-
-
-    setMatrixUniforms(6);
-    gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-    */
-
-
-
 
 
   }

@@ -158,20 +158,17 @@ function getShader(gl, id) {
         return;
     }
 
-    // define projection and view matrices
     var projectionMatrix = perspective(45, canvas.width / canvas.height, 0.1, 5000.0);
     var eye = [0.0, 500.0, 200.0];
     var at = [0.0, 0.0, 0.0];
     var up = [0.0, 1.0, 0.0];
     var viewMatrix = lookAt(eye, at, up);
 
-    // calculate viewProjection Matrix
     var viewProjMatrix = mult(projectionMatrix, viewMatrix);
 
-    // Start reading the OBJ file
     readOBJFile('teapot.obj', model, 30, true);
 
-    var tick = function() {   // Start drawing
+    var tick = function() {
         render(viewMatrix, viewProjMatrix, model);
         requestAnimationFrame(tick);
       };
@@ -189,9 +186,8 @@ function webGLStart() {
 
 }
 
-// Create an buffer object and perform an initial configuration
 function initVertexBuffers() {
-  var o = new Object(); // Utilize Object object to return multiple buffer objects
+  var o = new Object();
   o.vertexBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexPositionAttribute, 3, gl.FLOAT);
   o.normalBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexNormalAttribute, 3, gl.FLOAT);
   o.colorBuffer = createEmptyArrayBuffer(gl, shaderProgram.vertexColorAttribute, 4, gl.FLOAT);
@@ -203,21 +199,20 @@ function initVertexBuffers() {
   return o;
 }
 
-// Create a buffer object, assign it to attribute variables, and enable the assignment
+
 function createEmptyArrayBuffer(gl, a_attribute, num, type) {
-  var buffer =  gl.createBuffer();  // Create a buffer object
+  var buffer =  gl.createBuffer();
   if (!buffer) {
     console.log('Failed to create the buffer object');
     return null;
   }
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);  // Assign the buffer object to the attribute variable
-  gl.enableVertexAttribArray(a_attribute);  // Enable the assignment
+  gl.vertexAttribPointer(a_attribute, num, type, false, 0, 0);
+  gl.enableVertexAttribArray(a_attribute);
 
   return buffer;
 }
 
-// Read a file
 function readOBJFile(fileName, gl, model, scale, reverse) {
   var request = new XMLHttpRequest();
 
@@ -226,16 +221,16 @@ function readOBJFile(fileName, gl, model, scale, reverse) {
       onReadOBJFile(request.responseText, fileName, gl, model, scale, reverse);
     }
   }
-  request.open('GET', fileName, true); // Create a request to acquire the file
-  request.send();                      // Send the request
+  request.open('GET', fileName, true);
+  request.send();
 }
 
-var g_objDoc = null;      // The information of OBJ file
-var g_drawingInfo = null; // The information for drawing 3D model
+var g_objDoc = null;
+var g_drawingInfo = null;
 
 function onReadOBJFile(fileString, fileName, o, scale, reverse) {
-    var objDoc = new OBJDoc(fileName);  // Create a OBJDoc object
-    var result = objDoc.parse(fileString, scale, reverse); // Parse the file
+    var objDoc = new OBJDoc(fileName);
+    var result = objDoc.parse(fileString, scale, reverse);
     if (!result) {
       g_objDoc = null;
       g_drawingInfo = null;
@@ -250,16 +245,15 @@ var g_mvpMatrix = mat4MV();
 var g_normalMatrix = [];
 
 function render(viewMatrix, viewProjMatrix, model) {
-  if (g_objDoc != null && g_objDoc.isMTLComplete()){ // OBJ and all MTLs are available
+  if (g_objDoc != null && g_objDoc.isMTLComplete()){
     g_drawingInfo = onReadComplete(model, g_objDoc);
     g_objDoc = null;
   }
 
   if (!g_drawingInfo) return;
 
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  // Clear color and depth buffers
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  // rotate the object
   g_modelMatrix = mult(g_modelMatrix, rotate(1, [0, 1, 0]));
 
   g_normalMatrix = [
@@ -270,21 +264,18 @@ function render(viewMatrix, viewProjMatrix, model) {
 
   gl.uniformMatrix3fv(shaderProgram.normalMatrixUniform, false, flatten(g_normalMatrix));
 
-  // Calculate the model view project matrix and pass it to uMvpMatrix
   g_mvpMatrix = viewProjMatrix;
   g_mvpMatrix = mult(g_mvpMatrix, g_modelMatrix);
   gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, flatten(g_mvpMatrix));
 
   gl.uniformMatrix4fv(shaderProgram.vMatrixUniform, false, flatten(viewMatrix));
-  // Draw
+
   gl.drawElements(gl.TRIANGLES, g_drawingInfo.indices.length, gl.UNSIGNED_SHORT, 0);
 }
 
 function onReadComplete(model, objDoc) {
-    // Acquire the vertex coordinates and colors from OBJ file
     var drawingInfo = objDoc.getDrawingInfo();
 
-    // Write date into the buffer object
     gl.bindBuffer(gl.ARRAY_BUFFER, model.vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.vertices, gl.STATIC_DRAW);
 
@@ -293,8 +284,6 @@ function onReadComplete(model, objDoc) {
 
     gl.bindBuffer(gl.ARRAY_BUFFER, model.colorBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, drawingInfo.colors, gl.STATIC_DRAW);
-
-    // Write the indices to the buffer object
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, model.indexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, drawingInfo.indices, gl.STATIC_DRAW);
 
